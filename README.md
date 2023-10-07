@@ -6,7 +6,7 @@
 
 # Development
 
-1. Repository clonen
+1. Clone Repository
 ```
 https://github.com/f0reclone/wbh-lernplattform.git
 ```
@@ -39,6 +39,24 @@ open C:\Windows\System32\drivers\etc\hosts
 
 // Add line
 127.0.0.1 wbh.test
+```
+
+6. Install node modules
+```
+// Use npm
+npm install
+
+// Use pnpm (faster)
+pnpm install
+```
+
+7. Run FE with hot reload
+```
+// Use npm
+npm run dev
+
+// Use pnpm (faster)
+pnpm run dev
 ```
 
 Your app is now available on http://wbh.test
