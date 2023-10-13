@@ -29,6 +29,7 @@ docker-compose up -d
 ```
 
 If the container started successfully, you can reach it on http://localhost/
+
 5. Add hosts
 ```
 // Unix
