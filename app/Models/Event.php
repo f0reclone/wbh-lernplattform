@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 
 
 /**
@@ -15,10 +17,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $description
  * @property string|null $location
  * @property int $user_id
- * @property string $related_type
- * @property int $related_id
- * @property string $start
- * @property string|null $end
+ * @property string|null $related_type
+ * @property int|null $related_id
+ * @property int $is_editable
+ * @property \Illuminate\Support\Carbon $start
+ * @property \Illuminate\Support\Carbon $end
+ * @property int $is_full_day
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Database\Factories\EventFactory factory($count = null, $state = [])
@@ -29,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereEnd($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereIsEditable($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Event whereIsFullDay($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereKey($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereLocation($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereRelatedId($value)
@@ -43,6 +49,30 @@ class Event extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'start' => 'datetime',
+        'end' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
 
     protected $guarded = [];
+
+    public function getTime(): array
+    {
+        return [
+            'start' => $this->getFormattedDate($this->start),
+            'end' => $this->getFormattedDate($this->end)
+        ];
+    }
+
+    private function getFormattedDate(Carbon $date):string
+    {
+        if($this->is_full_day) {
+            return $date->timezone('Europe/Berlin')->toDateString();
+        }
+
+        return $date->timezone('Europe/Berlin')->toDateTimeString('minute');
+    }
 }

@@ -18,9 +18,11 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('location')->nullable();
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->morphs('related');
+            $table->nullableMorphs('related');
+            $table->boolean('is_editable');
             $table->dateTime('start');
-            $table->dateTime('end')->nullable();
+            $table->dateTime('end');
+            $table->boolean('is_full_day');
             $table->timestamps();
 
         });
