@@ -28,6 +28,21 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/boards', function () {
+    return Inertia::render('Boards');
+})->middleware(['auth', 'verified'])->name('boards');
+Route::get('/calendar', function () {
+    return Inertia::render('Calendar');
+})->middleware(['auth', 'verified'])->name('calendar');
+Route::get('/modules', function () {
+    return Inertia::render('Modules');
+})->middleware(['auth', 'verified'])->name('modules');
+Route::get('/help', function () {
+    return Inertia::render('Help');
+})->middleware(['auth', 'verified'])->name('help');
+Route::get('/modules/tasks', function () {
+    return Inertia::render('Tasks');
+})->middleware(['auth', 'verified'])->name('tasks');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
