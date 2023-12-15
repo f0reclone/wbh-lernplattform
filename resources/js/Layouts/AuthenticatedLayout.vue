@@ -35,7 +35,7 @@ const showingNavigationDropdown = ref(false);
                                 </NavLink>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('boards')" :active="route().current('boards')">
+                                <NavLink :href="route('board')" :active="route().current('board')">
                                     ToDo's
                                 </NavLink>
                             </div>
@@ -81,7 +81,7 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('help')"> Hilfe </DropdownLink>
+                                        <DropdownLink :href="route('user-manual')"> Hilfe </DropdownLink>
                                         <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
@@ -135,8 +135,8 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
                     </div>
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('boards')" :active="route().current('boards')">
-                            Boards
+                        <ResponsiveNavLink :href="route('board')" :active="route().current('board')">
+                            Board
                         </ResponsiveNavLink>
                     </div>
                     <div class="pt-2 pb-3 space-y-1">
