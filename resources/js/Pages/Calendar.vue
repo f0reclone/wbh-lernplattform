@@ -78,7 +78,7 @@ defineProps({ events: Array })
 
 
 <script>
-import {Qnpmalendar} from "qalendar";
+import {Qalendar} from "qalendar";
 
 export default {
     components: {

@@ -1,43 +1,79 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import Dropdown from "@/Components/Dropdown.vue";
-import DropdownLink from "@/Components/DropdownLink.vue";
-import UpdateProfileInformationForm from "@/Pages/Profile/Partials/UpdateProfileInformationForm.vue";
-import DeleteUserForm from "@/Pages/Profile/Partials/DeleteUserForm.vue";
-import UpdatePasswordForm from "@/Pages/Profile/Partials/UpdatePasswordForm.vue";
-import Checkbox from "@/Components/Checkbox.vue";
+import DropdownMultiSelect from "@/Components/DropdownMultiSelect.vue";
+import TaskItem from "@/Components/TaskItem.vue";
+import {computed, ref} from "vue";
+
 
 const tasks = [
-            {
-                id: 1,
-                title: "Add discount code to checkout page",
-                date: "Sep 14",
-                type: "Feature Request"
-            },
-            {
-                id: 2,
-                title: "Provide documentation on integrations",
-                date: "Sep 12"
-            },
-            {
-                id: 3,
-                title: "Design shopping cart dropdown",
-                date: "Sep 9",
-                type: "Design"
-            },
-            {
-                id: 4,
-                title: "Add discount code to checkout page",
-                date: "Sep 14",
-                type: "Feature Request"
-            },
-            {
-                id: 5,
-                title: "Test checkout flow",
-                date: "Sep 15",
-                type: "QA"
-            }];
+    {
+        id: 1,
+        parent_task_id: 1,
+        title: "SRN04",
+        description: "Intrusion Detection und Intrusion Prevention",
+        status: "closed",
+        progress: 100,
+        related_type: "",
+        related_id: 156,
+        created_at: "Sep 14",
+        updated_at: "Sep 16"
+    },
+    {
+        id: 2,
+        parent_task_id: 1,
+        title: "SRN03",
+        description: "Firewall-Systeme",
+        status: "inProgress",
+        progress: 30,
+        related_type: "",
+        related_id: 156,
+        created_at: "Sep 14",
+        updated_at: "Sep 16"
+    },
+    {
+        id: 3,
+        parent_task_id: 1,
+        title: "SRN05",
+        description: "Sichere Netzwerkommunikation",
+        status: "inProgress",
+        progress: 15,
+        related_type: "",
+        related_id: 156,
+        created_at: "Sep 14",
+        updated_at: "Sep 16"
+    },
+    {
+        id: 4,
+        parent_task_id: 1,
+        title: "ISM01",
+        description: "IT-Sicherheitsmanagement 1",
+        status: "open",
+        progress: 0,
+        related_type: "",
+        related_id: 156,
+        created_at: "Sep 14",
+        updated_at: "Sep 16"
+    },
+    {
+        id: 5,
+        parent_task_id: 1,
+        title: "ISM02",
+        description: "IT-Sicherheitsmanagement 2",
+        status: "open",
+        progress: 0,
+        related_type: "",
+        related_id: 156,
+        created_at: "Sep 14",
+        updated_at: "Sep 16"
+    },];
+
+const searchQuery = ref('');
+
+const filteredTasks = computed(() => {
+    const query = searchQuery.value.toLowerCase();
+    return tasks.filter((task) => task.title.toLowerCase().includes(query));
+});
 
 </script>
 
@@ -49,25 +85,10 @@ const tasks = [
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Dashboard</h2>
         </template>
 
-
-
-
-
-
-        <div >
-            <div class="mt-5 flex lg:ml-4 lg:mt-0">
-            </div>
-            <div class="mt-5 flex lg:ml-4 lg:mt-0">
-
-            </div>
-        </div>
-
-
-
-
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Full Width row -->
             <div class="mt-4 lg:flex lg:items-center lg:justify-between">
-                <Dropdown id="semester" align="left">
+                <DropdownMultiSelect id="semester" align="left">
                     <template #trigger>
                             <span class="inline-flex rounded-md">
                                 <button
@@ -82,50 +103,41 @@ const tasks = [
                     </template>
 
                     <template #content>
-                        <div class="mt-2 ml-2">
-                            <Checkbox checked="unchecked" class="mt-8 mb-3 flex lg:ml-4 lg:mt-0"></Checkbox>
-                        </div>
 
-                        <DropdownLink :href="route('user-manual')"> Hilfe </DropdownLink>
-                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-                        <DropdownLink :href="route('logout')" method="post" as="button">
-                            Log Out
-                        </DropdownLink>
                     </template>
-                </Dropdown>
+                </DropdownMultiSelect>
+                <!-- Search bar -->
+                <div class="ml-auto flex items-center space-x-4">
+                    <input
+                        v-model="searchQuery"
+                        type="text"
+                        placeholder="Search tasks..."
+                        class="mr-4 border border-gray-300 dark:border-gray-800 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
             </div>
+            <!-- Full width and hight columns -->
             <div class="flex justify-between h-16">
                 <div class="flex w-full h-full">
                     <div class="mt-4 w-1/3 h-full">
                         <div class="bg-white dark:bg-gray-800 rounded-lg px-3 py-3 column-width rounded mr-4">
-                            <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">ToDo's</p>
-                            <div v-for="task in tasks" :key="task.id" class="mt-2 p-3 bg-white-100 dark:bg-gray-700 rounded-lg">
-                                <div class="list-group-item">
-                                    {{task.title}}
-                                </div>
-                            </div>
+                            <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">Open</p>
+                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="open"/>
                         </div>
                     </div>
                     <div class="mt-4 w-1/3 h-full">
                         <div class="bg-white dark:bg-gray-800 rounded-lg px-3 py-3 column-width rounded mr-4">
-                            <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">In Bearbeitung</p>
-                            <div v-for="task in tasks" :key="task.id" class="mt-2 p-3 bg-white-100 dark:bg-gray-700 rounded-lg">
-                                <div class="list-group-item">
-                                    {{task.title}}
-                                </div>
-                            </div>
+                            <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">In Progress</p>
+                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="inProgress"/>
                         </div>
                     </div>
                     <div class="mt-4 w-1/3 h-full">
                         <div class="bg-white dark:bg-gray-800 rounded-lg px-3 py-3 column-width rounded mr-4">
-                            <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">Abgeschlossen</p>
-                            <div v-for="task in tasks" :key="task.id" class="mt-2 p-3 bg-white-100 dark:bg-gray-700 rounded-lg">
-                                <div class="list-group-item">
-                                    {{task.title}}
-                                </div>
-                            </div>
+                            <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">Closed</p>
+                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="closed"/>
                         </div>
                     </div>
+
 
                 </div>
             </div>
