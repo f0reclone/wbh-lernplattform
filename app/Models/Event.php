@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-
 /**
  * App\Models\Event
  *
@@ -26,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon $start
  * @property \Illuminate\Support\Carbon $end
  * @property int $is_full_day
+ * @property string|null $external_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static EventFactory factory($count = null, $state = [])
@@ -57,6 +57,8 @@ class Event extends Model
         'end' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'is_editable' => 'boolean',
+        'is_full_day' => 'boolean',
     ];
 
 
@@ -70,12 +72,29 @@ class Event extends Model
         ];
     }
 
-    private function getFormattedDate(Carbon $date):string
+    private function getFormattedDate(Carbon $date): string
     {
-        if($this->is_full_day) {
+        if ($this->is_full_day) {
             return $date->timezone('Europe/Berlin')->toDateString();
         }
 
         return $date->timezone('Europe/Berlin')->toDateTimeString('minute');
+    }
+
+    public function getIdentifiersAsArray(): array
+    {
+        // Set some changing properties to null and format date times for better comparison
+        $identifiers = [
+                'id' => null,
+                'start' => $this->start->toIso8601String(),
+                'end' => $this->start->toIso8601String(),
+                'external_id' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ] + $this->toArray();
+
+        ksort($identifiers);
+
+        return $identifiers;
     }
 }

@@ -34,7 +34,16 @@ defineProps({ events: Array })
                 <div class="label">
                     <span class="label-text">Titel</span>
                 </div>
-                <input type="text" placeholder="Name des Termins" :value="event.title" disabled
+                <input type="text" placeholder="Name des Termins" :value="event.title" :disabled="!event.isEditable"
+                       class="input input-bordered w-full"/>
+                <div class="label">
+                </div>
+            </label>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Ort</span>
+                </div>
+                <input type="text" placeholder="Ort" :value="event.location" :disabled="!event.isEditable"
                        class="input input-bordered w-full"/>
                 <div class="label">
                 </div>
@@ -43,7 +52,7 @@ defineProps({ events: Array })
                 <div class="label">
                     <span class="label-text">Start</span>
                 </div>
-                <input type="datetime-local" placeholder="Start" :value="event.time.start" disabled
+                <input :type="dateTimeInputType" placeholder="Start" :value="event.time.start" :disabled="!event.isEditable"
                        class="input input-bordered w-full"/>
                 <div class="label">
                 </div>
@@ -52,7 +61,7 @@ defineProps({ events: Array })
                 <div class="label">
                     <span class="label-text">Ende</span>
                 </div>
-                <input type="datetime-local" placeholder="Ende" :value="event.time.end" disabled
+                <input :type="dateTimeInputType" placeholder="Ende" :value="event.time.end" :disabled="!event.isEditable"
                        class="input input-bordered w-full"/>
                 <div class="label">
                 </div>
@@ -62,7 +71,7 @@ defineProps({ events: Array })
                     <span class="label-text">Beschreibung</span>
                 </div>
                 <textarea class="textarea textarea-bordered h-48 w-full" placeholder="Bio"
-                          :value="event.description"></textarea>
+                          :value="event.description" :disabled="!event.isEditable"></textarea>
                 <div class="label">
                 </div>
             </label>
@@ -103,6 +112,13 @@ export default {
 
                 return event;
             })
+        },
+        dateTimeInputType() {
+            if(this.event?.isFullDay) {
+                return 'date-local';
+            }
+
+            return 'datetime-local'
         }
     },
 
