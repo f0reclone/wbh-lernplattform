@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Carbon;
@@ -61,6 +62,11 @@ class Task extends Model
         return $this->belongsTo(Task::class, 'parent_task_id');
     }
 
+    public function childTasks(): HasMany
+    {
+        return $this->hasMany(Task::class, 'parent_task_id');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -80,4 +86,20 @@ class Task extends Model
     {
         return $this->morphToMany(Event::class, 'related');
     }
+    public function getProgress(): float
+    {
+        if($this->status==='closed'){
+            return 1;
+        }
+
+        $tasks=$this->childTasks()->get();
+
+        if ($tasks->isEmpty()){
+            return 0;
+        }
+
+        return $tasks->where('status', '=', 'closed')->count()/$tasks->count();
+
+    }
+
 }
