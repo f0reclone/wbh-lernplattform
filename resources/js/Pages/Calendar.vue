@@ -100,6 +100,7 @@ export default {
         qalenderEvents() {
             return this.events.map((event) => {
                 event.with = null;
+
                 return event;
             })
         }
