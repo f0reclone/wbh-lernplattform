@@ -9,6 +9,6 @@ use Inertia\Inertia;
 class ModuleController extends Controller
 {
     public function index() {
-        return Inertia::render('Calendar');
+        return Inertia::render('Module');
     }
 }
