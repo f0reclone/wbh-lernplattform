@@ -4,12 +4,14 @@ use App\Http\Controllers\BoardController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\ModuleCreateController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserManualController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Enums;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +46,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/modules', [ModuleController::class, 'index'])
         ->name('modules');
+
+    Route::get('/modules/create', [ModuleCreateController::class, 'index'])
+        ->name('createModules');
 
     Route::get('/user-manual', [UserManualController::class, 'index'])
         ->name('user-manual');

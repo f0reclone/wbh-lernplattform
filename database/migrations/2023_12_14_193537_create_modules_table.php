@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('status');
+            $table->enum('status',['unbearbeitet','in Arbeit','Erledigt(bewertet)','Erledigt(unbewertet)','warte auf Ergebnis']);
             $table->foreignId('user_id')->references('id')->on('users');
             $table->unsignedInteger('start_semester');
             $table->unsignedInteger('end_semester');
