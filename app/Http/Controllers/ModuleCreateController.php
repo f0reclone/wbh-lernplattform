@@ -6,9 +6,10 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 
-class ModuleController extends Controller
+class ModuleCreateController extends Controller
 {
     public function index() {
-        return Inertia::render('Module/Module');
+        return Inertia::render('Module/Create');
     }
+
 }

@@ -20,7 +20,7 @@ import InputError from "@/Components/InputError.vue";
     </svg>
     <span class="text-2xl font-extrabold mx-2">Modulfilter</span>
         </a>
-        <br><br>
+        <br><br><br>
         <InputLabel><span class="mx-2 text-lg font-extrabold">Semester</span></InputLabel>
         <div class="left mx-2 lg:px-3 space-y-1">
               <!-- Repeat the checkbox for each semester -->
@@ -89,9 +89,7 @@ import InputError from "@/Components/InputError.vue";
         <!-- Header -->
         <div class="px-4 py-4 space-x-4">
           <TextInput v-model="d" placeholder="Search Module..." class="w-60" />
-          <button @click="" class="btn btn-accent btn-outline bg-green ">
-            Modul hinzufügen
-          </button>
+            <Link href="/modules/create" class="btn btn-accent btn-outline bg-green " method="get" as="button">Module hinzufügen</Link>
         </div>
 
         <!-- Content -->
