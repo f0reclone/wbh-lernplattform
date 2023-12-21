@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Jobs\ImportUniversityCalendarEventsForUserJob;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -27,15 +32,40 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request)
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $user->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
+        try {
+            if ($user->university_calendar_url !== null && $user->university_calendar_url !== '') {
+                // Dispatch synchronously for now
+                ImportUniversityCalendarEventsForUserJob::dispatchSync($user);
+
+
+                request()->session()->flash('alert', [
+                    'type' => 'success',
+                    'message' => 'Kalendareinträge von deiner Universität wurden erfolgreich importiert.'
+                ]);
+            }
+        } catch (\Throwable $e) {
+            $message = 'Es gab einen Fehler beim Import der der Kalendareinträge von der Universität.';
+            Log::error($message, [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTrace()
+            ]);
+            request()->session()->flash('alert', [
+                'type' => 'error',
+                'message' => $message
+            ]);
+
+            return Redirect::route('profile.edit')->withErrors(['university_calendar_url' => $message]);
+        }
 
         return Redirect::route('profile.edit');
     }
