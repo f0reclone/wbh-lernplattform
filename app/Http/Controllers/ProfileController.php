@@ -50,11 +50,11 @@ class ProfileController extends Controller
 
                 request()->session()->flash('alert', [
                     'type' => 'success',
-                    'message' => 'Kalendareinträge von deiner Universität wurden erfolgreich importiert.'
+                    'message' => 'Kalendereinträge von deiner Universität wurden erfolgreich importiert.'
                 ]);
             }
         } catch (\Throwable $e) {
-            $message = 'Es gab einen Fehler beim Import der der Kalendareinträge von der Universität.';
+            $message = 'Es gab einen Fehler beim Import der der Kalendereinträge von der Universität.';
             Log::error($message, [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTrace()
