@@ -23,6 +23,7 @@ return new class extends Migration
             $table->dateTime('start');
             $table->dateTime('end');
             $table->boolean('is_full_day');
+            $table->string('external_id')->unique('unique_events_external_id')->nullable();
             $table->timestamps();
 
         });
