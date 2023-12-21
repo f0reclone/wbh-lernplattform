@@ -12,6 +12,9 @@ defineProps({
     status: {
         type: String,
     },
+    errors: {
+        type: Object
+    }
 });
 </script>
 
