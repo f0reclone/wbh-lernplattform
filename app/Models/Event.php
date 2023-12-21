@@ -8,6 +8,8 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 
 /**
@@ -96,5 +98,14 @@ class Event extends Model
         ksort($identifiers);
 
         return $identifiers;
+    }
+
+    public function user(): BelongsTo {
+        return $this->belongsTo(User::class);
+    }
+
+    public function related(): MorphTo
+    {
+        return $this->morphTo('related');
     }
 }

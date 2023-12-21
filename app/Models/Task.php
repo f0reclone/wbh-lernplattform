@@ -72,9 +72,9 @@ class Task extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function module(): MorphTo
+    public function related(): MorphTo
     {
-        return $this->morphTo(Module::class);
+        return $this->morphTo('related');
     }
 
     public function files(): MorphToMany
@@ -86,20 +86,38 @@ class Task extends Model
     {
         return $this->morphToMany(Event::class, 'related');
     }
+
     public function getProgress(): float
     {
-        if($this->status==='closed'){
+        if ($this->status === 'closed') {
             return 1;
         }
 
-        $tasks=$this->childTasks()->get();
+        $tasks = $this->childTasks()->get();
 
-        if ($tasks->isEmpty()){
+        if ($tasks->isEmpty()) {
             return 0;
         }
 
-        return $tasks->where('status', '=', 'closed')->count()/$tasks->count();
+        return $tasks->where('status', '=', 'closed')->count() / $tasks->count();
+    }
 
+    public function getSemesters(): array
+    {
+        if($this->parent_task_id !== null) {
+            return $this->parentTask->getSemesters();
+        }
+
+        $this->loadMissing('related');
+        $module = $this->related;
+        if (!$module instanceof Module) {
+            return [];
+        }
+
+        $semesters = array_unique(range($module->start_semester, $module->end_semester));
+        sort($semesters);
+
+        return array_values($semesters);
     }
 
 }

@@ -16,8 +16,12 @@ class ModuleFactory extends Factory
      */
     public function definition(): array
     {
+        $startSemester = $this->faker->numberBetween(1, 6);
         return [
-            //
+            'name' => $this->faker->name,
+            'status' => 'open',
+            'start_semester' => $startSemester,
+            'end_semester' => $startSemester + $this->faker->numberBetween(0, 1),
         ];
     }
 }
