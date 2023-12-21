@@ -46,7 +46,19 @@ class Module extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'status' => ModuleStatus::class,
+    ];
+
     protected $guarded = [];
+
+    public static function getStatusCases(): array
+    {
+        return array_map(
+            fn(ModuleStatus $moduleStatus) => ['value' => $moduleStatus->value, 'name' => $moduleStatus->getName()],
+            ModuleStatus::cases()
+        );
+    }
 
 
     public function user(): BelongsTo

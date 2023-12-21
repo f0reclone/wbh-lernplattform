@@ -10,18 +10,21 @@ const props = defineProps({
     moduleStatusCases: {
         type: Array,
     },
+    module: {
+        type: Object
+    }
 });
 
 const form = useForm({
-    name: null,
-    status: props.moduleStatusCases[0].value,
-    start_semester: null,
-    end_semester: null,
+    name: props.module.name,
+    status: props.module.status,
+    start_semester: props.module.start_semester,
+    end_semester: props.module.end_semester,
 })
 </script>
 
 <template>
-    <Head title="Modul erstellen"/>
+    <Head title="Modul bearbeiten"/>
 
     <AuthenticatedLayout>
         <div class="py-12">
@@ -39,13 +42,13 @@ const form = useForm({
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                           d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
                                 </svg>
-                                <span class="text-2xl font-extrabold mx-2">Module hinzufügen</span>
+                                <span class="text-2xl font-extrabold mx-2">Modul bearbeiten</span>
                             </a>
                         </div>
 
                         <!-- Form -->
                         <div class="p-8">
-                            <form @submit.prevent="form.post('/modules')">
+                            <form @submit.prevent="form.put(route('modules.update', {module:module.id}))">
                                 <div class="space-y-4">
                                     <label for="name" class="daisy block mb-1 text-lg ">Modulname:</label>
                                     <input id="name" v-model="form.name"
@@ -73,7 +76,7 @@ const form = useForm({
                                 </div>
                                 <br>
                                 <button type="submit" class="btn btn-accent btn-outline bg-green py-2 px-4 rounded-md">
-                                    Modul erstellen
+                                    Modul bearbeiten
                                 </button>
                             </form>
                         </div>
