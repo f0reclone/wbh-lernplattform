@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('exams', function (Blueprint $table) {
-            //
+        Schema::create('exams', function (Blueprint $table) {
+            $table->int('credit_points');
         });
     }
 
@@ -21,8 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('exams', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('exams');
     }
 };

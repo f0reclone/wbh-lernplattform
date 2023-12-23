@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property int $module_id
  * @property int $grade
  * @property int $semester
+ * @property int $credit_points
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Event> $events
