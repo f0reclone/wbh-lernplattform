@@ -10,6 +10,14 @@ const props = defineProps({
     },
 });
 
+//dirty
+const statusTranslations = {
+    'open': 'Unbearbeitet',
+    'in_progress': 'In Arbeit',
+    'waiting_for_result': 'Erledigt (warte auf Ergebnis)',
+    'done_without_grade': 'Erledigt (unbewertet)',
+    'done_with_grade': 'Erledigt (bewertet)'
+};
 
 </script>
 <style scoped>
@@ -170,7 +178,7 @@ const props = defineProps({
                         <div class="card w-96 bg-base-100 shadow-xl mb-4" v-for="(module, index) in filteredModules" :key="module.id">
                             <div class="card-body">
                                 <h2 class="card-title">{{ module.name }}</h2>
-                                <p>Status: {{module.status}}</p>
+                                <p>Status: {{ statusTranslations[module.status] }}</p>
                                 <p>Start: Semester {{ module.start_semester }}</p>
                                 <p>Ende: Semester {{ module.end_semester }}</p>
                                 <div class="card-actions justify-end">
