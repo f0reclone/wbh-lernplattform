@@ -3,7 +3,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head, Link} from '@inertiajs/vue3';
 import TextInput from "@/Components/TextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import InputError from "@/Components/InputError.vue";
 
 const props = defineProps({
     modules: {
@@ -107,31 +106,31 @@ const props = defineProps({
                             <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
                                 <li>
                                     <label class="flex items-center">
-                                        <input type="checkbox" v-model="selectedStatuses" value="Open">
+                                        <input type="checkbox" v-model="selectedStatuses" id="Open" value="Open">
                                         <span class="ml-2">Unbearbeitet</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label class="flex items-center">
-                                        <input type="checkbox" v-model="selectedStatuses" value="InProgress">
+                                        <input type="checkbox" v-model="selectedStatuses" id="In_Progress" value="In_Progress">
                                         <span class="ml-2">In Arbeit</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label class="flex items-center">
-                                        <input type="checkbox" v-model="selectedStatuses" value="WaitingForResult">
+                                        <input type="checkbox" v-model="selectedStatuses" id="Waiting_For_Result" value="Waiting_For_Result">
                                         <span class="ml-2">Erledigt (warte auf Ergebnis)</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label class="flex items-center">
-                                        <input type="checkbox" v-model="selectedStatuses" value="DoneWithoutGrade">
+                                        <input type="checkbox" v-model="selectedStatuses" id="Done_Without_Grade" value="Done_Without_Grade">
                                         <span class="ml-2">Erledigt (unbewertet)</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label class="flex items-center">
-                                        <input type="checkbox" v-model="selectedStatuses" value="DoneWithGrade">
+                                        <input type="checkbox" v-model="selectedStatuses" id="Done_With_Grade" value="Done_With_Grade">
                                         <span class="ml-2">Erledigt (bewertet)</span>
                                     </label>
                                 </li>
@@ -222,14 +221,24 @@ export default {
             }
             return modules;
         },
-        selectedStatusesFilter(modules) {
+        selectedStatusesFilter: function (modules) {
             if (this.selectedStatuses.length === 0) {
                 return modules;
             }
-            const statusesArray = Array.from(this.selectedStatuses).map(status => status.toString());
-            console.log(statusesArray)
-            console.log(modules.filter(module => statusesArray.includes(module.status)));
-            return modules.filter(module => statusesArray.includes(module.status));
+            const selectedStatusesArray = Array.isArray(this.selectedStatuses)
+                ? this.selectedStatuses.map(status => status.toLowerCase())
+                : [this.selectedStatuses.toLowerCase()];
+
+            console.log(selectedStatusesArray);
+
+// Filter modules based on selected statuses
+            const filteredModules = modules.filter(module =>
+                selectedStatusesArray.some(status => module.status.toLowerCase().includes(status))
+            );
+
+            console.log(filteredModules);
+
+            return filteredModules;
         },
         sortModules(modules) {
             switch (this.sortOption) {
