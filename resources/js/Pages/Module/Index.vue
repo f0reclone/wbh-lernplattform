@@ -10,8 +10,18 @@ const props = defineProps({
         type: Array,
     },
 });
-</script>
 
+
+</script>
+<style scoped>
+.flex.flex-wrap > .card:not(:last-child) {
+    margin-right: 1rem; /* Adjust as needed for the desired spacing */
+}
+/* Counteract the margin on the last card in each row */
+.flex.flex-wrap > .card:last-child {
+    margin-right: 0;
+}
+</style>
 <template>
     <Head title="Module"/>
 
@@ -20,117 +30,152 @@ const props = defineProps({
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Module</h2>
         </template>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="relative flex min-h-screen">
-
-                    <div class="bg-slate-500 text-cyan-100 w-48 ">
-                        <a href="" class="flex itemns-center mx-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                 stroke="currentColor" class="w-6 h-6 ">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
-                            </svg>
-                            <span class="text-2xl font-extrabold mx-2">Modulfilter</span>
-                        </a>
-                        <br><br><br>
-                        <InputLabel><span class="mx-2 text-lg font-extrabold">Semester</span></InputLabel>
-                        <div class="left mx-2 lg:px-3 space-y-1">
-                            <!-- Repeat the checkbox for each semester -->
-                            <div class="flex items-center ">
-                                <input type="checkbox" class="checkbox checkbox-primary" id="semester1"
-                                       name="semester1">
-                                <label for="semester1" class="ml-2">1</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" class="checkbox checkbox-primary" id="semester1"
-                                       name="semester1">
-                                <label for="semester1" class="ml-2">2</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" class="checkbox checkbox-primary" id="semester1"
-                                       name="semester1">
-                                <label for="semester1" class="ml-2">3</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" class="checkbox checkbox-primary" id="semester1"
-                                       name="semester1">
-                                <label for="semester1" class="ml-2">4</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" class="checkbox checkbox-primary" id="semester1"
-                                       name="semester1">
-                                <label for="semester1" class="ml-2">5</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" class="checkbox checkbox-primary" id="semester1"
-                                       name="semester1">
-                                <label for="semester1" class="ml-2">6</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" class="checkbox checkbox-primary" id="semester1"
-                                       name="semester1">
-                                <label for="semester1" class="ml-2">7</label>
-                            </div>
+        <div class="py-12 max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="relative flex min-h-screen">
+                <!-- Left sidebar for filters -->
+                <div class="bg-slate-500 text-cyan-100 w-48 ">
+                    <a href="" class="flex itemns-center mx-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor" class="w-6 h-6 ">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                        </svg>
+                        <span class="text-2xl font-extrabold mx-2">Modulfilter</span>
+                    </a>
+                    <br><br><br>
+                    <InputLabel><span class="mx-2 text-lg font-extrabold">Semester</span></InputLabel>
+                    <div class="left mx-2 lg:px-3 space-y-1">
+                        <!-- Repeat the checkbox for each semester -->
+                        <div class="flex items-center ">
+                            <input type="checkbox" class="checkbox checkbox-primary" id="semester1" v-model="selectedSemesters" value="1"
+                                   name="semester1">
+                            <label for="semester1" class="ml-2">1</label>
                         </div>
-                        <br>
-                        <InputLabel><span class="text-lg ml-2 font-extrabold space-y-5">Sortieren nach</span>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="checkbox checkbox-primary" id="semester2" v-model="selectedSemesters" value="2"
+                                   name="semester1">
+                            <label for="semester1" class="ml-2">2</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="checkbox checkbox-primary" id="semester3" v-model="selectedSemesters" value="3"
+                                   name="semester1">
+                            <label for="semester1" class="ml-2">3</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="checkbox checkbox-primary" id="semester4" v-model="selectedSemesters" value="4"
+                                   name="semester1">
+                            <label for="semester1" class="ml-2">4</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="checkbox checkbox-primary" id="semester5" v-model="selectedSemesters" value="5"
+                                   name="semester1">
+                            <label for="semester1" class="ml-2">5</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="checkbox checkbox-primary" id="semester6" v-model="selectedSemesters" value="6"
+                                   name="semester1">
+                            <label for="semester1" class="ml-2">6</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="checkbox checkbox-primary" id="semester7" v-model="selectedSemesters" value="7"
+                                   name="semester1">
+                            <label for="semester1" class="ml-2">7</label>
+                        </div>
+                    </div>
+                    <br>
+                    <InputLabel><span class="text-lg ml-2 font-extrabold space-y-5">Sortieren nach</span>
+                    </InputLabel>
+                    <div class="left mx-2 lg:px-3 space-y-0.5">
+                        <div>
+                            <input type="radio" class="radio radio-primary" id="sortBySemester" v-model="sortOption" name="sortOption"
+                                   value="semester">
+                            <label for="sortBySemester" class="mx-2">Semester</label>
+                        </div>
+                        <div>
+                            <input type="radio" class="radio radio-primary " id="sortByModule" v-model="sortOption" name="sortOption"
+                                   value="module">
+                            <label for="sortBySemester" class="mx-2">Module</label>
+                        </div>
+                        <div class="dropdown dropdown-hover">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                                </svg>
+
+                                <div tabindex="0" class="m-1 py-2 bg-base-100/0 mx-2">Status</div>
+                            </div>
+                            <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
+                                <li>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" v-model="selectedStatuses" value="Open">
+                                        <span class="ml-2">Unbearbeitet</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" v-model="selectedStatuses" value="InProgress">
+                                        <span class="ml-2">In Arbeit</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" v-model="selectedStatuses" value="WaitingForResult">
+                                        <span class="ml-2">Erledigt (warte auf Ergebnis)</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" v-model="selectedStatuses" value="DoneWithoutGrade">
+                                        <span class="ml-2">Erledigt (unbewertet)</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" v-model="selectedStatuses" value="DoneWithGrade">
+                                        <span class="ml-2">Erledigt (bewertet)</span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="space-y-2">
+                        <InputLabel><span
+                            class="text-sm ml-2 font-extrabold space-y-5">Erledigte Tasks anzeigen</span>
                         </InputLabel>
                         <div class="left mx-2 lg:px-3 space-y-0.5">
                             <div>
-                                <input type="radio" class="radio radio-primary" id="sortBySemester" name="sortOption"
-                                       value="semester">
-                                <label for="sortBySemester" class="mx-2">Semester</label>
+                                <input type="radio" class="radio radio-primary" id="showCompletedYes"
+                                       name="showCompleted" value="yes">
+                                <label for="showCompletedYes">Ja</label>
                             </div>
                             <div>
-                                <input type="radio" class="radio radio-primary" id="sortBySemester" name="sortOption"
-                                       value="semester">
-                                <label for="sortBySemester" class="mx-2">Module</label>
-                            </div>
-                            <div>
-                                <input type="radio" class="radio radio-primary" id="sortBySemester" name="sortOption"
-                                       value="semester">
-                                <label for="sortBySemester" class="mx-2">Status</label>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="space-y-2">
-                            <InputLabel><span
-                                class="text-sm ml-2 font-extrabold space-y-5">Erledigte Tasks anzeigen</span>
-                            </InputLabel>
-                            <div class="left mx-2 lg:px-3 space-y-0.5">
-                                <div>
-                                    <input type="radio" class="radio radio-primary" id="showCompletedYes"
-                                           name="showCompleted" value="yes">
-                                    <label for="showCompletedYes">Ja</label>
-                                </div>
-                                <div>
-                                    <input type="radio" class="radio radio-primary" id="showCompletedNo"
-                                           name="showCompleted" value="no">
-                                    <label for="showCompletedNo">Nein</label>
-                                </div>
+                                <input type="radio" class="radio radio-primary" id="showCompletedNo"
+                                       name="showCompleted" value="no">
+                                <label for="showCompletedNo">Nein</label>
                             </div>
                         </div>
                     </div>
-                    <!-- Main content -->
-                    <div class="flex-1">
-                        <!-- Header -->
-                        <div class="px-4 py-4 space-x-4">
-                            <TextInput v-model="d" placeholder="Search Module..." class="w-60"/>
-                            <Link href="/modules/create" class="btn btn-accent btn-outline bg-green " method="get"
-                                  as="button">Module hinzufügen
-                            </Link>
-                        </div>
-                        <div class="px-4 py-4 space-x-4">
-                            <!-- Content -->
-                            <div class="card w-96 bg-base-100 shadow-xl" v-for="module in filteredModules">
-                                <div class="card-body">
-                                    <h2 class="card-title">{{ module.name }}</h2>
-                                    <p>Start Semester {{ module.start_semester }}</p>
-                                    <p>Ende Semester {{ module.end_semester }}</p>
-                                    <div class="card-actions justify-end">
-                                        <a class="btn btn-primary" :href="route('modules.edit', {'module': module.id})">Bearbeiten</a>
-                                    </div>
+                </div>
+
+                <!-- Main content -->
+                <!-- Main content -->
+                <div class="flex-1">
+                    <div class="px-4 py-4 space-x-4">
+                        <TextInput v-model="searchQuery" placeholder="Search Module..." class="w-60"/>
+                        <Link href="/modules/create" class="btn btn-accent btn-outline bg-green" method="get" as="button">Module hinzufügen</Link>
+                    </div>
+                    <div class="px-4 py-4 flex flex-wrap">
+                        <!-- Content -->
+                        <div class="card w-96 bg-base-100 shadow-xl mb-4" v-for="(module, index) in filteredModules" :key="module.id">
+                            <div class="card-body">
+                                <h2 class="card-title">{{ module.name }}</h2>
+                                <p>Status: {{module.status}}</p>
+                                <p>Start: Semester {{ module.start_semester }}</p>
+                                <p>Ende: Semester {{ module.end_semester }}</p>
+                                <div class="card-actions justify-end">
+                                    <a class="btn btn-primary" :href="route('modules.edit', {'module': module.id})">Bearbeiten</a>
                                 </div>
                             </div>
                         </div>
@@ -145,18 +190,57 @@ const props = defineProps({
 <script>
 
 export default {
+    data() {
+        return {
+            selectedSemesters: [],
+            sortOption: '',
+            selectedStatuses:[],
+            showCompleted: 'yes',
+            searchQuery: ''
+        };
+
+
+    },
     computed: {
         filteredModules() {
-            let modules = this.modules;
-            // TODO: check for search
-
-            // TODO: check for filters
-
-            // TODO: Sort
-
+            let modules = this.filterModules(this.modules);
+            modules = this.searchModules(modules);
+            modules = this.selectedStatusesFilter(modules);
+            return this.sortModules(modules);
+        }
+    },
+    methods: {
+        filterModules(modules) {
+            if (this.selectedSemesters.length > 0) {
+                modules = modules.filter(module => this.selectedSemesters.includes(module.start_semester.toString()));
+            }
             return modules;
+        },
+        searchModules(modules) {
+            if (this.searchQuery.trim() !== '') {
+                return modules.filter(module => module.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
+            }
+            return modules;
+        },
+        selectedStatusesFilter(modules) {
+            if (this.selectedStatuses.length === 0) {
+                return modules;
+            }
+            const statusesArray = Array.from(this.selectedStatuses).map(status => status.toString());
+            console.log(statusesArray)
+            console.log(modules.filter(module => statusesArray.includes(module.status)));
+            return modules.filter(module => statusesArray.includes(module.status));
+        },
+        sortModules(modules) {
+            switch (this.sortOption) {
+                case 'semester':
+                    return modules.sort((a, b) => a.start_semester - b.start_semester);
+                case 'module':
+                    return modules.sort((a, b) => a.name.localeCompare(b.name));
+                default:
+                    return modules;
+            }
         }
     }
 }
-
 </script>
