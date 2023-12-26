@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Enums\ModuleStatus;
 use App\Http\Requests\ModuleCreateUpdateRequest;
 use App\Http\Resources\ModuleResource;
 use App\Models\Module;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use PhpParser\Node\Expr\AssignOp\Mod;
 
 class ModuleController extends Controller
 {
