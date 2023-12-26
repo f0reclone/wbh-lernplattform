@@ -6,10 +6,12 @@ namespace App\Http\Controllers;
 
 use App\Enums\ModuleStatus;
 use App\Http\Requests\ModuleCreateUpdateRequest;
+use App\Http\Resources\ModuleResource;
 use App\Models\Module;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use PhpParser\Node\Expr\AssignOp\Mod;
 
 class ModuleController extends Controller
 {
@@ -21,7 +23,8 @@ class ModuleController extends Controller
             ->where('user_id', '=', $user->id)
             ->get();
         return Inertia::render('Module/Index', [
-            'modules' => $modules
+            'modules' => ModuleResource::collection($modules)->collection,
+            'moduleStatusCases' => Module::getStatusCases()
         ]);
     }
 
@@ -46,7 +49,7 @@ class ModuleController extends Controller
     public function edit(Request $request, Module $module)
     {
         return Inertia::render('Module/Edit', [
-            'module' => $module,
+            'module' => ModuleResource::make($module),
             'moduleStatusCases' => Module::getStatusCases()
         ]);
     }

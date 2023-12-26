@@ -2,8 +2,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head} from '@inertiajs/vue3';
 import {useForm} from '@inertiajs/vue3'
-import TextInput from "@/Components/TextInput.vue";
-import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
 
 const props = defineProps({
@@ -18,8 +16,8 @@ const props = defineProps({
 const form = useForm({
     name: props.module.name,
     status: props.module.status,
-    start_semester: props.module.start_semester,
-    end_semester: props.module.end_semester,
+    start_semester: props.module.startSemester,
+    end_semester: props.module.endSemester,
 })
 </script>
 

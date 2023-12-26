@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  *
  * @property int $id
  * @property string $name
- * @property string $status
+ * @property string|ModuleStatus $status
  * @property int $start_semester
  * @property int $end_semester
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -84,5 +84,10 @@ class Module extends Model
     public function events(): MorphToMany
     {
         return $this->morphToMany(Event::class, 'related');
+    }
+
+    public function getSemesters(): array
+    {
+        return range($this->start_semester, $this->end_semester);
     }
 }
