@@ -1,78 +1,30 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import DropdownMultiSelect from "@/Components/DropdownMultiSelect.vue";
-import TaskItem from "@/Components/TaskItem.vue";
-import {computed, ref} from "vue";
+import TaskItem from "@/Components/TaskItem.vue"; //TaskItem View
+import DropdownMultiSelect from "@/Components/DropdownMultiSelect.vue"; //MultiSelect
+import {computed, ref} from "vue"; //Search Bar
 
 
-const tasks = [
-    {
-        id: 1,
-        parent_task_id: 1,
-        title: "SRN04",
-        description: "Intrusion Detection und Intrusion Prevention",
-        status: "closed",
-        progress: 100,
-        related_type: "",
-        related_id: 156,
-        created_at: "Sep 14",
-        updated_at: "Sep 16"
-    },
-    {
-        id: 2,
-        parent_task_id: 1,
-        title: "SRN03",
-        description: "Firewall-Systeme",
-        status: "inProgress",
-        progress: 30,
-        related_type: "",
-        related_id: 156,
-        created_at: "Sep 14",
-        updated_at: "Sep 16"
-    },
-    {
-        id: 3,
-        parent_task_id: 1,
-        title: "SRN05",
-        description: "Sichere Netzwerkommunikation",
-        status: "inProgress",
-        progress: 15,
-        related_type: "",
-        related_id: 156,
-        created_at: "Sep 14",
-        updated_at: "Sep 16"
-    },
-    {
-        id: 4,
-        parent_task_id: 1,
-        title: "ISM01",
-        description: "IT-Sicherheitsmanagement 1",
-        status: "open",
-        progress: 0,
-        related_type: "",
-        related_id: 156,
-        created_at: "Sep 14",
-        updated_at: "Sep 16"
-    },
-    {
-        id: 5,
-        parent_task_id: 1,
-        title: "ISM02",
-        description: "IT-Sicherheitsmanagement 2",
-        status: "open",
-        progress: 0,
-        related_type: "",
-        related_id: 156,
-        created_at: "Sep 14",
-        updated_at: "Sep 16"
-    },];
+const { tasks } = defineProps({
+    task: Object,
+    tasks: Array,
+    semesters: Array,
+});
 
 const searchQuery = ref('');
 
 const filteredTasks = computed(() => {
     const query = searchQuery.value.toLowerCase();
     return tasks.filter((task) => task.title.toLowerCase().includes(query));
+});
+
+const parentTasks = computed(() => {
+   return tasks.filter(task => task.parent_task_id === null);
+});
+
+const childTasks = computed(() => {
+    return tasks.filter(task => task.parent_task_id !== null);
 });
 
 </script>
@@ -128,13 +80,13 @@ const filteredTasks = computed(() => {
                     <div class="mt-4 w-1/3 h-full">
                         <div class="bg-white dark:bg-gray-800 rounded-lg px-3 py-3 column-width rounded mr-4">
                             <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">In Progress</p>
-                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="inProgress"/>
+                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="in_progress"/>
                         </div>
                     </div>
                     <div class="mt-4 w-1/3 h-full">
                         <div class="bg-white dark:bg-gray-800 rounded-lg px-3 py-3 column-width rounded mr-4">
                             <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">Closed</p>
-                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="closed"/>
+                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="done_without_grade"/>
                         </div>
                     </div>
 
@@ -146,22 +98,22 @@ const filteredTasks = computed(() => {
 </template>
 
 <script>
+
 export default {
     data() {
         return {
-            selectedSemester: 1, // Default selected semester
-            semesters: [1, 2, 3], // Replace with actual semester data
-            tasksInSelectedSemester: [],
-            openTasks: [],
-            closedTasks: [],
-            openTasksInPriorSemesters: [],
+            selectedSemesters: [],
+            tasks: Array,
+
         };
+
+
+    },
+    computed: {
+
     },
     methods: {
-        async loadTasks() {
-            // Fetch tasks based on selected semester and update data
-            // You'll implement this logic in the next step
-        },
-    },
-};
+
+    }
+}
 </script>

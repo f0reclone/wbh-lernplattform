@@ -67,6 +67,11 @@ class Task extends Model
         return $this->hasMany(Task::class, 'parent_task_id');
     }
 
+    public function getChildTasks(): array
+    {
+        return $this->childTasks()->pluck('id')->toArray();
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -102,7 +107,7 @@ class Task extends Model
         return $tasks->where('status', '=', 'closed')->count() / $tasks->count();
     }
 
-    public function getSemesters(): array
+    /*public function getSemesters(): array
     {
         if($this->parent_task_id !== null) {
             return $this->parentTask->getSemesters();
@@ -118,6 +123,7 @@ class Task extends Model
         sort($semesters);
 
         return array_values($semesters);
-    }
+    }*/
+
 
 }
