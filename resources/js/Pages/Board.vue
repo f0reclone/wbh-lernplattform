@@ -13,19 +13,21 @@ const { tasks } = defineProps({
 });
 
 const searchQuery = ref('');
+const statusFilters = ['open', 'in_progress', 'done_without_grade', 'done_with_grade', 'waiting_for_result'];
 
 const filteredTasks = computed(() => {
     const query = searchQuery.value.toLowerCase();
-    return tasks.filter((task) => task.title.toLowerCase().includes(query));
+    return tasks.filter((task) => {
+        const titleMatches = task.title.toLowerCase().includes(query);
+        const statusMatches = statusFilters.includes(task.status);
+        return titleMatches && statusMatches;
+    });
 });
 
-const parentTasks = computed(() => {
-   return tasks.filter(task => task.parent_task_id === null);
-});
+const filteredOpenTasks = computed(() => filteredTasks.value.filter(task => task.status === 'open'));
+const filteredInProgressTasks = computed(() => filteredTasks.value.filter(task => task.status === 'in_progress'));
+const filteredClosedTasks = computed(() => filteredTasks.value.filter(task => ['done_without_grade', 'done_with_grade', 'waiting_for_result'].includes(task.status)));
 
-const childTasks = computed(() => {
-    return tasks.filter(task => task.parent_task_id !== null);
-});
 
 </script>
 
@@ -86,11 +88,9 @@ const childTasks = computed(() => {
                     <div class="mt-4 w-1/3 h-full">
                         <div class="bg-white dark:bg-gray-800 rounded-lg px-3 py-3 column-width rounded mr-4">
                             <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">Closed</p>
-                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="done_without_grade"/>
+                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="done_without_grade" />
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -103,10 +103,7 @@ export default {
     data() {
         return {
             selectedSemesters: [],
-            tasks: Array,
-
         };
-
 
     },
     computed: {
