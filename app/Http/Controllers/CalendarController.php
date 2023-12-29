@@ -12,7 +12,10 @@ use Inertia\Inertia;
 class CalendarController extends Controller
 {
     public function index(Request $request) {
-        $events = Event::query()->where('user_id', '=', $request->user()->id)->get();
+        $events = Event::query()
+            ->where('user_id', '=', $request->user()->id)
+            ->whereNotNull('id')
+            ->get();
 
         return Inertia::render('Calendar', [
             'events' => EventResource::collection($events)->collection,

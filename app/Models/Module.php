@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ModuleStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  *
  * @property int $id
  * @property string $name
- * @property string $status
+ * @property string|ModuleStatus $status
  * @property int $start_semester
  * @property int $end_semester
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -45,7 +46,19 @@ class Module extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'status' => ModuleStatus::class,
+    ];
+
     protected $guarded = [];
+
+    public static function getStatusCases(): array
+    {
+        return array_map(
+            fn(ModuleStatus $moduleStatus) => ['value' => $moduleStatus->value, 'name' => $moduleStatus->getName()],
+            ModuleStatus::cases()
+        );
+    }
 
 
     public function user(): BelongsTo
@@ -71,5 +84,10 @@ class Module extends Model
     public function events(): MorphToMany
     {
         return $this->morphToMany(Event::class, 'related');
+    }
+
+    public function getSemesters(): array
+    {
+        return range($this->start_semester, $this->end_semester);
     }
 }
