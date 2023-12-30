@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 
+
 /**
- * App\Models\Exam
+ * \App\Models\Exam
  *
  * @property int $id
  * @property int $module_id
- * @property int $grade
+ * @property int|null $grade
  * @property int $semester
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at

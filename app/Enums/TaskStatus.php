@@ -6,7 +6,7 @@ namespace App\Enums;
 
 use Kongulov\Traits\InteractWithEnum;
 
-enum ModuleStatus: string
+enum TaskStatus: string
 {
     use InteractWithEnum;
 
@@ -14,14 +14,11 @@ enum ModuleStatus: string
 
     case InProgress = 'in_progress';
 
-    case WaitingForResult = 'waiting_for_result';
 
-    case DoneWithGrade = 'done_with_grade';
-
-    case DoneWithoutGrade = 'done_without_grade';
+    case Done = 'done';
 
     public function getName(): string
     {
-        return trans('modules.status.' . $this->value);
+        return trans('tasks.status.' . $this->value);
     }
 }
