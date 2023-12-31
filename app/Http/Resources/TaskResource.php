@@ -22,13 +22,10 @@ class TaskResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'parent_task_id' => $this->resource->parent_task_id,
             'title' => $this->resource->title,
             'description' => $this->resource->description,
             'status' => $this->resource->status,
-            'semesters' => $this->resource->getSemesters(),
-            'relatedType' => $this->resource->related_type,
-            'relatedId' => $this->resource->related_id,
+            //'semesters' => $this->resource->getSemesters(),
             'createdAt' => $this->resource->created_at,
             'updatedAt' => $this->resource->updated_at,
         ];
