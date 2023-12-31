@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Carbon;
-
+use Illuminate\Support\Facades\DB;
 
 
 /**
@@ -77,6 +77,12 @@ class Task extends Model
         return $this->belongsTo(Module::class);
     }
 
+    public function getModuleName(): ?string
+    {
+        $module = $this->module;
+        return $module?->name;
+    }
+
     public function events(): MorphToMany
     {
         return $this->morphToMany(Event::class, 'related');
@@ -84,20 +90,19 @@ class Task extends Model
 
     public function getSemesters(): array
     {
-        if ($this->parent_task_id !== null) {
-            return $this->parentTask->getSemesters();
+        $module = $this->module;
+        if ($module) {
+            return range($module->start_semester, $module->end_semester);
         }
+        return [];
+    }
 
-        $this->loadMissing('related');
-        $module = $this->related;
-        if (!$module instanceof Module) {
-            return [];
-        }
+    public static function getAllSemesters(): array
+    {
+        $startSemesters = DB::table('modules')->distinct()->pluck('start_semester')->filter()->toArray();
+        $endSemesters = DB::table('modules')->distinct()->pluck('end_semester')->filter()->toArray();
 
-        $semesters = array_unique(range($module->start_semester, $module->end_semester));
-        sort($semesters);
-
-        return array_values($semesters);
+        return array_merge($startSemesters, $endSemesters);
     }
 }
 

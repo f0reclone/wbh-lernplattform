@@ -14,14 +14,19 @@ use Inertia\Inertia;
 class TaskController extends Controller
 {
     public function index(Request $request) {
-        $tasks = Task::query()->where('user_id', '=', $request->user()->id)->get();
-        $modules = Module::query()
-            ->where('user_id', '=', $user->id)
+        $tasks = Task::query()
+            ->where('user_id', '=', $request->user()->id)
             ->get();
+        $modules = Module::query()
+            ->where('user_id', '=', $request->user()->id)
+            ->get();
+
+        $allSemesters = Task::getAllSemesters();
 
         return Inertia::render('Task', [
             'tasks' => TaskResource::collection($tasks)->collection,
-            'modules' => ModuleResource::collection($modules)->collection
+            'modules' => ModuleResource::collection($modules)->collection,
+            'allSemesters' => [1,2,3,4],
         ]);
     }
 }

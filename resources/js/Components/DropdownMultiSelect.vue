@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref, defineProps } from 'vue';
 
 const checkbox1 = ref(false);
 const checkbox2 = ref(false);
@@ -17,7 +17,12 @@ const props = defineProps({
         type: String,
         default: 'py-1 bg-white dark:bg-gray-700',
     },
+    allSemesters: {
+        type: Array,
+    },
 });
+
+const checkboxes = ref([]);
 
 const closeOnEscape = (e) => {
     if (open.value && e.key === 'Escape') {
@@ -83,11 +88,15 @@ const closeDropdown = (e) => {
                 @click="open = false"
             >
                 <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
-                    <label class="m-2 flex items-center space-x-2" @click.stop="">
+                    <label class="m-2 flex items-center space-x-2" @click.stop="" >
                         <input type="checkbox" v-model="checkbox1" class="m-2 rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"/> Semester 1
                     </label>
                     <label class="m-2 flex items-center space-x-2" @click.stop="">
                         <input type="checkbox" v-model="checkbox2" class="m-2 rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"/> Semester 2
+                    </label>
+                    <!-- Use the checkboxes array for dynamic checkboxes -->
+                    <label v-for="(semester, index) in props.allSemesters" :key="index" class="m-2 flex items-center space-x-2" @click.stop="">
+                        <input type="checkbox" v-model="checkboxes[index]" class="m-2 rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"/> {{ semester }}
                     </label>
                     <slot name="content" />
                 </div>

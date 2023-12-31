@@ -1,15 +1,17 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head} from '@inertiajs/vue3';
-import TaskItem from "@/Components/TaskItem.vue"; //TaskItem View
-import DropdownMultiSelect from "@/Components/DropdownMultiSelect.vue"; //MultiSelect
-import {computed, ref} from "vue"; //Search Bar
+import { Head } from '@inertiajs/vue3';
+import TaskItem from "@/Components/TaskItem.vue";
+import DropdownMultiSelect from "@/Components/DropdownMultiSelect.vue";
+import { computed, onMounted, ref } from "vue";
 
-
-const { tasks } = defineProps({
+const { tasks, allSemesters } = defineProps({
     task: Object,
     tasks: Array,
+    module: Object,
+    modules: Array,
     semesters: Array,
+    allSemesters: Array,
 });
 
 const searchQuery = ref('');
@@ -35,22 +37,24 @@ const filteredTasks = computed(() => {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Full Width row -->
             <div class="mt-4 lg:flex lg:items-center lg:justify-between">
-                <DropdownMultiSelect id="semester" align="left">
+                <DropdownMultiSelect id="semester" align="left" :allSemesters="allSemesters">
                     <template #trigger>
-                            <span class="inline-flex rounded-md">
-                                <button
-                                    type="button"
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-md leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
-                                >
-                                    Semesterauswahl:
-                                    <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                    </svg>
-                                </button>
-                            </span>
+                        <span class="inline-flex rounded-md">
+                            <button
+                                type="button"
+                                class="inline-flex items-center px-3 py-2 border border-transparent text-md leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
+                            >
+                                Semesterauswahl:
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                        </span>
+                        <p>All Semesters for all tasks: {{ allSemesters }}</p>
                     </template>
 
                     <template #content>
-
+                        <!-- Dropdown content goes here if needed -->
                     </template>
                 </DropdownMultiSelect>
                 <!-- Search bar -->
@@ -63,7 +67,7 @@ const filteredTasks = computed(() => {
                     />
                 </div>
             </div>
-            <!-- Full width and hight columns -->
+            <!-- Full width and height columns -->
             <div class="flex justify-between h-16">
                 <div class="flex w-full h-full">
                     <div class="mt-4 w-1/3 h-full">
@@ -92,21 +96,3 @@ const filteredTasks = computed(() => {
         </div>
     </AuthenticatedLayout>
 </template>
-
-<script>
-
-export default {
-    data() {
-        return {
-            selectedSemesters: [],
-        };
-
-    },
-    computed: {
-
-    },
-    methods: {
-
-    }
-}
-</script>

@@ -1,5 +1,8 @@
-
-
+<script setup>
+function formatSemesters(semesters) {
+return semesters.length > 0 ? semesters.map(s => `${s}`).join(', ') : 'N/A';
+}
+</script>
 <!-- TaskItem.vue -->
 <template>
     <div>
@@ -8,15 +11,14 @@
                 <div class="lg:flex lg:items-center lg:justify-between">
                     <div class="font-semibold text-md text-gray-800 dark:text-gray-200 leading-tight">
                         {{ task.title }}
-                        {{ module.name }}
+                    </div>
+                    <div>
+                        {{ task.module }} (Semester {{ task.semesters ? formatSemesters(task.semesters) : 'N/A' }})
                     </div>
                 </div>
                 <hr>
                 <div class="mt-2 font-semibold text-sm text-gray-500 dark:text-gray-400 leading-tight">
                     {{ task.description}}
-                </div>
-                <div class="mt-2 font-semibold text-sm text-gray-500 dark:text-gray-400 leading-tight">
-                    Semester: {{ task.semesters }}
                 </div>
             </div>
         </div>
@@ -28,6 +30,11 @@ export default {
     props: {
         task: Object, // Pass the task as a prop
         status: String, // Pass the desired status as a prop
+        semesters: Array,
+        module: Object,
+        modules: Array,
     },
 };
+
+
 </script>
