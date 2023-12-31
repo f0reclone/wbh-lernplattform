@@ -23,11 +23,9 @@ class TaskResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'parent_task_id' => $this->resource->parent_task_id,
-            'child_tasks' => $this->resource->getChildTasks(),
             'title' => $this->resource->title,
             'description' => $this->resource->description,
             'status' => $this->resource->status,
-            'progress' => $this->resource->getProgress(),
             'semesters' => $this->resource->getSemesters(),
             'relatedType' => $this->resource->related_type,
             'relatedId' => $this->resource->related_id,

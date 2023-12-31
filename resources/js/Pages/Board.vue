@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import {Head} from '@inertiajs/vue3';
 import TaskItem from "@/Components/TaskItem.vue"; //TaskItem View
 import DropdownMultiSelect from "@/Components/DropdownMultiSelect.vue"; //MultiSelect
 import {computed, ref} from "vue"; //Search Bar
@@ -18,16 +18,9 @@ const statusFilters = ['open', 'in_progress', 'done_without_grade', 'done_with_g
 const filteredTasks = computed(() => {
     const query = searchQuery.value.toLowerCase();
     return tasks.filter((task) => {
-        const titleMatches = task.title.toLowerCase().includes(query);
-        const statusMatches = statusFilters.includes(task.status);
-        return titleMatches && statusMatches;
+        return task.title.toLowerCase().includes(query);
     });
 });
-
-const filteredOpenTasks = computed(() => filteredTasks.value.filter(task => task.status === 'open'));
-const filteredInProgressTasks = computed(() => filteredTasks.value.filter(task => task.status === 'in_progress'));
-const filteredClosedTasks = computed(() => filteredTasks.value.filter(task => ['done_without_grade', 'done_with_grade', 'waiting_for_result'].includes(task.status)));
-
 
 </script>
 
@@ -89,6 +82,9 @@ const filteredClosedTasks = computed(() => filteredTasks.value.filter(task => ['
                         <div class="bg-white dark:bg-gray-800 rounded-lg px-3 py-3 column-width rounded mr-4">
                             <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">Closed</p>
                             <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="done_without_grade" />
+                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="done_with_grade" />
+                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="waiting_for_result" />
+                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="done" />
                         </div>
                     </div>
                 </div>
