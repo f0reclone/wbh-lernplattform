@@ -20,6 +20,7 @@ class ModuleCreateUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
             'status' => ['required', new Enum(ModuleStatus::class)],
             'start_semester' => ['numeric', 'integer', Rule::in(range(1, 10))],
             'end_semester' => ['numeric', 'integer', 'gte:start_semester', Rule::in(range(1, 10))],
