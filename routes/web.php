@@ -56,6 +56,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/modules/{module}/edit', [ModuleController::class, 'edit'])
         ->name('modules.edit');
 
+    Route::get('/modules/{module}/show', [ModuleController::class, 'show'])
+        ->name('modules.show');
+
     Route::put('/modules/{module}', [ModuleController::class, 'update'])
         ->name('modules.update');
 

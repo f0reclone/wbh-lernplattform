@@ -52,7 +52,7 @@ const props = defineProps({
                             <input type="checkbox" class="checkbox checkbox-primary" :id="'semester-' + semester"
                                    v-model="selectedSemesters" :value="semester"
                                    name="semester1">
-                            <label for="semester1" class="ml-2">{{ semester }}</label>
+                            <label for="'semester-' + semester" class="ml-2">{{ semester }}</label>
                         </div>
 
                     </div>
@@ -104,10 +104,16 @@ const props = defineProps({
                             <div class="card-body">
                                 <h2 class="card-title">{{ module.name }}</h2>
                                 <p>Status: {{ module.statusName }}</p>
+                                <p>Beschreibung: {{module.description}}</p>
                                 <p>Start: Semester {{ module.startSemester }}</p>
                                 <p>Ende: Semester {{ module.endSemester }}</p>
-                                <div class="card-actions justify-end">
+                                <div class="flex justify-between">
+                                <div class="card-actions">
+                                    <a class="btn btn-warning" :href="route('modules.show', {'module': module.id})">Anzeigen</a>
+                                </div>
+                                <div class="card-actions">
                                     <a class="btn btn-primary" :href="route('modules.edit', {'module': module.id})">Bearbeiten</a>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -138,6 +144,7 @@ export default {
             let modules = this.filterModules(this.modules);
             modules = this.searchModules(modules);
             modules = this.selectedStatusesFilter(modules);
+            console.log('Filtered modules:', modules);
             return this.sortModules(modules);
         },
         semesters() {
@@ -149,6 +156,7 @@ export default {
             if (this.selectedSemesters.length > 0) {
                 modules = modules.filter(module => module.semesters.some((semester) => this.selectedSemesters.includes(semester.toString())));
             }
+            console.log('Filtered modules:', modules);
             return modules;
         },
         searchModules(modules) {

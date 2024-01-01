@@ -60,4 +60,12 @@ class ModuleController extends Controller
 
         return redirect()->route('modules');
     }
+
+    public function show(Request $request, Module $module)
+    {
+        return Inertia::render('Module/Show', [
+            'module' => ModuleResource::make($module),
+            'moduleStatusCases' => Module::getStatusCases()
+        ]);
+    }
 }

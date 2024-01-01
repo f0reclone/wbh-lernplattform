@@ -16,6 +16,7 @@ const props = defineProps({
 const form = useForm({
     name: props.module.name,
     status: props.module.status,
+    description: props.module.description,
     start_semester: props.module.startSemester,
     end_semester: props.module.endSemester,
 })
@@ -52,6 +53,11 @@ const form = useForm({
                                     <input id="name" v-model="form.name"
                                            class="border rounded-md p-2 w-2/3 md:w-1/2 focus:border-blue-500 focus:ring-green-500 bg-gray-200 text-black "/>
                                     <InputError class="mt-2" :message="form.errors.name" />
+
+                                    <label for="description" class="daisy block mb-1 text-lg">Beschreibung:</label>
+                                    <textarea id="description" v-model="form.description"
+                                              class="border rounded-md p-2 w-2/3 md:w-1/2 h-32 resize-none focus:border-blue-500 text-black focus:ring-green-500 bg-gray-200"></textarea>
+                                    <InputError class="mt-2" :message="form.errors.description" />
 
                                     <label for="status" class="daisy block mb-1 text-lg">Status:</label>
                                     <select id="status" v-model="form.status"
