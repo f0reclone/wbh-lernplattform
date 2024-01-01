@@ -93,16 +93,6 @@ class TaskController extends Controller
     public function destroy(Task $task, Request $request)
     {
         $user = $request->user();
-
-        if ($task->user_id !== $user->id) {
-            request()->session()->flash('alert', [
-                'type' => 'error',
-                'message' => 'Diese Task gehört nicht zu dem aktuellen User.'
-            ]);
-
-            return redirect()->route('tasks');
-        }
-
         $task->delete();
 
         request()->session()->flash('alert', [

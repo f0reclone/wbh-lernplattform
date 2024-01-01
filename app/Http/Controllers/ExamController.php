@@ -61,12 +61,15 @@ class ExamController extends Controller
     }
     public function update(Exam $exam, ExamUpdateRequest $request)
     {
+        $user = $request->user();
         $exam->fill($request->validated());
         $grade = $request->get('grade');
         if($grade !== null) {
             $exam->grade = (int) ($grade * 10);
         }
-
+        if(!$user->hasAccessToModule(Module::query()->firstOrFail($exam->module_id))) {
+            abort('User does not have access to module.');
+        }
         $exam->save();
 
         request()->session()->flash('alert', [
@@ -80,10 +83,14 @@ class ExamController extends Controller
     public function store(ExamCreateRequest $request)
     {
         $user = $request->user();
-
         $data = $request->validated();
+
         $exam = new Exam();
         $exam->fill($data);
+
+        if(!$user->hasAccessToModule(Module::query()->firstOrFail($exam->module_id))) {
+            abort('User does not have access to module.');
+        }
         $exam->save();
 
         return redirect()->route('exams.index');
@@ -91,20 +98,7 @@ class ExamController extends Controller
 
     public function destroy(Exam $exam, Request $request)
     {
-        $user = $request->user();
-        $exam->load('module');
-
-        if ($exam->module->user_id !== $user->id) {
-            abort(403);
-        }
-
         $exam->delete();
-
-        request()->session()->flash('alert', [
-            'type' => 'success',
-            'message' => 'Prüfung erfolgreich gelöscht.'
-        ]);
-
 
         return redirect()->route('exams.index');
     }
