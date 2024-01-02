@@ -4,7 +4,6 @@ import { Head } from '@inertiajs/vue3';
 import TaskItem from "@/Components/TaskItem.vue";
 import DropdownMultiSelect from "@/Components/DropdownMultiSelect.vue";
 import { computed, onMounted, ref } from "vue";
-import draggable from 'vuedraggable'
 
 
 const { tasks, allSemesters } = defineProps({
