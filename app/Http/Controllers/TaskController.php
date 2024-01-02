@@ -9,9 +9,9 @@ use App\Http\Requests\TaskCreateRequest;
 use App\Http\Requests\TaskUpdateRequest;
 use App\Http\Resources\ModuleResource;
 use App\Http\Resources\TaskResource;
-use App\Models\Exam;
 use App\Models\Module;
 use App\Models\Task;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -77,8 +77,10 @@ class TaskController extends Controller
             'type' => 'success',
             'message' => 'Aufgabe gespeichert.'
         ]);
-
-        return redirect()->route('tasks');
+        if ($request->get('skipRedirect') === true) {
+            return redirect()->back();
+        }
+        return redirect()->route('tasks.index');
     }
 
     public function store(TaskCreateRequest $request)
@@ -94,7 +96,7 @@ class TaskController extends Controller
         $task->user_id = $user->id;
         $task->save();
 
-        return redirect()->route('tasks');
+        return redirect()->route('tasks.index');
     }
 
     public function destroy(Task $task, Request $request)
@@ -108,6 +110,6 @@ class TaskController extends Controller
         ]);
 
 
-        return redirect()->route('tasks');
+        return redirect()->route('tasks.index');
     }
 }

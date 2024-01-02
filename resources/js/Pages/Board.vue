@@ -1,20 +1,23 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import {Head, router} from '@inertiajs/vue3';
 import TaskItem from "@/Components/TaskItem.vue";
 import DropdownMultiSelect from "@/Components/DropdownMultiSelect.vue";
-import { computed, onMounted, ref } from "vue";
+import {computed, ref} from "vue";
+import {data} from "autoprefixer";
+import { useForm } from '@inertiajs/vue3'
 
 
-const { tasks, allSemesters } = defineProps({
+
+const { tasks,  } = defineProps({
     task: Object,
     tasks: Array,
     module: Object,
     modules: Array,
     semesters: Array,
-    allSemesters: Array,
 });
 
+// Search Query and Filter //////////////////////////
 const searchQuery = ref('');
 const statusFilters = ['open', 'in_progress', 'done_without_grade', 'done_with_grade', 'waiting_for_result'];
 
@@ -36,14 +39,69 @@ const filteredTasks = computed(() => {
     });
 });
 
+
+
 const handleSelectSemesters = (selected) => {
     selectedSemesters.value = selected;
-    // Do something with the selected semesters
 };
 
 const selectedSemesters = ref([]);
 
+// Drag and Drop ////////////////////////////////////
+const draggedTask = ref(null);
+
+const handleDragStart = (event, task) => {
+    event.dataTransfer.setData('text/plain', JSON.stringify(task));
+    draggedTask.value = task;
+};
+
+const handleDragEnter = (event, task) => {
+    event.preventDefault();
+    // Highlight the drop target, you can customize the background color
+    // based on your design preferences
+    event.target.classList.add('drag-enter');
+};
+
+const handleDragLeave = (event) => {
+    // Remove the highlight when leaving the drop target
+    event.target.classList.remove('drag-enter');
+};
+
+const handleDrop = (event, status) => {
+    event.preventDefault();
+    const droppedTask = JSON.parse(event.dataTransfer.getData('text/plain'));
+
+
+    const form = useForm({
+        status: status,
+        skipRedirect: true
+    })
+
+    form.put(route('tasks.update', {'task': droppedTask.id}));
+
+
+    console.log(`Task ${droppedTask.id} dropped to status: ${status}`);
+
+
+    // Clear the draggedTask after drop
+    draggedTask.value = null;
+
+    // Remove the highlight when dropping
+    event.target.classList.remove('drag-enter');
+};
+
 </script>
+
+<style scoped>
+.dragged-item {
+    background-color: deeppink;
+}
+
+/* Add styles for the drag enter effect */
+.drag-enter {
+    background-color: #aed581; /* Customize the background color as needed */
+}
+</style>
 
 <template>
     <Head title="ToDo's" />
@@ -89,25 +147,58 @@ const selectedSemesters = ref([]);
             <!-- Full width and height columns -->
             <div class="flex justify-between h-16">
                 <div class="flex w-full h-full">
-                    <div class="mt-4 w-1/3 h-full">
+                    <div class="mt-4 w-1/3 h-full"
+                         @dragover.prevent
+                         @drop="event => handleDrop(event, 'open', task)">
                         <div class="bg-white dark:bg-gray-800 rounded-lg px-3 py-3 column-width rounded mr-4">
                             <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">Open</p>
-                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="open"/>
+                            <TaskItem
+                                v-for="task in filteredTasks"
+                                :key="task.id"
+                                :task="task"
+                                status="open"
+                                :draggable="true"
+                                @dragstart="event => handleDragStart(event, task)"
+                                @dragenter="event => handleDragEnter(event, task)"
+                                @dragleave="event => handleDragLeave(event)"
+                                :class="{ 'dragged-item': task === draggedTask }"
+                            />
                         </div>
                     </div>
-                    <div class="mt-4 w-1/3 h-full">
+                    <div class="mt-4 w-1/3 h-full"
+                         @dragover.prevent
+                         @drop="event => handleDrop(event, 'in_progress', task)">
                         <div class="bg-white dark:bg-gray-800 rounded-lg px-3 py-3 column-width rounded mr-4">
                             <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">In Progress</p>
-                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="in_progress"/>
+                            <TaskItem
+                                v-for="task in filteredTasks"
+                                :key="task.id"
+                                :task="task"
+                                status="in_progress"
+                                :draggable="true"
+                                @dragstart="event => handleDragStart(event, task)"
+                                @dragenter="event => handleDragEnter(event, task)"
+                                @dragleave="event => handleDragLeave(event)"
+                                :class="{ 'dragged-item': task === draggedTask }"
+                            />
                         </div>
                     </div>
-                    <div class="mt-4 w-1/3 h-full">
+                    <div class="mt-4 w-1/3 h-full"
+                         @dragover.prevent
+                         @drop="event => handleDrop(event, 'done', task)">
                         <div class="bg-white dark:bg-gray-800 rounded-lg px-3 py-3 column-width rounded mr-4">
                             <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">Closed</p>
-                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="done_without_grade" />
-                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="done_with_grade" />
-                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="waiting_for_result" />
-                            <TaskItem v-for="task in filteredTasks" :key="task.id" :task="task" status="done" />
+                            <TaskItem
+                                v-for="task in filteredTasks"
+                                :key="task.id"
+                                :task="task"
+                                status="done"
+                                :draggable="true"
+                                @dragstart="event => handleDragStart(event, task)"
+                                @dragenter="event => handleDragEnter(event, task)"
+                                @dragleave="event => handleDragLeave(event)"
+                                :class="{ 'dragged-item': task === draggedTask }"
+                            />
                         </div>
                     </div>
                 </div>

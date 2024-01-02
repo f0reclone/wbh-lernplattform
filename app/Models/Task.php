@@ -55,18 +55,6 @@ class Task extends Model
         'status' => TaskStatus::class,
     ];
 
-    /*
-    public function childTasks(): HasMany
-    {
-        return $this->hasMany(Task::class, 'parent_task_id');
-    }
-
-    public function getChildTasks(): array
-    {
-        return $this->childTasks()->get()->toArray();
-    }
-    */
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -104,6 +92,13 @@ class Task extends Model
 
         return array_merge($startSemesters, $endSemesters);
     }
+
+    public static function getStatusCases(): array
+    {
+        return array_map(
+            fn(TaskStatus $taskStatus) => ['value' => $taskStatus->value, 'name' => $taskStatus->getName()],
+            TaskStatus::cases()
+        );
+    }
+
 }
-
-
