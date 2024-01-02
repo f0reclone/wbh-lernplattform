@@ -21,6 +21,7 @@
     "dependencies": {
         "@formkit/auto-animate": "^0.8.1",
         "qalendar": "^3.7.0",
-        "uuid": "^9.0.1"
+        "uuid": "^9.0.1",
+        "vuedraggable": "^2.24.3"
     }
 }

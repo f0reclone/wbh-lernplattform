@@ -4,6 +4,8 @@ import { Head } from '@inertiajs/vue3';
 import TaskItem from "@/Components/TaskItem.vue";
 import DropdownMultiSelect from "@/Components/DropdownMultiSelect.vue";
 import { computed, onMounted, ref } from "vue";
+import draggable from 'vuedraggable'
+
 
 const { tasks, allSemesters } = defineProps({
     task: Object,
@@ -19,10 +21,28 @@ const statusFilters = ['open', 'in_progress', 'done_without_grade', 'done_with_g
 
 const filteredTasks = computed(() => {
     const query = searchQuery.value.toLowerCase();
+    const selectedSemestersInt = selectedSemesters.value.map(Number);
+
+    if (selectedSemestersInt.length === 0) {
+        // No semester selected, return all tasks
+        return tasks.filter((task) => task.title.toLowerCase().includes(query));
+    }
+
     return tasks.filter((task) => {
-        return task.title.toLowerCase().includes(query);
+        const taskSemestersInt = task.semesters.map(Number);
+        return (
+            task.title.toLowerCase().includes(query) &&
+            selectedSemestersInt.some((semester) => taskSemestersInt.includes(semester))
+        );
     });
 });
+
+const handleSelectSemesters = (selected) => {
+    selectedSemesters.value = selected;
+    // Do something with the selected semesters
+};
+
+const selectedSemesters = ref([]);
 
 </script>
 
@@ -37,7 +57,8 @@ const filteredTasks = computed(() => {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Full Width row -->
             <div class="mt-4 lg:flex lg:items-center lg:justify-between">
-                <DropdownMultiSelect id="semester" align="left" :allSemesters="allSemesters">
+                <DropdownMultiSelect id="semester" align="left" :initialSelectedSemesters="selectedSemesters"
+                                     @selectSemesters="handleSelectSemesters" >
                     <template #trigger>
                         <span class="inline-flex rounded-md">
                             <button
@@ -50,7 +71,6 @@ const filteredTasks = computed(() => {
                                 </svg>
                             </button>
                         </span>
-                        <p>All Semesters for all tasks: {{ allSemesters }}</p>
                     </template>
 
                     <template #content>

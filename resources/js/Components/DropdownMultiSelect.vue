@@ -1,8 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref, defineProps } from 'vue';
-
-const checkbox1 = ref(false);
-const checkbox2 = ref(false);
+import { reactive, ref, defineProps, defineEmits, onMounted, onUnmounted, watch } from 'vue';
 
 const props = defineProps({
     align: {
@@ -17,12 +14,16 @@ const props = defineProps({
         type: String,
         default: 'py-1 bg-white dark:bg-gray-700',
     },
-    allSemesters: {
+    initialSelectedSemesters: {
         type: Array,
+        default: () => [],
     },
 });
 
-const checkboxes = ref([]);
+const emit = defineEmits();
+
+const checkboxes = reactive({});
+const open = ref(false);
 
 const closeOnEscape = (e) => {
     if (open.value && e.key === 'Escape') {
@@ -33,13 +34,11 @@ const closeOnEscape = (e) => {
 onMounted(() => document.addEventListener('keydown', closeOnEscape));
 onUnmounted(() => document.removeEventListener('keydown', closeOnEscape));
 
-const widthClass = computed(() => {
-    return {
-        48: 'w-48',
-    }[props.width.toString()];
-});
+const widthClass = ref({
+    48: 'w-48',
+}[props.width.toString()]);
 
-const alignmentClasses = computed(() => {
+const alignmentClasses = ref(() => {
     if (props.align === 'left') {
         return 'origin-top-left left-0';
     } else if (props.align === 'right') {
@@ -49,7 +48,10 @@ const alignmentClasses = computed(() => {
     }
 });
 
-const open = ref(false);
+watch(checkboxes, (newValues) => {
+    const selectedSemesters = Object.keys(newValues).filter(semester => newValues[semester]);
+    emit('selectSemesters', selectedSemesters);
+});
 
 const toggleDropdown = () => {
     open.value = !open.value;
@@ -59,6 +61,10 @@ const closeDropdown = (e) => {
     if (!e.target.closest('.rounded-md') && !e.target.closest('.checkbox-label')) {
         open.value = false;
     }
+};
+
+const toggleCheckbox = (semester) => {
+    checkboxes[semester] = !checkboxes[semester];
 };
 
 </script>
@@ -83,22 +89,13 @@ const closeDropdown = (e) => {
             <div
                 v-show="open"
                 class="absolute z-50 mt-2 rounded-md shadow-lg"
-                :class="[widthClass, alignmentClasses]"
+                :class="[widthClass, alignmentClasses()]"
                 style="display: none"
-                @click="open = false"
             >
                 <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
-                    <label class="m-2 flex items-center space-x-2" @click.stop="" >
-                        <input type="checkbox" v-model="checkbox1" class="m-2 rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"/> Semester 1
+                    <label v-for="semester in [1, 2, 3, 4, 5, 6, 7]" :key="semester" class="m-2 flex items-center space-x-2" @click.stop="">
+                        <input type="checkbox" v-model="checkboxes[semester]" class="m-2 rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"/> Semester {{ semester }}
                     </label>
-                    <label class="m-2 flex items-center space-x-2" @click.stop="">
-                        <input type="checkbox" v-model="checkbox2" class="m-2 rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"/> Semester 2
-                    </label>
-                    <!-- Use the checkboxes array for dynamic checkboxes -->
-                    <label v-for="(semester, index) in props.allSemesters" :key="index" class="m-2 flex items-center space-x-2" @click.stop="">
-                        <input type="checkbox" v-model="checkboxes[index]" class="m-2 rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"/> {{ semester }}
-                    </label>
-                    <slot name="content" />
                 </div>
             </div>
         </Transition>
