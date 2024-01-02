@@ -9,7 +9,7 @@ export default {
         },
         type: {
             type: String,
-            default: 'button',
+            default: 'submit',
         },
     },
     methods: {
