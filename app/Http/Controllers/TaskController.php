@@ -71,7 +71,7 @@ class TaskController extends Controller
             'message' => 'Aufgabe gespeichert.'
         ]);
 
-        return redirect()->route('tasks');
+        return redirect()->route('tasks.index');
     }
 
     public function store(TaskCreateRequest $request)
@@ -87,7 +87,7 @@ class TaskController extends Controller
         $task->user_id = $user->id;
         $task->save();
 
-        return redirect()->route('tasks');
+        return redirect()->route('tasks.index');
     }
 
     public function destroy(Task $task, Request $request)
@@ -101,6 +101,6 @@ class TaskController extends Controller
         ]);
 
 
-        return redirect()->route('tasks');
+        return redirect()->route('tasks.index');
     }
 }
