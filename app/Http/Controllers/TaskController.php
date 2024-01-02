@@ -78,7 +78,7 @@ class TaskController extends Controller
             'message' => 'Aufgabe gespeichert.'
         ]);
         if ($request->get('skipRedirect') === true) {
-            return redirect()->back();
+            return TaskResource::make($task);
         }
         return redirect()->route('tasks.index');
     }
