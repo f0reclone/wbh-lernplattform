@@ -13,7 +13,7 @@ return semesters.length > 0 ? semesters.map(s => `${s}`).join(', ') : 'N/A';
                         {{ task.title }}
                     </div>
                     <div>
-                        {{ task.module }} (Semester {{ task.semesters ? formatSemesters(task.semesters) : 'N/A' }})
+                        {{ task.moduleName }} (Semester {{ task.semesters ? formatSemesters(task.semesters) : 'N/A' }})
                     </div>
                 </div>
                 <hr>

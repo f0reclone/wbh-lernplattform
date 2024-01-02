@@ -24,11 +24,16 @@ class TaskResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $allSemesters = Task::getAllSemesters();
+
         return [
             'id' => $this->resource->id,
             'title' => $this->resource->title,
             'description' => $this->resource->description,
             'status' => $this->resource->status->value,
+            'moduleName' => $this->resource->getModuleName(),
+            'semesters' => $this->resource->getSemesters(),
+            'all_semesters' => $allSemesters,
             'statusName' => $this->resource->status->getName(),
             'moduleId' => $this->resource->module_id,
             'module' => ModuleResource::make($this->whenLoaded('module')),
