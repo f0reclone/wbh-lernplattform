@@ -26,7 +26,8 @@ class BoardController extends Controller
 
         return Inertia::render('Board', [
             'tasks' => TaskResource::collection($tasks)->collection,
-            'modules' => ModuleResource::collection($modules)->collection
+            'modules' => ModuleResource::collection($modules)->collection,
+            'taskStatusValues' =>  Task::getStatusCases()
         ]);
     }
 
