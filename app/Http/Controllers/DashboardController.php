@@ -77,6 +77,7 @@ class DashboardController extends Controller {
         return Inertia::render('Dashboard',
             ['credit_points_total' => $credit_points_total,
              'credit_points_achieved' => $credit_points_achieved,
+             'modules' => $modules,
              'modules_done' => $modules_done,
              'modules_total' => count($modules),
              'grade_average' => $grade_average,

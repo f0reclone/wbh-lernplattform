@@ -5,6 +5,7 @@ import { Head } from '@inertiajs/vue3';
 // defineProps({ events: Array })
 defineProps({ credit_points_total: Number,
                     credit_points_achieved: Number,
+                    modules: Array,
                     modules_done: Number,
                     modules_total: Number,
                     grade_average: Number,
@@ -14,13 +15,10 @@ defineProps({ credit_points_total: Number,
 </script>
 <template>
 <Head title="Übersicht" />
-
-
     <AuthenticatedLayout>
 		<template #header>
 			<h1 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Dashboard</h1>
 		</template>
-
 		<!-- 0 - This is the outermost Div -->
 		<div class="py-6">
 
@@ -28,53 +26,34 @@ defineProps({ credit_points_total: Number,
 			<div class="max-w-7x1 mx-auto sm:px-6 lg:px-8 space-y-6">
 
 				<!-- 3 - This is the bottom Div for ToDo's and Calendar-->
-				<div class="p-2 sm:p-4 bg-opacity-0 overflow-hidden shadow-sm sm:rounded-lg flex gap-4 content-between justify-center">
+				<div class="p-2 sm:p-4 bg-opacity-0 shadow-sm sm:rounded-lg flex gap-4 content-between justify-center">
 					<!-- 3l - This is the bottom left Div for the ToDo title and the ToDo items-->
-					<div class="p-2 sm:p-4 bg-gray-100 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-3/4">
-						<!-- 3lt - This is the bottom left top Div for ToDo title-->
-						<div class="bg-opacity-0">
+                    <div class="p-2 sm:p-4 bg-gray-100 dark:bg-gray-800 overflow-x-auto shadow-sm sm:rounded-lg w-3/4">
+                        <!-- 3lt - This is the bottom left top Div for ToDo title -->
+                        <div class="bg-opacity-0">
                             <h1 class="flex justify-center font-semibold text-3xl text-gray-800 dark:text-gray-200 leading-tight">
                                 Deine Module
                             </h1>
                             <div class="border-t border-gray-500 my-2"></div>
-						</div>
+                        </div>
 
-						<!-- 3lb - This is the bottom left bottom Div for Modules and associated Tasks-->
-						<div class="p-4 flex gap-4 content-between justify-center">
-
-						<!-- 3lbl - This is the bottom left bottom left Div for the first ToDo item-->
-                            <div v-if="tasks[0] != null" class="p-4 sm:p-8 bg-gray-200 overflow-hidden shadow-sm sm:rounded-lg w-1/3">
-                                {{ tasks[0].title }}<br>
+                        <!-- 3lb - This is the bottom left bottom Div for Modules and associated Tasks -->
+                        <div class="p-4 flex gap-4 content-between justify-center flex-wrap">
+                            <!-- Loop through each module -->
+                            <div v-for="(module, moduleIndex) in modules" :key="moduleIndex" class="p-4 sm:p-8 bg-gray-200 dark:bg-opacity-0 shadow-sm sm:rounded-lg w-1/4">
+                                {{ module.name }}<br>
                                 <div class="border-t border-gray-500 my-2"></div>
-                                {{ tasks[0].description }}
-                            </div>
-                            <div v-else class="p-4 sm:p-8 bg-gray-200 shadow-sm sm:rounded-lg w-1/3">
-                                Du hast keine offenen Tasks - Yay!
-                            </div>
 
-							<!-- 3lbl - This is the bottom left bottom center Div for the second ToDo item-->
-                            <div v-if="tasks[1] != null" class="p-4 sm:p-8 bg-gray-200 overflow-hidden shadow-sm sm:rounded-lg w-1/3">
-                                {{ tasks[1].title }}<br>
-                                <div class="border-t border-gray-500 my-2"></div>
-                                {{ tasks[1].description }}
+                                <div v-for="(task, index) in tasks" :key="index">
+                                    <div v-if="task.module_id === module.id">
+                                        {{ task.title }}
+                                    </div>
+                                </div>
                             </div>
-                            <div v-else class="p-4 sm:p-8 bg-gray-200 overflow-hidden shadow-sm sm:rounded-lg w-1/3">
-                                Kein weiterer Task zum Anzeigen - Yay!
-                            </div>
+                        </div>
+                    </div>
 
-							<!-- 3blr - This is the bottom left bottom right Div for the third Todo item-->
-                            <div v-if="tasks[2] != null" class="p-4 sm:p-8 bg-gray-200 overflow-hidden shadow-sm sm:rounded-lg w-1/3">
-                                {{ tasks[2].title }}<br>
-                                <div class="border-t border-gray-500 my-2"></div>
-                                {{ tasks[2].description }}
-                            </div>
-                            <div v-else class="p-4 sm:p-8 bg-gray-200 overflow-hidden shadow-sm sm:rounded-lg w-1/3">
-                                Kein weiterer Task zum Anzeigen - Yay!
-                            </div>
-						</div>
-					</div>
-
-					<!-- 3r - This is the bottom left Div for the Calendar-->
+                    <!-- 3r - This is the bottom left Div for the Calendar-->
 					<div class="p-2 sm:p-4 bg-gray-100 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-1/4">
                         <div class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -90,11 +69,9 @@ defineProps({ credit_points_total: Number,
                             <div class="p-2 sm:p-4 bg-opacity-0">
                                 <div class="progress-bar flex">
                                     <div class="progress-bar-fill" :style="{ width: completionPercentage + '%' }"></div>
-                                    <div class="progress-text">{{ modules_done }} von {{ modules_total }} Modulen</div>
+                                    <div class="progress-text">{{ modules_done }} / {{ modules_total }} Modulen</div>
                                 </div>
                             </div>
-
-
 
                             <!-- 2c - This is the Div for the Credit Points -->
                             <div class="p-2 sm:p-4 bg-opacity-0 flex items-center">
@@ -113,7 +90,7 @@ defineProps({ credit_points_total: Number,
                                 </svg>
 
                                 <h1 class="font-semibold text-xl ml-2">
-                                    {{ grade_average }} Durschnittsnote
+                                     Notendurchschnitt: {{ grade_average.toFixed(1) }}
                                 </h1>
                             </div>
                         </div>
