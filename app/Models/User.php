@@ -89,4 +89,26 @@ class User extends Authenticatable
     {
         return $this->hasMany(Event::class);
     }
+
+    public function hasAccessToExam(Exam $exam): bool
+    {
+        $exam->loadMissing('module');
+
+        return $this->hasAccessToModule($exam->module);
+    }
+
+    public function hasAccessToModule(Module $module): bool
+    {
+        return $module->user_id === $this->id;
+    }
+
+    public function hasAccessToTask(Task $task): bool
+    {
+        return $task->user_id === $this->id;
+    }
+
+    public function hasAccessToEvent(Event $event): bool
+    {
+        return $event->user_id === $this->id;
+    }
 }

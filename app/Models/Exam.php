@@ -18,6 +18,7 @@ use Illuminate\Support\Carbon;
  * \App\Models\Exam
  *
  * @property int $id
+ * @property string $code
  * @property int $module_id
  * @property int|null $grade
  * @property int|null $credit_points
@@ -46,6 +47,7 @@ class Exam extends Model
 
     protected $guarded = [];
 
+    public const AVAILABLE_GRADES = [1, 1.3, 1.7, 2, 2.3, 2.7, 3, 3.3, 3.7, 4, 5];
 
     public function module(): BelongsTo
     {
@@ -55,5 +57,14 @@ class Exam extends Model
     public function events(): MorphToMany
     {
         return $this->morphToMany(Event::class, 'related');
+    }
+
+    public function getGrade(): ?float
+    {
+        if($this->grade === null) {
+            return null;
+        }
+
+        return $this->grade / 10;
     }
 }

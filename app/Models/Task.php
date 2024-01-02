@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ModuleStatus;
 use App\Enums\TaskStatus;
 use Database\Factories\TaskFactory;
 use Barryvdh\LaravelIdeHelper\Eloquent;
@@ -67,5 +68,13 @@ class Task extends Model
     public function events(): MorphToMany
     {
         return $this->morphToMany(Event::class, 'related');
+    }
+
+    public static function getStatusCases(): array
+    {
+        return array_map(
+            fn(TaskStatus $taskStatus) => ['value' => $taskStatus->value, 'name' => $taskStatus->getName()],
+            TaskStatus::cases()
+        );
     }
 }

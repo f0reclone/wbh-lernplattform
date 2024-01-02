@@ -20,6 +20,8 @@
     },
     "dependencies": {
         "@formkit/auto-animate": "^0.8.1",
+        "@heroicons/vue": "^2.1.1",
+        "dayjs": "^1.11.10",
         "qalendar": "^3.7.0",
         "uuid": "^9.0.1"
     }
