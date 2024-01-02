@@ -147,7 +147,7 @@ export default {
     methods: {
         filterModules(modules) {
             if (this.selectedSemesters.length > 0) {
-                modules = modules.filter(module => module.semesters.some((semester) => this.selectedSemesters.includes(semester.toString())));
+                modules = modules.filter(module => module.semesters.some((semester) => this.selectedSemesters.includes(semester)));
             }
             return modules;
         },

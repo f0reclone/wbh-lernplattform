@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use App\Models\Module;
-use App\Models\Task;
+use App\Models\Exam;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property Task $resource
+ * @property Exam $resource
  */
-class TaskResource extends JsonResource
+class ExamResource extends JsonResource
 {
     public static $wrap = null;
 
@@ -26,10 +25,10 @@ class TaskResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'title' => $this->resource->title,
-            'description' => $this->resource->description,
-            'status' => $this->resource->status->value,
-            'statusName' => $this->resource->status->getName(),
+            'code' => $this->resource->code,
+            'grade' => $this->resource->getGrade(),
+            'creditPoints' => $this->resource->credit_points,
+            'semester' => $this->resource->semester,
             'moduleId' => $this->resource->module_id,
             'module' => ModuleResource::make($this->whenLoaded('module')),
             'createdAt' => $this->resource->created_at,

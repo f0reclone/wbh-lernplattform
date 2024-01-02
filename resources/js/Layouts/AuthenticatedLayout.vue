@@ -49,6 +49,16 @@ const showingNavigationDropdown = ref(false);
                                     Module
                                 </NavLink>
                             </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink :href="route('exams.index')" :active="route().current('exams.index')">
+                                    Prüfungen
+                                </NavLink>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink :href="route('tasks.index')" :active="route().current('tasks.index')">
+                                    Aufgaben
+                                </NavLink>
+                            </div>
 
                         </div>
 
