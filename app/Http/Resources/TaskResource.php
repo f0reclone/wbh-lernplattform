@@ -5,14 +5,18 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Models\Module;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @property Module $resource */
-class ModuleResource extends JsonResource
+/**
+ * @property Task $resource
+ */
+class TaskResource extends JsonResource
 {
-
     public static $wrap = null;
+
+
     /**
      * Transform the resource into an array.
      *
@@ -22,15 +26,14 @@ class ModuleResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'name' => $this->resource->name,
+            'title' => $this->resource->title,
+            'description' => $this->resource->description,
             'status' => $this->resource->status->value,
             'statusName' => $this->resource->status->getName(),
-            'semesters' => $this->resource->getSemesters(),
-            'startSemester' => $this->resource->start_semester,
-            'endSemester' => $this->resource->end_semester,
-            'tasks' => TaskResource::collection($this->whenLoaded('tasks')),
-            'createdAt' => $this->resource->created_at?->toIso8601String(),
-            'updatedAt' => $this->resource->updated_at?->toIso8601String(),
+            'moduleId' => $this->resource->module_id,
+            'module' => ModuleResource::make($this->whenLoaded('module')),
+            'createdAt' => $this->resource->created_at,
+            'updatedAt' => $this->resource->updated_at,
         ];
     }
 }

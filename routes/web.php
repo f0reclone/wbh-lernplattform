@@ -3,6 +3,7 @@
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ModuleCreateController;
 use App\Http\Controllers\ProfileController;
@@ -54,16 +55,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('modules.store');
 
     Route::get('/modules/{module}/edit', [ModuleController::class, 'edit'])
+        ->middleware('can:update,module')
         ->name('modules.edit');
 
     Route::put('/modules/{module}', [ModuleController::class, 'update'])
+        ->middleware('can:update,module')
         ->name('modules.update');
+
+    Route::resource('tasks', TaskController::class);
+
+    Route::resource('exams', ExamController::class);
 
     Route::get('/user-manual', [UserManualController::class, 'index'])
         ->name('user-manual');
-
-    Route::get('/tasks', [TaskController::class, 'index'])
-        ->name('tasks');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
