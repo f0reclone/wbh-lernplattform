@@ -18,12 +18,12 @@ return semesters.length > 0 ? semesters.map(s => `${s}`).join(', ') : 'N/A';
                 @drop="handleDrop">
                 <a  :href="route('tasks.edit', {task: task.id})">
                     <div class="p-2 bg-gray-100	 dark:bg-gray-700 rounded-lg">
-                        <div class="lg:flex lg:items-center lg:justify-between">
+                        <div class="justify-cdbetween">
                             <div class="font-semibold text-md text-gray-800 dark:text-gray-200 leading-tight">
                                 {{ task.title }}
                             </div>
                             <div>
-                                {{ task.moduleName }} (Semester {{ task.semesters ? formatSemesters(task.semesters) : 'N/A' }})
+                                {{ task.moduleName }}
                             </div>
                         </div>
                         <hr>
