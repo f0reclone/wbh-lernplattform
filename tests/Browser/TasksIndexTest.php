@@ -10,7 +10,7 @@ use App\Models\User;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class TasksTest extends DuskTestCase
+class TasksIndexTest extends DuskTestCase
 {
 
     public function test_access_denied_without_user(): void
