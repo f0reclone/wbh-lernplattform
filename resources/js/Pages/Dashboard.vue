@@ -102,7 +102,7 @@ defineProps({ credit_points_total: Number,
                             <h2 class="text-xl font-bold underline ml-2">Deine Termine</h2>
                         </div>
 
-                        <div class="scrollable-container" @click="redirectToEvent">
+                        <div class="scrollable-container cursor-pointer" @click="redirectToEvent">
                             <div class="event" v-for="(event, index) in events" :key="index">
                                 <div class="event-date">{{ event.date }}</div>
                                 <div class="event-details">
