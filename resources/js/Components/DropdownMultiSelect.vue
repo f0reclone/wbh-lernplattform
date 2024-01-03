@@ -94,7 +94,7 @@ const toggleCheckbox = (semester) => {
             >
                 <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
                     <label v-for="semester in [1, 2, 3, 4, 5, 6, 7]" :key="semester" class="m-2 flex items-center space-x-2" @click.stop="">
-                        <input type="checkbox" v-model="checkboxes[semester]" class="m-2 rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"/> Semester {{ semester }}
+                        <input type="checkbox" v-model="checkboxes[semester]" class="m-2 rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"/> Semester {{ semester }}
                     </label>
                 </div>
             </div>

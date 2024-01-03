@@ -4,6 +4,7 @@ import {Head} from '@inertiajs/vue3';
 import TaskItem from "@/Components/TaskItem.vue";
 import DropdownMultiSelect from "@/Components/DropdownMultiSelect.vue";
 import {computed, ref} from "vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 
 const {tasks,} = defineProps({
@@ -104,11 +105,19 @@ const handleDrop = (event, status) => {
     event.target.classList.remove('drag-enter');
 };
 
+const lastTenClosedTasks = computed(() => {
+    const closedTasks = filteredTasks.value
+        .filter(task => task.status === 'done')
+        .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+
+    return closedTasks.slice(0, 10);
+});
+
 </script>
 
 <style scoped>
 .dragged-item {
-    background-color: deeppink;
+
 }
 
 /* Add styles for the drag enter effect */
@@ -122,19 +131,21 @@ const handleDrop = (event, status) => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Dashboard</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Hier siehst du deine Aufgaben.
+            </h2>
         </template>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Full Width row -->
-            <div class="mt-4 lg:flex lg:items-center lg:justify-between">
-                <DropdownMultiSelect id="semester" align="left" :initialSelectedSemesters="selectedSemesters"
-                                     @selectSemesters="handleSelectSemesters">
-                    <template #trigger>
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Full Width row -->
+                <div class="lg:flex lg:items-center lg:justify-between">
+                    <DropdownMultiSelect id="semester" align="left" :initialSelectedSemesters="selectedSemesters"
+                                         @selectSemesters="handleSelectSemesters">
+                        <template #trigger>
                         <span class="inline-flex rounded-md">
                             <button
                                 type="button"
-                                class="inline-flex items-center px-3 py-2 border border-transparent text-md leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
+                                class="inline-flex items-center px-3 py-2 border border-transparent text-md leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                             >
                                 Semesterauswahl:
                                 <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -145,87 +156,101 @@ const handleDrop = (event, status) => {
                                 </svg>
                             </button>
                         </span>
-                    </template>
+                        </template>
 
-                    <template #content>
-                        <!-- Dropdown content goes here if needed -->
-                    </template>
-                </DropdownMultiSelect>
-                <!-- Search bar -->
-                <div class="ml-auto flex items-center space-x-4">
-                    <input
-                        v-model="searchQuery"
-                        type="text"
-                        placeholder="Search tasks..."
-                        class="mr-4 border border-gray-300 dark:border-gray-800 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                    />
+                        <template #content>
+                            <!-- Dropdown content goes here if needed -->
+                        </template>
+                    </DropdownMultiSelect>
+                    <div class="ml-4">
+                        <PrimaryButton
+                            class=" ml-auto"
+                            style="background-color: white; color: rgb(55 65 81)"
+                            :link="route('tasks.create')">
+                            Aufgabe erstellen
+                        </PrimaryButton>
+                    </div>
+                    <!-- Search bar -->
+                    <div class="ml-auto flex items-center space-x-4">
+                        <div>
+                            <input
+                                v-model="searchQuery"
+                                type="text"
+                                placeholder="Suchen..."
+                                class="mr-4 border border-gray-300 bg-white text-gray-800 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                            />
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <!-- Full width and height columns -->
-            <div class="flex justify-between h-16">
-                <div class="flex w-full h-full">
-                    <div class="mt-4 w-1/3 h-full"
-                    >
-                        <div
-                            class="bg-white dark:bg-gray-800 rounded-lg px-3 py-3 column-width rounded mr-4 min-h-[500px]"
-                            @drop="event => handleDrop(event, 'open', task)" @dragover.prevent="handleDragOver('open')"
-                            :class="columnClasses('open')">
-                            <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg">
-                                Open</p>
-                            <TaskItem
-                                v-for="task in filteredTasks"
-                                :key="task.id"
-                                :task="task"
-                                status="open"
-                                :draggable="true"
-                                @dragend="handleDragEnd()"
-                                @dragstart="event => handleDragStart(event, task)"
-                                @dragenter="event => handleDragEnter(event, task)"
-                                @dragleave="event => handleDragLeave(event)"
-                                :class="{ 'dragged-item': task === draggedTask }"
-                            />
+                <!-- Full width and height columns -->
+                <div class="w-full flex ">
+                    <div class="w-full flex ">
+                        <div class="mt-4 w-1/3 flex"
+                             @drop="event => handleDrop(event, 'open', task)">
+                            <div
+                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px]"
+                                @dragover.prevent="handleDragOver('open')"
+                                :class="columnClasses('open')">
+                                <p class="text-gray-800 font-semibold font-sans tracking-wide text-lg">
+                                    Offen
+                                </p>
+                                <TaskItem
+                                    v-for="task in filteredTasks"
+                                    :key="task.id"
+                                    :task="task"
+                                    status="open"
+                                    :draggable="true"
+                                    @dragend="handleDragEnd()"
+                                    @dragstart="event => handleDragStart(event, task)"
+                                    @dragenter="event => handleDragEnter(event, task)"
+                                    @dragleave="event => handleDragLeave(event)"
+                                    :class="{ 'dragged-item': task === draggedTask }"
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div class="mt-4 w-1/3 h-full"
-                         @drop="event => handleDrop(event, 'in_progress', task)">
-                        <div
-                            class="bg-white dark:bg-gray-800 rounded-lg px-3 py-3 column-width rounded mr-4 min-h-[500px]" @dragover.prevent="handleDragOver('in_progress')" :class="columnClasses('in_progress')">
-                            <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg"
-                               >In
-                                Progress</p>
-                            <TaskItem
-                                v-for="task in filteredTasks"
-                                :key="task.id"
-                                :task="task"
-                                status="in_progress"
-                                :draggable="true"
-                                @dragend="handleDragEnd()"
-                                @dragstart="event => handleDragStart(event, task)"
-                                @dragenter="event => handleDragEnter(event, task)"
-                                @dragleave="event => handleDragLeave(event)"
-                                :class="{ 'dragged-item': task === draggedTask }"
-                            />
+                        <div class="mt-4 w-1/3 flex"
+                             @drop="event => handleDrop(event, 'in_progress', task)">
+                            <div
+                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px]"
+                                @dragover.prevent="handleDragOver('in_progress')" :class="columnClasses('in_progress')">
+                                <p class="text-gray-800 font-semibold font-sans tracking-wide text-lg">
+                                    In Bearbeitung
+                                </p>
+                                <TaskItem
+                                    v-for="task in filteredTasks"
+                                    :key="task.id"
+                                    :task="task"
+                                    status="in_progress"
+                                    :draggable="true"
+                                    @dragend="handleDragEnd()"
+                                    @dragstart="event => handleDragStart(event, task)"
+                                    @dragenter="event => handleDragEnter(event, task)"
+                                    @dragleave="event => handleDragLeave(event)"
+                                    :class="{ 'dragged-item': task === draggedTask }"
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div class="mt-4 w-1/3 h-full"
-                         @drop="event => handleDrop(event, 'done', task)">
-                        <div
-                            class="bg-white dark:bg-gray-800 rounded-lg px-3 py-3 column-width rounded mr-4 min-h-[500px]" @dragover.prevent="handleDragOver('done')" :class="columnClasses('done')">
-                            <p class="text-gray-800 dark:text-gray-200 font-semibold font-sans tracking-wide text-lg"
-                               >
-                                Closed</p>
-                            <TaskItem
-                                v-for="task in filteredTasks"
-                                :key="task.id"
-                                :task="task"
-                                status="done"
-                                :draggable="true"
-                                @dragend="handleDragEnd()"
-                                @dragstart="event => handleDragStart(event, task)"
-                                @dragenter="event => handleDragEnter(event, task)"
-                                @dragleave="event => handleDragLeave(event)"
-                                :class="{ 'dragged-item': task === draggedTask }"
-                            />
+                        <div class="mt-4 w-1/3 flex"
+                             @drop="event => handleDrop(event, 'done', task)">
+                            <div
+                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px]"
+                                @dragover.prevent="handleDragOver('done')" :class="columnClasses('done')">
+                                <p class="text-gray-800 font-semibold font-sans tracking-wide text-lg">
+                                    Erledigt
+                                </p>
+                                <TaskItem
+                                    v-for="task in lastTenClosedTasks"
+                                    :key="task.id"
+                                    :task="task"
+                                    status="done"
+                                    :draggable="true"
+                                    @dragend="handleDragEnd()"
+                                    @dragstart="event => handleDragStart(event, task)"
+                                    @dragenter="event => handleDragEnter(event, task)"
+                                    @dragleave="event => handleDragLeave(event)"
+                                    :class="{ 'dragged-item': task === draggedTask }"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
