@@ -241,3 +241,6 @@ $examValue = ['university_external', 'exam'];
 $locationValue = ['online', 'Prüfungsstandort'];
 ["Mündliche Prüfung Kommunikation und Führung 853323",'Abgabefrist für Projektarbeit', 'Prüfungstermin: KFIA',
     ]
+
+    Abgabetermin: B-RBW01XX',
+                    'description' => 'B-Prüfung Recht und Betriebswirtschaftslehre',
