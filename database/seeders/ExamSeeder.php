@@ -16,9 +16,10 @@ class ExamSeeder extends Seeder
         /**
          * Run the database seeds.
          */
-        $user = User::query()->find(2);
+        $user = User::query()->where('email', '=', 'florian.hellmann@student.wb-hochschule.com')->first();
         if ($user) {
             Exam::factory()->createMany([
+                /*  already added to Informatik seeder
                 [
                     'code' => 'BSRAPS',
                     'grade' => 30,
@@ -28,6 +29,7 @@ class ExamSeeder extends Seeder
                     'created_at' => '2021-10-23 11:00:00',
                     'updated_at' => '2021-10-23 13:00:00',
                 ],
+                */
                 [
                     'code' => 'B-INF01XX',
                     'grade' => 10,

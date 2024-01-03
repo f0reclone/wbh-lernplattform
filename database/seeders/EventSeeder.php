@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Event;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class EventSeeder extends Seeder
@@ -14,9 +13,10 @@ class EventSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::query()->find(2);
+        $user = User::query()->where('email', '=', 'florian.hellmann@student.wb-hochschule.com')->first();
         if ($user) {
             Event::factory()->createMany([
+                /*  already added to Informatik seeder
                 [
                     'user_id' => $user->id,
                     'key' => 'exam',
@@ -33,6 +33,7 @@ class EventSeeder extends Seeder
                     'created_at' => '2021-10-23 11:00:00',
                     'updated_at' => '2021-10-23 13:00:00',
                 ],
+                */
                 [
                     'user_id' => $user->id,
                     'key' => 'exam',
