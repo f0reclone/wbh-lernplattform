@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Exam;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class ModuleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'start_semester' => $this->faker->randomElement(range(1,3)),
+            'end_semester' => $this->faker->randomElement(range(4,6)),
         ];
     }
 }
