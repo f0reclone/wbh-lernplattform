@@ -4,6 +4,7 @@ import {Head} from '@inertiajs/vue3';
 import {useForm} from '@inertiajs/vue3'
 import InputError from "@/Components/InputError.vue";
 import {PencilIcon} from "@heroicons/vue/24/solid/index.js";
+import { DatePicker } from "qalendar";
 
 const props = defineProps({
     modules: {
@@ -16,7 +17,13 @@ const form = useForm({
     module_id: null,
     semester: null,
     credit_points: null,
+    exam_date: null,
 })
+
+const updateExamDate = (payload) => {
+    const { year, month, date } = payload;
+    form.exam_date = year + '-' + month + '-' + date;
+};
 </script>
 
 <template>
@@ -63,6 +70,9 @@ const form = useForm({
                                                max="30"
                                                class="input w-full input-bordered"/>
                                         <InputError class="mt-2" :message="form.errors.credit_points"/>
+                                        <label for="exam_date" class="daisy block mb-1 text-lg">Prüfungstermin:</label>
+                                        <input type="date" class="input input-bordered w-full" v-model="form.exam_date"/>
+                                        <InputError class="mt-2" :message="form.errors.exam_date"/>
 
 
                                     </div>
