@@ -21,6 +21,7 @@ const form = useForm({
     semester: props.exam.semester,
     credit_points: props.exam.creditPoints,
     grade: props.exam.grade,
+    exam_date: props.exam.examDate,
 })
 </script>
 
@@ -73,7 +74,9 @@ const form = useForm({
                                                step=".1"
                                                class="input w-full input-bordered"/>
                                         <InputError class="mt-2" :message="form.errors.grade"/>
-
+                                        <label for="exam_date" class="daisy block mb-1 text-lg">Prüfungstermin:</label>
+                                        <input type="date" class="input input-bordered w-full" v-model="form.exam_date"/>
+                                        <InputError class="mt-2" :message="form.errors.exam_date"/>
 
                                     </div>
                                     <br>

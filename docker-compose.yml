@@ -25,6 +25,7 @@ services:
             - mysql
             - redis
             - mailpit
+            - selenium
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
@@ -69,6 +70,32 @@ services:
         ports:
             - '${FORWARD_MAILPIT_PORT:-1025}:1025'
             - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
+        networks:
+            - sail
+    selenium:
+        image: 'seleniarm/standalone-chromium'
+        ports:
+            - '4444:4444'
+            - '7900:7900'
+        environment:
+            LARAVEL_SAIL: 1
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        volumes:
+            - '/dev/shm:/dev/shm'
+        networks:
+            - sail
+    selenium-windows:
+        image: 'selenium/standalone-chrome'
+        ports:
+            - '4445:4444'
+            - '7901:7900'
+        environment:
+            LARAVEL_SAIL: 1
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        volumes:
+            - '/dev/shm:/dev/shm'
         networks:
             - sail
 networks:

@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Enums\TaskStatus;
 use App\Http\Requests\TaskCreateRequest;
 use App\Http\Requests\TaskUpdateRequest;
+use App\Http\Resources\ExamResource;
 use App\Http\Resources\ModuleResource;
 use App\Http\Resources\TaskResource;
 use App\Models\Exam;
@@ -30,8 +31,11 @@ class TaskController extends Controller
             ->where('user_id', '=', $user->id)
             ->get();
 
+        $modules = $tasks->pluck('module')->unique('id')->values();
+
         return Inertia::render('Task/Index', [
-            'tasks' => TaskResource::collection($tasks)->collection
+            'tasks' => TaskResource::collection($tasks)->collection,
+            'modules' => ModuleResource::collection($modules)->collection,
         ]);
     }
 
