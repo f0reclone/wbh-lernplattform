@@ -89,8 +89,20 @@ class Task extends Model
     {
         $startSemesters = DB::table('modules')->distinct()->pluck('start_semester')->filter()->toArray();
         $endSemesters = DB::table('modules')->distinct()->pluck('end_semester')->filter()->toArray();
+        $numericSemesters = array_filter($startSemesters, function ($semester) {
+            return is_numeric($semester);
+        });
 
-        return array_merge($startSemesters, $endSemesters);
+        // Loop through each module to include semesters in between
+        foreach ($startSemesters as $startSemester) {
+            $numericSemesters = array_merge($numericSemesters, range($startSemester, $endSemesters[$startSemester] ?? $startSemester));
+        }
+
+        // Remove duplicates and sort the semesters
+        $numericSemesters = array_unique($numericSemesters);
+        sort($numericSemesters);
+
+        return $numericSemesters;
     }
 
     public static function getStatusCases(): array

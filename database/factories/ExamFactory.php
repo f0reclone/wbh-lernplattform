@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Exam;
+use App\Models\Module;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,10 +20,10 @@ class ExamFactory extends Factory
     {
         return [
             'code' => $this->faker->word,
-            'grade' => $this->faker->numberBetween(10,50),
+            'grade' => $this->faker->randomElement(Exam::AVAILABLE_GRADES),
             'credit_points' => $this->faker->numberBetween(2,8),
             'semester' => $this->faker->numberBetween(1,6),
-            'module_id' => $this->faker->numberBetween(1,15),
+            'module_id' => Module::query()->first() ?? Module::factory()->createOne()->id,
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-1 year')->format('Y-m-d H:i:s'),
             'updated_at' => $this->faker->dateTimeBetween('-1 year', '-1 year')->format('Y-m-d H:i:s'),
         ];

@@ -17,7 +17,6 @@ const {tasks,} = defineProps({
 
 // Search Query and Filter //////////////////////////
 const searchQuery = ref('');
-const statusFilters = ['open', 'in_progress', 'done_without_grade', 'done_with_grade', 'waiting_for_result'];
 
 const allTasks = ref(null);
 allTasks.value = tasks;
@@ -39,7 +38,6 @@ const filteredTasks = computed(() => {
         );
     });
 });
-
 
 const handleSelectSemesters = (selected) => {
     selectedSemesters.value = selected;

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ModuleStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -30,7 +31,7 @@ class ModuleFactory extends Factory
         return [
             'name' => $this->faker->name,
             'description' => $this->faker->sentence,
-            'status' => $this->faker->randomElement($this->statusOptions),
+            'status' => $this->faker->randomElement(ModuleStatus::values()),
             'start_semester' => $startSemester,
             'end_semester' => $endSemester,
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-1 year')->format('Y-m-d H:i:s'),

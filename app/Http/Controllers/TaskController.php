@@ -33,12 +33,9 @@ class TaskController extends Controller
             ->where('user_id', '=', $request->user()->id)
             ->get();
 
-        $allSemesters = Task::getAllSemesters();
-
         return Inertia::render('Task/Index', [
             'tasks' => TaskResource::collection($tasks)->collection,
             'modules' => ModuleResource::collection($modules)->collection,
-            'allSemesters' => [1,2,3,4],
         ]);
     }
 
