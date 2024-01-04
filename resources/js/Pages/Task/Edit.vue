@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head} from '@inertiajs/vue3';
+import {Head, usePage} from '@inertiajs/vue3';
 import {useForm} from '@inertiajs/vue3'
 import InputError from "@/Components/InputError.vue";
 import Book from "@/Components/icons/Book.vue";
@@ -17,6 +17,9 @@ const props = defineProps({
         type: Array,
     },
 });
+
+const redirectTo =  usePage().props.ziggy.query?.redirectTo ?? null;
+
 
 const form = useForm({
     title: props.task.title,
@@ -45,7 +48,7 @@ const form = useForm({
                         <div class="flex-1">
                             <!-- Form -->
                             <div class="p-8">
-                                <form @submit.prevent="form.put(route('tasks.update', {'task': task.id}))">
+                                <form @submit.prevent="form.put(route('tasks.update', {'task': task.id, redirectTo}))">
                                     <div class="space-y-4">
 
                                         <label for="name" class="daisy block mb-1 text-lg ">Titel:</label>

@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head} from '@inertiajs/vue3';
+import {Head, usePage} from '@inertiajs/vue3';
 import {useForm} from '@inertiajs/vue3'
 import InputError from "@/Components/InputError.vue";
 import { DocumentCheckIcon } from '@heroicons/vue/24/solid'
@@ -10,10 +10,12 @@ const props = defineProps({
     },
 });
 
+const redirectTo =  usePage().props.ziggy.query?.redirectTo ?? null;
+
 const form = useForm({
     title: null,
     description: null,
-    moduleId: null,
+    moduleId: usePage().props.ziggy.query?.moduleId ?? null,
 })
 </script>
 
@@ -36,7 +38,7 @@ const form = useForm({
                         <div class="flex-1">
                             <!-- Form -->
                             <div class="p-8">
-                                <form @submit.prevent="form.post('/tasks')">
+                                <form @submit.prevent="form.post('/tasks', {redirectTo})">
                                     <div class="space-y-4">
                                         <label for="name" class="daisy block mb-1 text-lg bg-white">Titel:</label>
                                         <input id="name" v-model="form.title"

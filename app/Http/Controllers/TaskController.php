@@ -78,7 +78,8 @@ class TaskController extends Controller
         if ($request->get('skipRedirect') === true) {
             return TaskResource::make($task);
         }
-        return redirect()->route('tasks.index');
+
+        return $this->redirect($request);
     }
 
     public function store(TaskCreateRequest $request)
@@ -94,7 +95,7 @@ class TaskController extends Controller
         $task->user_id = $user->id;
         $task->save();
 
-        return redirect()->route('tasks.index');
+        return $this->redirect($request);
     }
 
     public function destroy(Task $task, Request $request)
@@ -107,6 +108,15 @@ class TaskController extends Controller
             'message' => 'Aufgabe erfolgreich gelöscht.'
         ]);
 
+
+        return $this->redirect($request);
+    }
+
+    private function redirect(Request $request)
+    {
+        if($request->has('redirectTo')) {
+            return redirect()->to($request->get('redirectTo'));
+        }
 
         return redirect()->route('tasks.index');
     }

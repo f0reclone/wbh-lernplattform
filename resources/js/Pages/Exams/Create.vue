@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head} from '@inertiajs/vue3';
+import {Head, usePage} from '@inertiajs/vue3';
 import {useForm} from '@inertiajs/vue3'
 import InputError from "@/Components/InputError.vue";
 import {PencilIcon} from "@heroicons/vue/24/solid/index.js";
@@ -12,9 +12,11 @@ const props = defineProps({
     },
 });
 
+const redirectTo =  usePage().props.ziggy.query?.redirectTo ?? null;
+
 const form = useForm({
     code: null,
-    module_id: null,
+    module_id: usePage().props.ziggy.query?.moduleId ?? null,
     semester: null,
     credit_points: null,
     exam_date: null,
@@ -45,7 +47,7 @@ const updateExamDate = (payload) => {
                         <div class="flex-1">
                             <!-- Form -->
                             <div class="p-8 ">
-                                <form @submit.prevent="form.post(route('exams.store'))">
+                                <form @submit.prevent="form.post(route('exams.store', {redirectTo}))">
                                     <div class="space-y-4 ">
                                         <label for="semester" class="daisy block mb-1 text-lg ">Prüfungskürzel:</label>
                                         <input id="code" v-model="form.code" type="text"

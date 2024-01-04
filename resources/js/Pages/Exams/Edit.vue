@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head} from '@inertiajs/vue3';
+import {Head, usePage} from '@inertiajs/vue3';
 import {useForm} from '@inertiajs/vue3'
 import InputError from "@/Components/InputError.vue";
 import Book from "@/Components/icons/Book.vue";
@@ -15,6 +15,8 @@ const props = defineProps({
     },
 });
 
+const redirectTo =  usePage().props.ziggy.query?.redirectTo ?? null;
+
 const form = useForm({
     code: props.exam.code,
     module_id: props.exam.moduleId,
@@ -22,6 +24,7 @@ const form = useForm({
     credit_points: props.exam.creditPoints,
     grade: props.exam.grade,
     exam_date: props.exam.examDate,
+
 })
 </script>
 
@@ -44,7 +47,7 @@ const form = useForm({
                         <div class="flex-1">
                             <!-- Form -->
                             <div class="p-8">
-                                <form @submit.prevent="form.put(route('exams.update',{exam: exam.id}))">
+                                <form @submit.prevent="form.put(route('exams.update',{exam: exam.id, redirectTo}))">
                                     <div class="space-y-4">
                                         <label for="semester" class="daisy block mb-1 text-lg ">Prüfungskürzel:</label>
                                         <input id="code" v-model="form.code" type="text"
