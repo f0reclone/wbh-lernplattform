@@ -1764,7 +1764,7 @@ class ItSicherheitSeeder extends Seeder
             [
                 'code' => 'DBIAPS',
                 'grade' => 23,
-                'credit_points' => 5,
+                'credit_points' => 8,
                 'semester' => 4,
                 'module_id' => $module->id,
                 'created_at' => '2023-02-08 11:00:00',
