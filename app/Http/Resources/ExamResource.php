@@ -31,6 +31,7 @@ class ExamResource extends JsonResource
             'semester' => $this->resource->semester,
             'moduleId' => $this->resource->module_id,
             'module' => ModuleResource::make($this->whenLoaded('module')),
+            'examDate' => $this->resource->examEvent()?->getTime()['start'],
             'createdAt' => $this->resource->created_at,
             'updatedAt' => $this->resource->updated_at,
         ];

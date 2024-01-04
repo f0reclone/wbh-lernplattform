@@ -11,7 +11,6 @@ use App\Http\Resources\ModuleResource;
 use App\Http\Resources\TaskResource;
 use App\Models\Module;
 use App\Models\Task;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -32,6 +31,8 @@ class TaskController extends Controller
         $modules = Module::query()
             ->where('user_id', '=', $request->user()->id)
             ->get();
+
+        $modules = $tasks->pluck('module')->unique('id')->values();
 
         return Inertia::render('Task/Index', [
             'tasks' => TaskResource::collection($tasks)->collection,

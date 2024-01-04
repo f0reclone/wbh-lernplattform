@@ -20,7 +20,8 @@ class ExamCreateRequest extends FormRequest
             'code' => ['required', 'string', Rule::unique('exams', 'code')],
             'module_id' => ['required', 'int', 'numeric', Rule::exists('modules', 'id')],
             'semester' => ['required', 'int', 'numeric', 'min:1', 'max:10'],
-            'credit_points' => ['required', 'int', 'numeric', 'min:0', 'max:30']
+            'credit_points' => ['required', 'int', 'numeric', 'min:0', 'max:30'],
+            'exam_date' => ['nullable', 'date']
         ];
     }
 }

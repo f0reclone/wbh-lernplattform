@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\ModuleStatus;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +15,6 @@ class ModuleFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
-    protected array $statusOptions = ['open', 'in_progress', 'waiting_for_result','done_with_grade', 'done_without_grade'];
 
     protected int $minSemester = 1;
     protected int $maxSemester = 10;

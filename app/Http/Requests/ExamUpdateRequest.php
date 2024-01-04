@@ -22,7 +22,8 @@ class ExamUpdateRequest extends FormRequest
             'module_id' => ['required', 'int', 'numeric', Rule::exists('modules', 'id')],
             'semester' => ['required', 'int', 'numeric', 'min:1', 'max:10'],
             'credit_points' => ['required', 'int', 'numeric', 'min:0', 'max:30'],
-            'grade' => ['nullable', 'numeric', Rule::in(Exam::AVAILABLE_GRADES)]
+            'grade' => ['nullable', 'numeric', Rule::in(Exam::AVAILABLE_GRADES)],
+            'exam_date' => ['nullable', 'date'],
         ];
     }
 }
