@@ -38,7 +38,7 @@ const form = useForm({
                         <div class="flex-1">
                             <!-- Form -->
                             <div class="p-8">
-                                <form @submit.prevent="form.post('/tasks', {redirectTo})">
+                                <form @submit.prevent="form.post(route('tasks.store', {redirectTo}))">
                                     <div class="space-y-4">
                                         <label for="name" class="daisy block mb-1 text-lg bg-white">Titel:</label>
                                         <input id="name" v-model="form.title"
