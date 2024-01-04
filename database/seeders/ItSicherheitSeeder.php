@@ -11,7 +11,7 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class InformatikSeeder extends Seeder
+class ItSicherheitSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -220,6 +220,38 @@ class InformatikSeeder extends Seeder
             ],
         ]);
 
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'B-INF01XX',
+                'grade' => 10,
+                'credit_points' => 2,
+                'semester' => 1,
+                'module_id' => $module->id,
+                'created_at' => '2021-07-20 13:00:00',
+                'updated_at' => '2021-07-20 13:00:00',
+            ],
+
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-INF01XX',
+                'description' => 'B-Prüfung Einführungsprojekt für Informatiker',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2021-07-20 13:00:00',
+                'end' => '2021-07-20 13:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2021-07-20 13:00:00',
+                'updated_at' => '2021-07-20 13:00:00',
+            ],
+        );
+
 
         $module = Module::factory()
             ->createOne(
@@ -286,6 +318,37 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'GDIAPS',
+                'grade' => 27,
+                'credit_points' => 6,
+                'semester' => 1,
+                'module_id' => $module->id,
+                'created_at' => '2021-07-17 09:00:00',
+                'updated_at' => '2021-07-17 11:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: GDIAPS',
+                'description' => 'Schriftliche Prüfung Grundlagen der Informatik',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2021-07-17 09:00:00',
+                'end' => '2021-07-17 11:00:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2021-07-17 09:00:00',
+                'updated_at' => '2021-07-17 09:00:00',
+            ],
+        );
 
         $module = Module::factory()
             ->createOne(
@@ -358,6 +421,37 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'B-GOPB01XX',
+                'grade' => 23,
+                'credit_points' => 6,
+                'semester' => 1,
+                'module_id' => $module->id,
+                'created_at' => '2021-08-20 13:00:00',
+                'updated_at' => '2021-08-20 13:00:00',
+            ],
+
+        );
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-GOPB01XX',
+                'description' => 'B-Prüfung Grundlagen der objektorientierten Programmierung',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2021-08-20 13:00:00',
+                'end' => '2021-08-20 13:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2021-08-20 13:00:00',
+                'updated_at' => '2021-08-20 13:00:00',
+            ],
+        );
 
         $module = Module::factory()
             ->createOne(
@@ -461,6 +555,38 @@ class InformatikSeeder extends Seeder
             ],
         ]);
 
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'MGIPS',
+                'grade' => 23,
+                'credit_points' => 8,
+                'semester' => 1,
+                'module_id' => $module->id,
+                'created_at' => '2021-07-17 15:00:00',
+                'updated_at' => '2021-07-17 17:00:00',
+            ],
+
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: MGIPS',
+                'description' => 'Schriftliche Prüfung Mathematische Grundlagen für Informatiker',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2021-07-17 15:00:00',
+                'end' => '2021-07-17 17:00:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2021-07-17 15:00:00',
+                'updated_at' => '2021-07-17 15:00:00',
+            ],
+        );
+
         $module = Module::factory()
             ->createOne(
                 [
@@ -537,6 +663,38 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'B-EIS01XX ',
+                'grade' => 17,
+                'credit_points' => 6,
+                'semester' => 2,
+                'module_id' => $module->id,
+                'created_at' => '2021-11-20 13:00:00',
+                'updated_at' => '2021-11-20 13:00:00',
+            ],
+
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-EIS01XX ',
+                'description' => 'B-Prüfung Einführung in die IT-Sicherheit',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2021-11-20 13:00:00',
+                'end' => '2021-11-20 13:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2021-11-20 13:00:00',
+                'updated_at' => '2021-11-20 13:00:00',
+            ],
+        );
 
         $module = Module::factory()
             ->createOne(
@@ -674,6 +832,71 @@ class InformatikSeeder extends Seeder
             ],
         ]);
 
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'B-RBW01XX',
+                'grade' => 10,
+                'credit_points' => 3,
+                'semester' => 2,
+                'module_id' => $module->id,
+                'created_at' => '2022-02-19 08:00:00',
+                'updated_at' => '2022-02-19 08:00:00',
+            ],
+
+
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-RBW01XX',
+                'description' => 'B-Prüfung Recht und Betriebswirtschaftslehre',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2022-02-19 08:00:00',
+                'end' => '2022-02-19 08:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2022-02-19 08:00:00',
+                'updated_at' => '2022-02-19 08:00:00',
+            ],
+        );
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'RBWPS',
+                'grade' => 13,
+                'credit_points' => 5,
+                'semester' => 2,
+                'module_id' => $module->id,
+                'created_at' => '2022-02-12 08:00:00',
+                'updated_at' => '2022-02-12 10:00:00',
+            ],
+
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: RBWPS',
+                'description' => 'Schriftliche Prüfung Recht und Betriebswirtschaftslehre',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2022-02-12 08:00:00',
+                'end' => '2022-02-12 10:00:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2022-02-12 08:00:00',
+                'updated_at' => '2022-02-12 08:00:00',
+            ],
+        );
+
 
         $module = Module::factory()
             ->createOne(
@@ -765,6 +988,38 @@ class InformatikSeeder extends Seeder
             ],
         ]);
 
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'SEIBPS',
+                'grade' => 10,
+                'credit_points' => 8,
+                'semester' => 2,
+                'module_id' => $module->id,
+                'created_at' => '2022-02-11 14:00:00',
+                'updated_at' => '2022-02-11 16:00:00',
+            ],
+
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: SEIBPS',
+                'description' => 'Schriftliche Prüfung Software Engineering',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2022-02-11 14:00:00',
+                'end' => '2022-02-11 16:00:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2022-02-11 14:00:00',
+                'updated_at' => '2022-02-11 14:00:00',
+            ],
+        );
+
 
         $module = Module::factory()
             ->createOne(
@@ -855,6 +1110,38 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'WMAPS',
+                'grade' => 33,
+                'credit_points' => 8,
+                'semester' => 2,
+                'module_id' => $module->id,
+                'created_at' => '2022-04-09 17:00:00',
+                'updated_at' => '2022-04-09 19:00:00',
+            ],
+
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: WMAPS',
+                'description' => 'Schriftliche Prüfung Weiterführende Mathematik',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2022-04-09 17:00:00',
+                'end' => '2022-04-09 19:00:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2022-04-09 17:00:00',
+                'updated_at' => '2022-04-09 17:00:00',
+            ],
+        );
 
 
         $module = Module::factory()
@@ -959,6 +1246,37 @@ class InformatikSeeder extends Seeder
             ],
         ]);
 
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'ITICPS',
+                'grade' => 27,
+                'credit_points' => 8,
+                'semester' => 3,
+                'module_id' => $module->id,
+                'created_at' => '2022-10-08 11:00:00',
+                'updated_at' => '2022-10-08 13:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: ITICPS',
+                'description' => 'Schriftliche Prüfung Informationstechnologie',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2022-10-08 11:00:00',
+                'end' => '2022-10-08 13:00:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2022-10-08 11:00:00',
+                'updated_at' => '2022-10-08 11:00:00',
+            ],
+        );
+
 
         $module = Module::factory()
             ->createOne(
@@ -1011,6 +1329,38 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'B-ICM01XX',
+                'grade' => 10,
+                'credit_points' => 3,
+                'semester' => 3,
+                'module_id' => $module->id,
+                'created_at' => '2023-02-08 11:00:00',
+                'updated_at' => '2023-02-08 11:00:00',
+            ],
+
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-ICM01XX',
+                'description' => 'B-Prüfung Interkulturelle Kompetenz',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2023-02-08 11:00:00',
+                'end' => '2023-02-08 11:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2023-02-08 11:00:00',
+                'updated_at' => '2023-02-08 11:00:00',
+            ],
+        );
 
 
         $module = Module::factory()
@@ -1100,6 +1450,39 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'B-PWAA01XX',
+                'grade' => 13,
+                'credit_points' => 6,
+                'semester' => 3,
+                'module_id' => $module->id,
+                'created_at' => '2022-12-08 11:00:00',
+                'updated_at' => '2023-10-08 19:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-PWAA01XX',
+                'description' => 'B-Prüfung Projektmanagement und wissenschaftliches Arbeiten',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2022-12-08 11:00:00',
+                'end' => '2022-12-08 11:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2022-12-08 11:00:00',
+                'updated_at' => '2022-12-08 11:00:00',
+            ],
+
+        );
+
         $module = Module::factory()
             ->createOne(
                 [
@@ -1177,6 +1560,39 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'SDAPS',
+                'grade' => 20,
+                'credit_points' => 6,
+                'semester' => 3,
+                'module_id' => $module->id,
+                'created_at' => '2022-10-08 08:00:00',
+                'updated_at' => '2022-10-08 10:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: SDAPS',
+                'description' => 'Schriftliche Prüfung Sicherheit von Informationen und Anwendungen',
+                'location' => 'Prüfungsstandort Hamburg',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2022-10-08 08:00:00',
+                'end' => '2022-10-08 10:00:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2022-10-08 08:00:00',
+                'updated_at' => '2022-10-08 08:00:00',
+            ],
+
+        );
+
         $module = Module::factory()
             ->createOne(
                 [
@@ -1217,6 +1633,38 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'BPP-Bericht',
+                'grade' => 20,
+                'credit_points' => 15,
+                'semester' => 4,
+                'module_id' => $module->id,
+                'created_at' => '2022-10-08 11:00:00',
+                'updated_at' => '2023-06-09 11:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: BPP-Bericht',
+                'description' => 'Bericht Berufspraktische Phase',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2022-10-08 11:00:00',
+                'end' => '2022-10-08 11:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2021-07-01 08:00:00',
+                'updated_at' => '2021-07-01 08:00:00',
+            ],
+        );
+
         $module = Module::factory()
             ->createOne(
                 [
@@ -1311,6 +1759,39 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'DBIAPS',
+                'grade' => 23,
+                'credit_points' => 5,
+                'semester' => 4,
+                'module_id' => $module->id,
+                'created_at' => '2023-02-08 11:00:00',
+                'updated_at' => '2023-02-08 11:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: DBIAPS',
+                'description' => 'Schriftliche Prüfung Datenbanken',
+                'location' => 'Prüfungsstandort Hamburg',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2023-02-08 11:00:00',
+                'end' => '2023-02-08 13:00:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2023-02-08 11:00:00',
+                'updated_at' => '2023-02-08 11:00:00',
+            ],
+
+        );
+
         $module = Module::factory()
             ->createOne(
                 [
@@ -1374,6 +1855,39 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'B-MUMA01XX',
+                'grade' => 10,
+                'credit_points' => 6,
+                'semester' => 4,
+                'module_id' => $module->id,
+                'created_at' => '2023-03-10 10:00:00',
+                'updated_at' => '2023-03-10 10:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-MUMA01XX',
+                'description' => 'B-Prüfung Multimediale Anwendungen',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2023-03-10 10:00:00',
+                'end' => '2023-03-10 10:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2023-03-10 10:00:00',
+                'updated_at' => '2023-03-10 10:00:00',
+            ],
+
+        );
+
         $module = Module::factory()
             ->createOne(
                 [
@@ -1430,6 +1944,39 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'SRN1PS',
+                'grade' => 13,
+                'credit_points' => 6,
+                'semester' => 4,
+                'module_id' => $module->id,
+                'created_at' => '2023-04-01 14:00:00',
+                'updated_at' => '2023-04-01 16:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: SRN1PS',
+                'description' => 'Schriftliche Prüfung Sicherheit von Systemen',
+                'location' => 'Prüfungsstandort Hamburg',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2023-04-01 14:00:00',
+                'end' => '2023-04-01 16:00:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2023-04-01 14:00:00',
+                'updated_at' => '2023-04-01 14:00:00',
+            ],
+
+        );
+
         $module = Module::factory()
             ->createOne(
                 [
@@ -1504,6 +2051,39 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'VIIDPS',
+                'grade' => 20,
+                'credit_points' => 8,
+                'semester' => 5,
+                'module_id' => $module->id,
+                'created_at' => '2023-12-09 12:30:00',
+                'updated_at' => '2023-12-09 14:30:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: VIIDPS',
+                'description' => 'Schriftliche Prüfung Verteilte Informationsverarbeitung',
+                'location' => 'Prüfungsstandort Hamburg',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2023-12-09 12:30:00',
+                'end' => '2023-12-09 14:30:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2023-12-09 12:30:00',
+                'updated_at' => '2023-12-09 12:30:00',
+            ],
+
+        );
+
         $module = Module::factory()
             ->createOne(
                 [
@@ -1567,6 +2147,39 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'B-AKI01XX',
+                'grade' => 10,
+                'credit_points' => 6,
+                'semester' => 5,
+                'module_id' => $module->id,
+                'created_at' => '2023-06-08 11:00:00',
+                'updated_at' => '2023-06-08 11:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-AKI01XX',
+                'description' => 'B-Prüfung Anwendung künstlicher Intelligenz',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2023-06-08 11:00:00',
+                'end' => '2023-06-08 11:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2023-06-08 11:00:00',
+                'updated_at' => '2023-06-08 11:00:00',
+            ],
+
+        );
+
         $module = Module::factory()
             ->createOne(
                 [
@@ -1658,6 +2271,37 @@ class InformatikSeeder extends Seeder
             ],
         ]);
 
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'KFIAPM',
+                'grade' => null,
+                'credit_points' => 6,
+                'semester' => 5,
+                'module_id' => $module->id,
+                'created_at' => '2023-06-08 11:00:00',
+                'updated_at' => '2023-06-08 11:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: KFIAPM',
+                'description' => 'Mündliche Prüfung Kommunikation und Führung',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2024-01-25 18:00:00',
+                'end' => '2024-01-25 21:00:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2024-01-25 18:00:00',
+                'updated_at' => '2024-01-25 18:00:00',
+            ],
+        );
+
         $module = Module::factory()
             ->createOne(
                 [
@@ -1713,6 +2357,38 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'ProPrä ',
+                'grade' => null,
+                'credit_points' => 6,
+                'semester' => 5,
+                'module_id' => $module->id,
+                'created_at' => '2023-09-16 10:00:00',
+                'updated_at' => '2023-09-16 12:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: Projektpräsentation',
+                'description' => 'Projektpräsentation Matjesbrötchen',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2024-02-03 14:00:00',
+                'end' => '2024-02-03 16:00:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2024-02-03 14:00:00',
+                'updated_at' => '2024-02-03 14:00:00',
+            ],
+        );
+
         $module = Module::factory()
             ->createOne(
                 [
@@ -1769,6 +2445,39 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'SRN2PS ',
+                'grade' => 30,
+                'credit_points' => 6,
+                'semester' => 5,
+                'module_id' => $module->id,
+                'created_at' => '2023-09-16 10:00:00',
+                'updated_at' => '2023-09-16 12:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: SRN2PS ',
+                'description' => 'Schriftliche Prüfung Sicherheit von Netzwerken',
+                'location' => 'Prüfungsstandort Hamburg',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2023-09-16 10:00:00',
+                'end' => '2023-09-16 12:00:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2023-09-16 10:00:00',
+                'updated_at' => '2023-09-16 10:00:00',
+            ],
+
+        );
+
         $module = Module::factory()
             ->createOne(
 
@@ -1837,6 +2546,38 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'WFP1PS',
+                'grade' => 13,
+                'credit_points' => 6,
+                'semester' => 5,
+                'module_id' => $module->id,
+                'created_at' => '2023-09-16 12:30:00',
+                'updated_at' => '2023-09-19 14:30:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Prüfungstermin: WFP1PS',
+                'description' => 'Schriftliche Prüfung Weiterführende Programmierung in C und C++',
+                'location' => 'Prüfungsstandort Hamburg',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2023-09-16 12:30:00',
+                'end' => '2023-09-16 14:30:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2023-09-16 12:30:00',
+                'updated_at' => '2023-09-16 12:30:00',
+            ],
+        );
+
         $module = Module::factory()
             ->createOne(
                 [
@@ -1891,6 +2632,38 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'B-ISM01XX',
+                'grade' => null,
+                'credit_points' => 6,
+                'semester' => 5,
+                'module_id' => $module->id,
+                'created_at' => '2023-09-16 12:30:00',
+                'updated_at' => '2023-09-19 14:30:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-ISM01XX',
+                'description' => 'B-Prüfung IT-Sicherheit-Management',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2024-02-19 14:00:00',
+                'end' => '2024-02-19 14:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2024-02-19 14:00:00',
+                'updated_at' => '2024-02-19 14:00:00',
+            ],
+
+        );
 
         $module = Module::factory()
             ->createOne(
@@ -1957,6 +2730,69 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'B-CSI01XX',
+                'grade' => 10,
+                'credit_points' => 0,
+                'semester' => 6,
+                'module_id' => $module->id,
+                'created_at' => '2023-11-16 12:00:00',
+                'updated_at' => '2023-11-16 12:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-CSI01XX',
+                'description' => 'B-Prüfung/ Laboreingangsprüfung Modul Labor Cybersicherheit',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2023-11-16 12:00:00',
+                'end' => '2023-11-16 12:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2023-11-16 12:00:00',
+                'updated_at' => '2023-11-16 12:00:00',
+            ],
+        );
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'B-CSI02XX',
+                'grade' => null,
+                'credit_points' => 6,
+                'semester' => 6,
+                'module_id' => $module->id,
+                'created_at' => '2023-11-16 12:00:00',
+                'updated_at' => '2023-11-16 12:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-CSI02XX',
+                'description' => 'B-Prüfung/ Laborabschlussprüfung Cyber-Sicherheit',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2024-03-04 12:00:00',
+                'end' => '2023-03-04 12:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2023-11-16 12:00:00',
+                'updated_at' => '2023-11-16 12:00:00',
+            ],
+        );
+
         $module = Module::factory()
             ->createOne(
                 [
@@ -2001,5 +2837,67 @@ class InformatikSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'Bachelor-Thesis',
+                'grade' => null,
+                'credit_points' => 12,
+                'semester' => 6,
+                'module_id' => $module->id,
+                'created_at' => '2023-11-16 12:00:00',
+                'updated_at' => '2023-11-16 12:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: Bachelor-Thesis',
+                'description' => 'Bachelor-Thesis "Secure-Scrum", Eine konzeptionelle Thsis über die Aufstellung von Scrum Theams und deren Methoden zur Gewährleistung sicherer Softwareentwicklung.',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2024-06-30 23:59:59',
+                'end' => '2024-06-30 23:59:59',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2023-11-16 12:00:00',
+                'updated_at' => '2023-11-16 12:00:00',
+            ],
+        );
+
+        $exam = Exam::factory()->createOne(
+            [
+                'code' => 'Kolloquium',
+                'grade' => null,
+                'credit_points' => 0,
+                'semester' => 6,
+                'module_id' => $module->id,
+                'created_at' => '2023-11-16 12:00:00',
+                'updated_at' => '2023-11-16 12:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Kolloquium: Bachelor-Thesis Verteidigung',
+                'description' => 'Präsentation und Verteidigung der Bachelor-Thesis',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2024-07-14 11:00:00',
+                'end' => '2024-07-14 14:00:00',
+                'is_full_day' => false,
+                'external_id' => null,
+                'created_at' => '2023-11-16 12:00:00',
+                'updated_at' => '2023-11-16 12:00:00',
+            ],
+        );
     }
 }
