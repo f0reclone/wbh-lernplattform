@@ -23,12 +23,12 @@ defineProps({ credit_points_total: Number,
 		<div class="py-6 flex justify-center items-center">
 
 			<!-- 1 - This is the second outermost Div-->
-			<div class="max-w-7xl mx-auto space-y-6 h-screen">
+			<div class="max-w-7xl mx-auto space-y-6">
 
 				<!-- 3 - This is the bottom Div for ToDo's and Calendar-->
-				<div class="p-2 sm:p-4 bg-opacity-0 shadow-sm sm:rounded-lg flex gap-4 content-between justify-center">
+				<div class="p-2 sm:p-4 bg-opacity-0 flex gap-4 content-between justify-center">
 					<!-- 3l - This is the bottom left Div for the ToDo title and the ToDo items-->
-                    <div class="p-2 sm:p-2 bg-gray-100 shadow-sm sm:rounded-lg w-7/8">
+                    <div class="p- sm:p-8 bg-white shadow-sm sm:rounded-lg w-3/4">
                         <!-- 3lt - This is the bottom left top Div for ToDo title -->
                         <div class="bg-opacity-0">
                             <h1 class="flex justify-center font-semibold text-3xl text-gray-800 leading-tight">
@@ -38,24 +38,22 @@ defineProps({ credit_points_total: Number,
                         </div>
 
                         <!-- 3lb - This is the bottom left bottom Div for Modules and associated Tasks -->
-                        <div class="p-2 flex gap-y-2 gap-x-2 justify-evenly flex-wrap">
+                        <div class="grid grid-cols-3 gap-6">
                             <!-- Loop through each module -->
-                            <div v-for="(module, moduleIndex) in modules" :key="moduleIndex" class="p-4 font-bold text-black bg-gray-50 shadow-sm sm:rounded-lg w-1/4 cursor-pointer" @click="redirectToModule(module.id)">
+                            <div v-for="(module, moduleIndex) in modules" :key="moduleIndex" class="p-4 font-bold text-black bg-gray-50 shadow-sm sm:rounded-lg cursor-pointer" @click="redirectToModule(module.id)">
                                 {{ module.name }}<br>
                                 <div class="border-t border-gray-500 my-2"></div>
 
-                                <div v-for="(task, index) in tasks" :key="index" class="text-gray-400 cursor-pointer" @click="redirectToTask(task.id)">
-                                    <div v-if="task.module_id === module.id">
+                                <div v-for="(task, index) in module.tasks" :key="index" class="text-gray-400 cursor-pointer hover:underline my-1" @click="redirectToTask(task.id)">
                                         {{ task.title }}
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- 3r - This is the bottom left Div for the Calendar-->
-					<div class="p-2 sm:p-4 bg-gray-100 overflow-hidden shadow-sm sm:rounded-lg w-1/4">
-                        <div class="flex items-center">
+					<div class="p-2 sm:p-4 bg-white overflow-hidden shadow-sm sm:rounded-lg w-1/4">
+                        <div class="flex items-center mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
                             </svg>
@@ -63,7 +61,7 @@ defineProps({ credit_points_total: Number,
                         </div>
 
                         <!-- 2 - This is the top Div for Progress, Credit Points, and Average Grade -->
-                        <div class="bg-opacity-0 overflow-hidden shadow-sm sm:rounded-lg flex-col">
+                        <div class="bg-opacity-0 overflow-hidden shadow-sm sm:rounded-lg scrollable-container border-solid flex-col">
 
                             <!-- 2l - This is the Div for the Progress Bar-->
                             <div class="p-2 sm:p-4 bg-opacity-0">
@@ -95,7 +93,7 @@ defineProps({ credit_points_total: Number,
                             </div>
                         </div>
 
-                        <div class="flex items-center mb-2 mt-4">
+                        <div class="flex items-center mt-6 mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
                             </svg>
@@ -106,7 +104,7 @@ defineProps({ credit_points_total: Number,
                             <div class="event" v-for="(event, index) in events" :key="index">
                                 <div class="event-date">{{ event.date }}</div>
                                 <div class="event-details">
-                                    <div class="event-title">{{ event.title }}</div>
+                                    <div class="event-title hover:underline">{{ event.title }}</div>
                                     <div class="event-description">{{ event.description }}</div>
                                 </div>
                             </div>
@@ -155,7 +153,11 @@ defineProps({ credit_points_total: Number,
 			},
             // Always return a little bit so that the bar is not invisible at 0 % progress
             completionPercentage(){
-                return 1 + (this.modules_done / (this.modules_total)) * 99;
+                if(this.modules_done === 0 || this.modules_total === 0) {
+                    return 1;
+                }
+
+                return (this.modules_done / (this.modules_total)) * 100;
             }
 		},
         data() {
@@ -176,9 +178,9 @@ defineProps({ credit_points_total: Number,
 
 .progress-bar {
     height: 33px;
-    border: 0px solid #ccc;
+    border: 1px solid #ccc;
     position: relative;
-    border-radius: 0px;
+    border-radius: 5px;
 }
 
 .progress-bar-fill {
