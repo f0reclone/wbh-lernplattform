@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\ModuleStatus;
 use App\Enums\TaskStatus;
 use Database\Factories\TaskFactory;
 use Barryvdh\LaravelIdeHelper\Eloquent;
@@ -11,9 +10,10 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Carbon;
-
+use Illuminate\Support\Facades\DB;
 
 
 /**
@@ -65,9 +65,44 @@ class Task extends Model
         return $this->belongsTo(Module::class);
     }
 
+    public function getModuleName(): ?string
+    {
+        $module = $this->module;
+        return $module?->name;
+    }
+
     public function events(): MorphToMany
     {
         return $this->morphToMany(Event::class, 'related');
+    }
+
+    public function getSemesters(): array
+    {
+        $module = $this->module;
+        if ($module) {
+            return range($module->start_semester, $module->end_semester);
+        }
+        return [];
+    }
+
+    public static function getAllSemesters(): array
+    {
+        $startSemesters = DB::table('modules')->distinct()->pluck('start_semester')->filter()->toArray();
+        $endSemesters = DB::table('modules')->distinct()->pluck('end_semester')->filter()->toArray();
+        $numericSemesters = array_filter($startSemesters, function ($semester) {
+            return is_numeric($semester);
+        });
+
+        // Loop through each module to include semesters in between
+        foreach ($startSemesters as $startSemester) {
+            $numericSemesters = array_merge($numericSemesters, range($startSemester, $endSemesters[$startSemester] ?? $startSemester));
+        }
+
+        // Remove duplicates and sort the semesters
+        $numericSemesters = array_unique($numericSemesters);
+        sort($numericSemesters);
+
+        return $numericSemesters;
     }
 
     public static function getStatusCases(): array
@@ -77,4 +112,5 @@ class Task extends Model
             TaskStatus::cases()
         );
     }
+
 }

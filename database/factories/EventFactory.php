@@ -17,13 +17,24 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
+        $examValue = ['university_external', 'exam'];
+        $locationValue = ['online', 'Prüfungsstandort'];
+
         return [
-            'key' => 'university_external',
+            'key' => $this->faker->randomElement($examValue),
             'title' => $this->faker->name,
+            'description' => $this->faker->sentence,
+            'location' => $this->faker->randomElement($locationValue),
+            'related_id' => null,
+            'related_type' => null,
             'is_editable' => false,
-            'is_full_day' => false,
             'start' => Carbon::now(),
-            'end' => Carbon::now()->addHours(2)
+            'end' => Carbon::now()->addHours(2),
+            'is_full_day' => false,
+            'external_id' => false,
+            'created_at' => $this->faker->dateTimeBetween('-2 year', '-1 year')->format('Y-m-d H:i:s'),
+            'updated_at' => $this->faker->dateTimeBetween('-2 year', '-1 year')->format('Y-m-d H:i:s'),
+
         ];
     }
 }
