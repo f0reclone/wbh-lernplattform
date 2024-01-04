@@ -90,6 +90,7 @@ const handleDrop = (event, status) => {
 
     // Change the status manually so it stays
     draggedTask.value.status = status;
+    draggedTask.value.updatedAt = new Date();
     dragOver.value = null;
 
 
