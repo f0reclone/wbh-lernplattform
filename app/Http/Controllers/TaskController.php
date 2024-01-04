@@ -7,10 +7,8 @@ namespace App\Http\Controllers;
 use App\Enums\TaskStatus;
 use App\Http\Requests\TaskCreateRequest;
 use App\Http\Requests\TaskUpdateRequest;
-use App\Http\Resources\ExamResource;
 use App\Http\Resources\ModuleResource;
 use App\Http\Resources\TaskResource;
-use App\Models\Exam;
 use App\Models\Module;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -29,6 +27,9 @@ class TaskController extends Controller
         $tasks = Task::query()
             ->with('module')
             ->where('user_id', '=', $user->id)
+            ->get();
+        $modules = Module::query()
+            ->where('user_id', '=', $request->user()->id)
             ->get();
 
         $modules = $tasks->pluck('module')->unique('id')->values();
@@ -74,7 +75,9 @@ class TaskController extends Controller
             'type' => 'success',
             'message' => 'Aufgabe gespeichert.'
         ]);
-
+        if ($request->get('skipRedirect') === true) {
+            return TaskResource::make($task);
+        }
         return redirect()->route('tasks.index');
     }
 
