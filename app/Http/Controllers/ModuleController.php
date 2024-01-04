@@ -6,8 +6,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ModuleCreateUpdateRequest;
 use App\Http\Resources\ModuleResource;
+use App\Http\Resources\TaskResource;
+use App\Http\Resources\ExamResource;
 use App\Models\Module;
 use App\Models\User;
+use App\Models\Task;
+use App\Models\Exam;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -63,9 +67,23 @@ class ModuleController extends Controller
 
     public function show(Request $request, Module $module)
     {
+        $user = $request->user();
+
+        // Fetch tasks for the specific module and user
+        $tasks = Task::query()
+            ->where('user_id', '=', $user->id)
+            ->where('module_id', '=', $module->id)
+            ->get();
+        $exams = Exam::query()
+            ->where('module_id', '=', $module->id)
+            ->get();
+
         return Inertia::render('Module/Show', [
             'module' => ModuleResource::make($module),
-            'moduleStatusCases' => Module::getStatusCases()
+            'moduleStatusCases' => Module::getStatusCases(),
+            'tasks' => TaskResource::collection($tasks)->collection,
+            'exams' => ExamResource::collection($exams)->collection
         ]);
     }
+
 }

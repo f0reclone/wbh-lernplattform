@@ -34,15 +34,15 @@ const filteredTasks = computed(() => {
         <template #header>
             <div class="flex items-center">
                 <DocumentCheckIcon class="h-6 w-6"/>
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight ml-2">Aufgaben</h2>
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight ml-2 ">Aufgaben</h2>
             </div>
         </template>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        <div class="py-12 ">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 text-black ">
                 <div class="flex">
-                    <div class="ml-auto">
+                    <div class="ml-auto ">
                         <select id="module" v-model="selectedModule"
-                                class="select select-bordered">
+                                class="select select-bordered bg-gray-300 shadow-lg text-black">
                             <option class="text-black" :value="null">
                                 Modul auswählen
                             </option>
@@ -51,22 +51,22 @@ const filteredTasks = computed(() => {
                             </option>
                         </select>
                     </div>
-                    <PrimaryButton class="ml-4" :link="route('tasks.create')">
+                    <button class="ml-4 btn btn-outline btn-success" @click="$inertia.visit(route('tasks.create'))">
                         Aufgabe erstellen
-                    </PrimaryButton>
+                    </button>
                 </div>
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg">
                     <div class="overflow-x-auto">
                         <table class="table" v-if="tasks.length > 0">
                             <!-- head -->
                             <thead>
                             <tr>
-                                <th>Titel</th>
-                                <th>Beschreibung</th>
-                                <th>Status</th>
-                                <th>Modul</th>
-                                <th>Erstellt am</th>
-                                <th>Aktionen</th>
+                                <th class="text-black">Titel</th>
+                                <th class="text-black">Beschreibung</th>
+                                <th class="text-black">Status</th>
+                                <th class="text-black">Modul</th>
+                                <th class="text-black">Erstellt am</th>
+                                <th class="text-black">Aktionen</th>
                             </tr>
                             </thead>
                             <tbody>
