@@ -5,26 +5,12 @@ namespace Tests\Browser;
 use App\Models\Module;
 use App\Models\Task;
 use App\Models\User;
-use Tests\TestCase;
+use Laravel\Dusk\Browser;
+use Tests\DuskTestCase;
 
-class Board extends TestCase
+class BoardTest extends DuskTestCase
 {
-
-    /**
-     * A basic feature test example.
-     */
-    public function test_todo_page_is_displayed(): void
-    {
-        $user = User::factory()->create();
-
-        $this->actingAs($user);
-
-        $response = $this->get('/board');
-
-        $response->assertStatus(200);
-    }
-
-    public function test_example(): void
+    public function test_it_can_show_a_task_on_the_board(): void
     {
         $user = User::factory()->create();
         $module = Module::factory()->create(['user_id' => $user->id]);
@@ -32,7 +18,6 @@ class Board extends TestCase
             'user_id' => $user->id,
             'module_id' => $module->id,
             'status' => 'in_progress',
-            //'status' => $this->faker->randomElement(['pending', 'in_progress', 'completed']),
         ]);
 
         $this->actingAs($user);
@@ -41,5 +26,14 @@ class Board extends TestCase
 
         $response->assertStatus(200);
         $response->assertSeeText($task->title);
+
+
+        $this->browse(function (Browser $browser) use ($user, $task, $module) {
+            $browser->loginAs($user)
+                ->visit(route('board'))
+                ->waitUntilMissing('#nprogress', 2)
+                ->screenshot('board/test_it_can_show_a_task_on_the_board')
+                ->assertSee($task->title);
+        });
     }
 }
