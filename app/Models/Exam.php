@@ -2,36 +2,46 @@
 
 namespace App\Models;
 
+
+use Barryvdh\LaravelIdeHelper\Eloquent;
+use Database\Factories\ExamFactory;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphOneOrMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Carbon;
 
 
 /**
- * App\Models\Exam
+ * \App\Models\Exam
  *
  * @property int $id
+ * @property string $code
  * @property int $module_id
- * @property int $grade
+ * @property int|null $grade
+ * @property int|null $credit_points
  * @property int $semester
- * @property int $credit_points
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Event> $events
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, Event> $events
  * @property-read int|null $events_count
- * @property-read \App\Models\Module $module
- * @method static \Database\Factories\ExamFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Exam newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Exam newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Exam query()
- * @method static \Illuminate\Database\Eloquent\Builder|Exam whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Exam whereGrade($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Exam whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Exam whereModuleId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Exam whereSemester($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Exam whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property-read Module $module
+ * @method static ExamFactory factory($count = null, $state = [])
+ * @method static Builder|Exam newModelQuery()
+ * @method static Builder|Exam newQuery()
+ * @method static Builder|Exam query()
+ * @method static Builder|Exam whereCreatedAt($value)
+ * @method static Builder|Exam whereCreditPoints($value)
+ * @method static Builder|Exam whereGrade($value)
+ * @method static Builder|Exam whereId($value)
+ * @method static Builder|Exam whereModuleId($value)
+ * @method static Builder|Exam whereSemester($value)
+ * @method static Builder|Exam whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Exam extends Model
 {
@@ -39,14 +49,29 @@ class Exam extends Model
 
     protected $guarded = [];
 
+    public const AVAILABLE_GRADES = [1, 1.3, 1.7, 2, 2.3, 2.7, 3, 3.3, 3.7, 4, 5];
 
     public function module(): BelongsTo
     {
         return $this->belongsTo(Module::class);
     }
 
-    public function events(): MorphToMany
+    public function events(): MorphOneOrMany
     {
-        return $this->morphToMany(Event::class, 'related');
+        return $this->morphMany(Event::class, 'related');
+    }
+
+    public function getGrade(): ?float
+    {
+        if($this->grade === null) {
+            return null;
+        }
+
+        return $this->grade / 10;
+    }
+
+    public function examEvent(): ?Event
+    {
+        return $this->events()->where('key', '=', 'exam')->first();
     }
 }

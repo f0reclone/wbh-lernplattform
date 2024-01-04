@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head} from '@inertiajs/vue3';
 
-defineProps({ events: Array })
+defineProps({events: Array})
 </script>
 
 <template>
@@ -14,17 +14,21 @@ defineProps({ events: Array })
             <p>Hier findest du eine Übersicht über deine aktuellen Termine.</p>
         </template>
 
-        <div class="bg-white shadow-sm is-light-mode h-[78vh] rounded"
-             style="color-scheme: light">
-            <Qalendar
-                :events="qalenderEvents"
-                :config="config"
-                @event-was-clicked="showEventModal"
-            >
-                <template #eventDialog="props">
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+                <div class="bg-white shadow-sm is-light-mode h-[78vh] rounded"
+                     style="color-scheme: light">
+                    <Qalendar
+                        :events="qalenderEvents"
+                        :config="config"
+                        @event-was-clicked="showEventModal"
+                    >
+                        <template #eventDialog="props">
 
-                </template>
-            </Qalendar>
+                        </template>
+                    </Qalendar>
+                </div>
+            </div>
         </div>
     </AuthenticatedLayout>
 
@@ -52,7 +56,8 @@ defineProps({ events: Array })
                 <div class="label">
                     <span class="label-text">Start</span>
                 </div>
-                <input :type="dateTimeInputType" placeholder="Start" :value="event.time.start" :disabled="!event.isEditable"
+                <input :type="dateTimeInputType" placeholder="Start" :value="event.time.start"
+                       :disabled="!event.isEditable"
                        class="input input-bordered w-full"/>
                 <div class="label">
                 </div>
@@ -61,7 +66,8 @@ defineProps({ events: Array })
                 <div class="label">
                     <span class="label-text">Ende</span>
                 </div>
-                <input :type="dateTimeInputType" placeholder="Ende" :value="event.time.end" :disabled="!event.isEditable"
+                <input :type="dateTimeInputType" placeholder="Ende" :value="event.time.end"
+                       :disabled="!event.isEditable"
                        class="input input-bordered w-full"/>
                 <div class="label">
                 </div>
@@ -114,7 +120,7 @@ export default {
             })
         },
         dateTimeInputType() {
-            if(this.event?.isFullDay) {
+            if (this.event?.isFullDay) {
                 return 'date-local';
             }
 

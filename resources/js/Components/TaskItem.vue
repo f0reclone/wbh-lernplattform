@@ -1,6 +1,6 @@
 <script setup>
 function formatSemesters(semesters) {
-    return semesters.length > 0 ? semesters.map(s => `${s}`).join(', ') : 'N/A';
+return semesters.length > 0 ? semesters.map(s => `${s}`).join(', ') : 'N/A';
 }
 </script>
 <!-- TaskItem.vue -->
@@ -9,7 +9,7 @@ function formatSemesters(semesters) {
         <div>
             <div
                 v-if="task.status === status"
-                class="mt-2 bg-white-100 dark:bg-gray-700 rounded-lg"
+                class="mt-2 bg-white-100 rounded-lg"
                 draggable="true"
                 @dragstart="handleDragStart"
                 @dragenter="handleDragEnter"
@@ -17,9 +17,9 @@ function formatSemesters(semesters) {
                 @dragover.prevent
                 @drop="handleDrop">
                 <a  :href="route('tasks.edit', {task: task.id})">
-                    <div class="p-2 bg-gray-100	 dark:bg-gray-700 rounded-lg">
-                        <div class="justify-cdbetween">
-                            <div class="font-semibold text-md text-gray-800 dark:text-gray-200 leading-tight">
+                    <div class="p-2 bg-gray-100	rounded-lg">
+                        <div class="justify-between">
+                            <div class="font-semibold text-md text-gray-800 leading-tight">
                                 {{ task.title }}
                             </div>
                             <div>
@@ -27,7 +27,7 @@ function formatSemesters(semesters) {
                             </div>
                         </div>
                         <hr>
-                        <div class="mt-2 font-semibold text-sm text-gray-500 dark:text-gray-400 leading-tight">
+                        <div class="mt-2 font-semibold text-sm text-gray-500 leading-tight">
                             {{ task.description}}
                         </div>
                     </div>

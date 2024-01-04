@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources;
 
 use App\Models\Module;
@@ -26,6 +28,7 @@ class ModuleResource extends JsonResource
             'semesters' => $this->resource->getSemesters(),
             'startSemester' => $this->resource->start_semester,
             'endSemester' => $this->resource->end_semester,
+            'tasks' => TaskResource::collection($this->whenLoaded('tasks')),
             'createdAt' => $this->resource->created_at?->toIso8601String(),
             'updatedAt' => $this->resource->updated_at?->toIso8601String(),
         ];

@@ -20,7 +20,8 @@ enum ModuleStatus: string
 
     case DoneWithoutGrade = 'done_without_grade';
 
-    public function getName() {
+    public function getName(): string
+    {
         return trans('modules.status.' . $this->value);
     }
 }

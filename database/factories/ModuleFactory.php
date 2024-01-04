@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ModuleStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +15,25 @@ class ModuleFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+    protected int $minSemester = 1;
+    protected int $maxSemester = 10;
+
     public function definition(): array
     {
+
+        $startSemester = $this->faker->numberBetween($this->minSemester, $this->maxSemester);
+        $endSemester = $this->faker->numberBetween($startSemester, $this->maxSemester);
+
         return [
-            //
+            'name' => $this->faker->name,
+            'description' => $this->faker->sentence,
+            'status' => $this->faker->randomElement(ModuleStatus::values()),
+            'start_semester' => $startSemester,
+            'end_semester' => $endSemester,
+            'created_at' => $this->faker->dateTimeBetween('-1 year', '-1 year')->format('Y-m-d H:i:s'),
+            'updated_at' => $this->faker->dateTimeBetween('-1 year', '-1 year')->format('Y-m-d H:i:s'),
+
         ];
     }
 }

@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Database\Factories\EventFactory;
-use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 
 /**
- * App\Models\Event
+ * \App\Models\Event
  *
  * @property int $id
  * @property string $key
@@ -21,20 +21,21 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $user_id
  * @property string|null $related_type
  * @property int|null $related_id
- * @property int $is_editable
+ * @property bool $is_editable
  * @property \Illuminate\Support\Carbon $start
  * @property \Illuminate\Support\Carbon $end
- * @property int $is_full_day
+ * @property bool $is_full_day
  * @property string|null $external_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static EventFactory factory($count = null, $state = [])
+ * @method static \Database\Factories\EventFactory factory($count = null, $state = [])
  * @method static Builder|Event newModelQuery()
  * @method static Builder|Event newQuery()
  * @method static Builder|Event query()
  * @method static Builder|Event whereCreatedAt($value)
  * @method static Builder|Event whereDescription($value)
  * @method static Builder|Event whereEnd($value)
+ * @method static Builder|Event whereExternalId($value)
  * @method static Builder|Event whereId($value)
  * @method static Builder|Event whereIsEditable($value)
  * @method static Builder|Event whereIsFullDay($value)
@@ -46,7 +47,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|Event whereTitle($value)
  * @method static Builder|Event whereUpdatedAt($value)
  * @method static Builder|Event whereUserId($value)
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 class Event extends Model
 {
@@ -96,5 +97,14 @@ class Event extends Model
         ksort($identifiers);
 
         return $identifiers;
+    }
+
+    public function user(): BelongsTo {
+        return $this->belongsTo(User::class);
+    }
+
+    public function related(): MorphTo
+    {
+        return $this->morphTo('related');
     }
 }

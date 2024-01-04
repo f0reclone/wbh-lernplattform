@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('module_id')->references('id')->on('modules');
             $table->unsignedInteger('grade')->nullable();
+            $table->unsignedInteger('credit_points')->nullable();
             $table->unsignedInteger('semester');
             $table->timestamps();
         });

@@ -14,6 +14,7 @@ return new class extends Migration {
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('description')->nullable();
             $table->enum('status', ModuleStatus::values())->default(ModuleStatus::Open->value);
             $table->foreignId('user_id')->references('id')->on('users');
             $table->unsignedInteger('start_semester');

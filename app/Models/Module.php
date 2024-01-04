@@ -3,44 +3,52 @@
 namespace App\Models;
 
 use App\Enums\ModuleStatus;
+
+use Barryvdh\LaravelIdeHelper\Eloquent;
+use Database\Factories\ModuleFactory;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Carbon;
 
 
 /**
- * App\Models\Module
+ * \App\Models\Module
  *
  * @property int $id
  * @property string $name
- * @property string|ModuleStatus $status
+ * @property string|null $description
+ * @property ModuleStatus $status
+ * @property int $user_id
  * @property int $start_semester
  * @property int $end_semester
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Event> $events
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, Event> $events
  * @property-read int|null $events_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exam> $exams
+ * @property-read Collection<int, Exam> $exams
  * @property-read int|null $exams_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\File> $files
- * @property-read int|null $files_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Task> $tasks
+ * @property-read Collection<int, Task> $tasks
  * @property-read int|null $tasks_count
- * @property-read \App\Models\User $user
- * @method static \Database\Factories\ModuleFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Module newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Module newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Module query()
- * @method static \Illuminate\Database\Eloquent\Builder|Module whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Module whereEndSemester($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Module whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Module whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Module whereStartSemester($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Module whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Module whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property-read User $user
+ * @method static ModuleFactory factory($count = null, $state = [])
+ * @method static Builder|Module newModelQuery()
+ * @method static Builder|Module newQuery()
+ * @method static Builder|Module query()
+ * @method static Builder|Module whereCreatedAt($value)
+ * @method static Builder|Module whereDescription($value)
+ * @method static Builder|Module whereEndSemester($value)
+ * @method static Builder|Module whereId($value)
+ * @method static Builder|Module whereName($value)
+ * @method static Builder|Module whereStartSemester($value)
+ * @method static Builder|Module whereStatus($value)
+ * @method static Builder|Module whereUpdatedAt($value)
+ * @method static Builder|Module whereUserId($value)
+ * @mixin Eloquent
  */
 class Module extends Model
 {
@@ -71,14 +79,9 @@ class Module extends Model
         return $this->hasMany(Exam::class);
     }
 
-    public function tasks(): MorphToMany
+    public function tasks(): HasMany
     {
-        return $this->morphToMany(Task::class, 'related');
-    }
-
-    public function files(): MorphToMany
-    {
-        return $this->morphToMany(File::class, 'related');
+        return $this->hasMany(Task::class);
     }
 
     public function events(): MorphToMany
