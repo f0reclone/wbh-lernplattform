@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\TaskStatus;
 use App\Http\Resources\ModuleResource;
 use Inertia\Inertia;
 use App\Models\Exam;
@@ -79,7 +80,7 @@ class DashboardController extends Controller
             [
                 'credit_points_total' => $creditPointsTotal,
                 'credit_points_achieved' => $creditPointsAchieved,
-                'modules' => ModuleResource::collection($modules->sortByDesc(fn(Module $module) => $module->tasks->where('status', '=', 'open')->count())->take(6))->collection,
+                'modules' => ModuleResource::collection($modules->sortByDesc(fn(Module $module) => $module->tasks->where('status', '=', TaskStatus::InProgress->value)->count())->take(6))->collection,
                 'modules_done' => $modules_done,
                 'modules_total' => count($modules),
                 'grade_average' => $gradeAverage,

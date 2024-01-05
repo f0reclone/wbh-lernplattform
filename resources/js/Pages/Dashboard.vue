@@ -37,7 +37,7 @@ defineProps({ credit_points_total: Number,
                         <!-- 3lt - This is the bottom left top Div for ToDo title -->
                         <div class="bg-opacity-0 ">
                             <h1 class="flex justify-center font-semibold text-3xl text-gray-800 leading-tight">
-                                Deine Module
+                                Deine zuletzt bearbeiteten Module
                             </h1>
                             <div class="border-t border-gray-500 my-2"></div>
                         </div>
@@ -59,7 +59,7 @@ defineProps({ credit_points_total: Number,
                     <!-- 3r - This is the bottom left Div for the Calendar-->
 					<div class="p-2 sm:p-4 bg-white overflow-hidden shadow-md sm:rounded-lg w-1/4">
                         <div class="flex items-center mb-4">
-                            <ArrowTrendingUpIcon class="mr-2 h-8 w-8 text-black" fill="none"/>
+                            <ArrowTrendingUpIcon class="mr-2 h-6 w-6 text-black" fill="none"/>
                             <h2 class="text-black text-xl font-bold ml-2">Deine Stats</h2>
                         </div>
 

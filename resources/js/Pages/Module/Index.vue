@@ -102,7 +102,7 @@ const props = defineProps({
                     </div>
                     <div class="ml-auto flex items-center space-x-4 mb-3">
                         <div class="px-4 space-x-4 space-y-3 ">
-                            <TextInput v-model="searchQuery" placeholder="Suche Modul ..." class="w-60"/>
+                            <TextInput v-model="searchQuery" placeholder="Suchen..." class="w-60"/>
                         </div>
                     </div>
                 </div>
