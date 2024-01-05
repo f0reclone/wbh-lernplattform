@@ -136,6 +136,7 @@ export default {
             eventDialogVisible: false,
             event: null,
             config: {
+                locale: "de-DE",
                 showCurrentTime: true,
                 eventDialog: {
                     isCustom: true
