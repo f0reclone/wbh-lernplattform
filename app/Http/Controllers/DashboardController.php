@@ -40,21 +40,18 @@ class DashboardController extends Controller
             ->get();
 
 
-        // Get all module ID's in one variable;
-        // Also count the amount of modules done
-        $module_ids = [];
         $modules_done = 0;
         foreach ($modules as $module) {
-            $module_ids[] = $module->id;
-            if ($module->status == ModuleStatus::WaitingForResult or
-                $module->status == ModuleStatus::DoneWithGrade or
-                $module->status == ModuleStatus::DoneWithoutGrade) {
+            if ($module->status === ModuleStatus::WaitingForResult ||
+                $module->status === ModuleStatus::DoneWithGrade ||
+                $module->status === ModuleStatus::DoneWithoutGrade) {
                 $modules_done++;
             }
         }
 
         // Now get all exams that belong to one of those modules
         $exams = Exam::query()->whereIn('module_id', $modules->pluck('id'))->get();
+
 
         // Sum the amount of credit points over all exams and count those that are done
         // An exam is considered done if it has been graded with a passing grade <= 4
@@ -80,7 +77,7 @@ class DashboardController extends Controller
             [
                 'credit_points_total' => $creditPointsTotal,
                 'credit_points_achieved' => $creditPointsAchieved,
-                'modules' => ModuleResource::collection($modules->sortByDesc(fn(Module $module) => $module->tasks->where('status', '=', TaskStatus::InProgress->value)->count())->take(6))->collection,
+                'modules' => ModuleResource::collection($modules->filter(fn(Module $module) => $module->tasks->where('status', '=', TaskStatus::InProgress)->isNotEmpty())->take(6))->collection,
                 'modules_done' => $modules_done,
                 'modules_total' => count($modules),
                 'grade_average' => $gradeAverage,
