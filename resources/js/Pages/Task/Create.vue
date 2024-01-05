@@ -53,7 +53,7 @@ const form = useForm({
 
                                         <label for="module" class="daisy block mb-1 text-lg">Modul:</label>
                                         <select id="module" v-model="form.moduleId"
-                                                class="select select-bordered w-full bg-white shadow-lg">
+                                                class="select select-bordered w-full bg-white shadow-lg text-lg">
                                             <option class="text-black" :value="module.id" v-for="module in modules">
                                                 {{ module.name }}
                                             </option>
