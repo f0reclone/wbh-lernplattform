@@ -16,6 +16,7 @@ const props = defineProps({
 const form = useForm({
     name: props.module.name,
     status: props.module.status,
+    description: props.module.description,
     start_semester: props.module.startSemester,
     end_semester: props.module.endSemester,
 })
@@ -26,10 +27,8 @@ const form = useForm({
 
     <AuthenticatedLayout>
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="relative flex min-h-screen">
-                    <!-- Sidebar content here if any -->
-
+            <div class="max-w-7xl mx-auto sm:px-6 rounded-box bg-white lg:px-8 space-y-6 text-black shadow-lg">
+                <div class="relative flex auto">
                     <!-- Main content -->
                     <div class="flex-1">
                         <!-- Header -->
@@ -50,12 +49,17 @@ const form = useForm({
                                 <div class="space-y-4">
                                     <label for="name" class="daisy block mb-1 text-lg ">Modulname:</label>
                                     <input id="name" v-model="form.name"
-                                           class="border rounded-md p-2 w-2/3 md:w-1/2 focus:border-blue-500 focus:ring-green-500 bg-gray-200 text-black "/>
+                                           class="border rounded-md p-2 w-2/3 md:w-1/2 focus:border-blue-500 focus:ring-green-500 bg-white text-black "/>
                                     <InputError class="mt-2" :message="form.errors.name" />
+
+                                    <label for="description" class="daisy block mb-1 text-lg">Beschreibung:</label>
+                                    <textarea id="description" v-model="form.description"
+                                              class="border rounded-md p-2 w-2/3 md:w-1/2 h-32 resize-none focus:border-blue-500 text-black focus:ring-green-500 bg-white"></textarea>
+                                    <InputError class="mt-2" :message="form.errors.description" />
 
                                     <label for="status" class="daisy block mb-1 text-lg">Status:</label>
                                     <select id="status" v-model="form.status"
-                                            class="border rounded-md p-2 w-2/3 md:w-1/2 focus:border-blue-500 text-black focus:ring-green-500 bg-gray-200">
+                                            class="border rounded-md p-2 w-2/3 md:w-1/2 focus:border-blue-500 text-black focus:ring-green-500 bg-white">
                                         <option class="text-black" :value="moduleStatusCase.value" v-for="moduleStatusCase in moduleStatusCases">
                                             {{ moduleStatusCase.name }}</option>
                                     </select>
@@ -64,12 +68,12 @@ const form = useForm({
                                     <label for="start_semester" class="daisy block mb-1 text-lg  ">Start
                                         Semester:</label>
                                     <input type="number" id="start_semester" v-model="form.start_semester"
-                                           class="text-black border rounded-md p-2 w-2/3 md:w-1/2 focus:border-blue-500 focus:ring-green-500 bg-gray-200"/>
+                                           class="text-black border rounded-md p-2 w-2/3 md:w-1/2 focus:border-blue-500 focus:ring-green-500 bg-white"/>
                                     <InputError class="mt-2" :message="form.errors.start_semester" />
 
                                     <label for="end_semester" class="daisy block mb-1 text-lg">End Semester:</label>
                                     <input type="number" id="end_semester" v-model="form.end_semester"
-                                           class="text-black border rounded-md p-2 w-2/3 md:w-1/2 focus:border-blue-500 focus:ring-green-500 bg-gray-200"/>
+                                           class="text-black border rounded-md p-2 w-2/3 md:w-1/2 focus:border-blue-500 focus:ring-green-500 bg-white"/>
                                     <InputError class="mt-2" :message="form.errors.end_semester" />
                                 </div>
                                 <br>

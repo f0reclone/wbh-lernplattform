@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head} from '@inertiajs/vue3';
+import {Head, usePage} from '@inertiajs/vue3';
 import {useForm} from '@inertiajs/vue3'
 import InputError from "@/Components/InputError.vue";
 import Book from "@/Components/icons/Book.vue";
@@ -17,6 +17,9 @@ const props = defineProps({
         type: Array,
     },
 });
+
+const redirectTo =  usePage().props.ziggy.query?.redirectTo ?? null;
+
 
 const form = useForm({
     title: props.task.title,
@@ -40,28 +43,28 @@ const form = useForm({
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-4 sm:p-8 bg-white bg-white text-black overflow-hidden shadow-lg sm:rounded-lg">
                     <div class="overflow-x-auto">
                         <div class="flex-1">
                             <!-- Form -->
                             <div class="p-8">
-                                <form @submit.prevent="form.put(route('tasks.update', {'task': task.id}))">
+                                <form @submit.prevent="form.put(route('tasks.update', {'task': task.id, redirectTo}))">
                                     <div class="space-y-4">
 
                                         <label for="name" class="daisy block mb-1 text-lg ">Titel:</label>
                                         <input id="name" v-model="form.title"
-                                               class="input w-full input-bordered"/>
+                                               class="input w-full input-bordered bg-white shadow-lg"/>
                                         <InputError class="mt-2" :message="form.errors.title"/>
 
                                         <label for="description" class="daisy block mb-1 text-lg">Beschreibung:</label>
                                         <textarea v-model="form.description" id="description"
-                                                  class="textarea textarea-bordered textarea-lg w-full"
+                                                  class="textarea textarea-bordered textarea-lg w-full bg-white shadow-lg"
                                                   placeholder="Beschreibung der Aufgabe"></textarea>
                                         <InputError class="mt-2" :message="form.errors.description"/>
 
                                         <label for="module" class="daisy block mb-1 text-lg">Modul:</label>
                                         <select id="module" v-model="form.module_id"
-                                                class="select select-bordered w-full">
+                                                class="select select-bordered w-full bg-white shadow-lg">
                                             <option class="text-black" :value="module.id" v-for="module in modules">
                                                 {{ module.name }}
                                             </option>
@@ -69,7 +72,7 @@ const form = useForm({
                                         <InputError class="mt-2" :message="form.errors.module"/>
                                         <label for="status" class="daisy block mb-1 text-lg">Status:</label>
                                         <select id="status" v-model="form.status"
-                                                class="select select-bordered w-full">
+                                                class="select select-bordered w-full bg-white shadow-lg">
                                             <option class="text-black" :value="taskStatusValue.value"
                                                     v-for="taskStatusValue in taskStatusValues">
                                                 {{ taskStatusValue.name }}

@@ -23,6 +23,7 @@ class ModuleResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'name' => $this->resource->name,
+            'description' => $this->resource->description,
             'status' => $this->resource->status->value,
             'statusName' => $this->resource->status->getName(),
             'semesters' => $this->resource->getSemesters(),
