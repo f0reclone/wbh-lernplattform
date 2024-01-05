@@ -89,7 +89,7 @@ class ExamController extends Controller
             'message' => 'Aufgabe gespeichert.'
         ]);
 
-        return redirect()->route('exams.index');
+        return $this->redirect($request);
     }
 
     public function store(ExamCreateRequest $request)
@@ -108,14 +108,14 @@ class ExamController extends Controller
         }
         $exam->save();
 
-        return redirect()->route('exams.index');
+        return $this->redirect($request);
     }
 
     public function destroy(Exam $exam, Request $request)
     {
         $exam->delete();
 
-        return redirect()->route('exams.index');
+        $this->redirect($request);
     }
 
     private function syncExamEvent(?string $examDate, Exam $exam)
@@ -142,5 +142,14 @@ class ExamController extends Controller
             $examEvent->related_id = $exam->id;
             $examEvent->save();
         }
+    }
+
+    private function redirect(Request $request)
+    {
+        if($request->has('redirectTo') && $request->get('redirectTo') !== null) {
+            return redirect()->to($request->get('redirectTo'));
+        }
+
+        return redirect()->route('exams.index');
     }
 }

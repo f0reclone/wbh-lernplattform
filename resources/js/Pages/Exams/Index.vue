@@ -34,16 +34,16 @@ const filteredExams = computed(() => {
         <template #header>
             <div class="flex items-center">
                 <pencil-icon class="h-6 w-6"/>
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight ml-2">Prüfungen</h2>
+                <h2 class="font-semibold text-xl text-black leading-tight ml-2">Prüfungen</h2>
             </div>
         </template>
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 text-black">
                 <div class="flex">
-                    <div class="ml-auto">
+                    <div class="ml-auto ">
                     <select id="module" v-model="selectedModule"
-                            class="select select-bordered">
-                        <option class="text-black" :value="null">
+                            class="select select-bordered bg-gray-300 shadow-lg text-black">
+                        <option class="text-black bg-gray-200 hover:bg-gray-200" :value="null">
                             Modul auswählen
                         </option>
                         <option class="text-black" :value="module.id" v-for="module in modules">
@@ -51,22 +51,22 @@ const filteredExams = computed(() => {
                         </option>
                     </select>
                     </div>
-                    <PrimaryButton class="ml-4" :link="route('exams.create')">
+                    <button class="ml-4 btn btn-outline btn-success" @click="$inertia.visit(route('exams.create'))">
                         Prüfung erstellen
-                    </PrimaryButton>
+                    </button>
                 </div>
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg ">
                     <div class="overflow-x-auto">
                         <table class="table" v-if="exams.length > 0">
                             <!-- head -->
                             <thead>
                             <tr>
-                                <th>Kürzel</th>
-                                <th>Modul</th>
-                                <th>ECTS-Punkte</th>
-                                <th>Note</th>
-                                <th>Prüfungstermin</th>
-                                <th>Aktionen</th>
+                                <th class="text-black">Kürzel</th>
+                                <th class="text-black">Modul</th>
+                                <th class="text-black">ECTS-Punkte</th>
+                                <th class="text-black">Note</th>
+                                <th class="text-black">Prüfungstermin</th>
+                                <th class="text-black">Aktionen</th>
                             </tr>
                             </thead>
                             <tbody>
