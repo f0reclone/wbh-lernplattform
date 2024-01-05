@@ -2792,6 +2792,61 @@ class ItSicherheitSeeder extends Seeder
                 'updated_at' => '2023-11-16 12:00:00',
             ],
         );
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-CSI02XX',
+                'description' => 'B-Prüfung/ Laborabschlussprüfung Cyber-Sicherheit',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2024-01-05 12:00:00',
+                'end' => '2023-01-05 12:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2023-11-16 12:00:00',
+                'updated_at' => '2023-11-16 12:00:00',
+            ],
+        );
+
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-CSI02XX',
+                'description' => 'B-Prüfung/ Laborabschlussprüfung Cyber-Sicherheit',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2024-01-19 12:00:00',
+                'end' => '2023-01-19 12:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2023-11-16 12:00:00',
+                'updated_at' => '2023-11-16 12:00:00',
+            ],
+        );
+        Event::factory()->createOne(
+            [
+                'user_id' => $user->id,
+                'key' => 'exam',
+                'title' => 'Abgabetermin: B-CSI02XX',
+                'description' => 'B-Prüfung/ Laborabschlussprüfung Cyber-Sicherheit',
+                'location' => 'online',
+                'related_id' => $exam->id,
+                'related_type' => $exam->getMorphClass(),
+                'is_editable' => true,
+                'start' => '2024-01-27 12:00:00',
+                'end' => '2023-01-27 12:00:00',
+                'is_full_day' => true,
+                'external_id' => null,
+                'created_at' => '2023-11-16 12:00:00',
+                'updated_at' => '2023-11-16 12:00:00',
+            ],
+        );
 
         $module = Module::factory()
             ->createOne(

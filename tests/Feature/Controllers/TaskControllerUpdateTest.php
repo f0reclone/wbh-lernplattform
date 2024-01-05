@@ -8,6 +8,7 @@ use App\Enums\TaskStatus;
 use App\Models\Module;
 use App\Models\Task;
 use App\Models\User;
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

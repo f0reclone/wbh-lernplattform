@@ -7,6 +7,7 @@ namespace Tests\Browser;
 use App\Models\Module;
 use App\Models\Task;
 use App\Models\User;
+use Carbon\Carbon;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
@@ -77,7 +78,6 @@ class TasksIndexTest extends DuskTestCase
                 ->assertDontSee('Es sind keine Aufgaben verfügbar. Erstelle doch welche!')
                 ->assertSee($task->title)
                 ->assertSee($module->name);
-
         });
     }
 }
