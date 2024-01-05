@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head} from '@inertiajs/vue3';
+import {CalendarDaysIcon} from "@heroicons/vue/24/solid/index.js";
 
 defineProps({events: Array})
 </script>
@@ -10,13 +11,15 @@ defineProps({events: Array})
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Kalender</h2>
-            <p>Hier findest du eine Übersicht über deine aktuellen Termine.</p>
+            <div class="flex items-center">
+                <CalendarDaysIcon class="mr-2 h-6 w-6 text-black"/>
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Hier findest deine aktuellen Termine.</h2>
+            </div>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="bg-white shadow-sm is-light-mode h-[78vh] rounded"
+                <div class="bg-white is-light-mode h-[78vh] rounded shadow-md"
                      style="color-scheme: light">
                     <Qalendar
                         :events="qalenderEvents"

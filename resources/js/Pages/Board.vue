@@ -5,6 +5,7 @@ import TaskItem from "@/Components/TaskItem.vue";
 import DropdownMultiSelect from "@/Components/DropdownMultiSelect.vue";
 import {computed, ref} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import {DocumentCheckIcon} from "@heroicons/vue/24/solid/index.js";
 
 
 const {tasks,} = defineProps({
@@ -130,12 +131,13 @@ const lastTenClosedTasks = computed(() => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Hier siehst du deine Aufgaben.
-            </h2>
+            <div class="flex items-center">
+                <DocumentCheckIcon class="mr-2 h-6 w-6 text-black"/>
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Hier findest du deine Aufgaben.</h2>
+            </div>
         </template>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="py-6">
+            <div class="max-w-7xl mx-auto px-4 space-y-2 space-y-2 sm:px-6 lg:px-8">
                 <!-- Full Width row -->
                 <div class="lg:flex lg:items-center lg:justify-between">
                     <DropdownMultiSelect id="semester" align="left" :initialSelectedSemesters="selectedSemesters"
@@ -144,7 +146,7 @@ const lastTenClosedTasks = computed(() => {
                         <span class="inline-flex rounded-md">
                             <button
                                 type="button"
-                                class="inline-flex items-center px-3 py-2 border border-transparent text-md leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                class="inline-flex items-center px-3 py-2 border border-transparent text-md leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 shadow"
                             >
                                 Semesterauswahl:
                                 <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -163,7 +165,7 @@ const lastTenClosedTasks = computed(() => {
                     </DropdownMultiSelect>
                     <div class="ml-4">
                         <PrimaryButton
-                            class=" ml-auto"
+                            class=" ml-auto shadow"
                             style="background-color: white; color: rgb(55 65 81)"
                             :link="route('tasks.create')">
                             Aufgabe erstellen
@@ -176,7 +178,7 @@ const lastTenClosedTasks = computed(() => {
                                 v-model="searchQuery"
                                 type="text"
                                 placeholder="Suchen..."
-                                class="mr-4 border border-gray-300 bg-white text-gray-800 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                                class="mr-4 border border-gray-300 bg-white text-gray-800 rounded-md focus:outline-none focus:ring focus:border-blue-300 shadow"
                             />
                         </div>
                     </div>
@@ -187,7 +189,7 @@ const lastTenClosedTasks = computed(() => {
                         <div class="mt-4 w-1/3 flex"
                              @drop="event => handleDrop(event, 'open', task)">
                             <div
-                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px]"
+                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px] shadow-md"
                                 @dragover.prevent="handleDragOver('open')"
                                 :class="columnClasses('open')">
                                 <p class="text-gray-800 font-semibold font-sans tracking-wide text-lg">
@@ -210,7 +212,7 @@ const lastTenClosedTasks = computed(() => {
                         <div class="mt-4 w-1/3 flex"
                              @drop="event => handleDrop(event, 'in_progress', task)">
                             <div
-                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px]"
+                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px] shadow-md"
                                 @dragover.prevent="handleDragOver('in_progress')" :class="columnClasses('in_progress')">
                                 <p class="text-gray-800 font-semibold font-sans tracking-wide text-lg">
                                     In Bearbeitung
@@ -232,7 +234,7 @@ const lastTenClosedTasks = computed(() => {
                         <div class="mt-4 w-1/3 flex"
                              @drop="event => handleDrop(event, 'done', task)">
                             <div
-                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px]"
+                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px] shadow-md"
                                 @dragover.prevent="handleDragOver('done')" :class="columnClasses('done')">
                                 <p class="text-gray-800 font-semibold font-sans tracking-wide text-lg">
                                     Erledigt

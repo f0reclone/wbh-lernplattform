@@ -39,7 +39,7 @@ const updatePassword = () => {
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Passwort ändern</h2>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Stellen Sie sicher, dass Ihr Konto ein langes, zufälliges Passwort verwendet, um sicher zu sein.
+                Stelle sicher, dass dein Konto ein langes, zufälliges Passwort verwendet, um sicher zu sein.
             </p>
         </header>
 

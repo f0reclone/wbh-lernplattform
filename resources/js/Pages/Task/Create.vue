@@ -26,14 +26,14 @@ const form = useForm({
 
         <template #header>
             <div class="flex items-center">
-                <DocumentCheckIcon class="h-6 w-6" />
-                <h2 class="font-semibold text-xl text-black bg-white leading-tight ml-2">Aufgabe
+                <DocumentCheckIcon class="mr-2 h-6 w-6 text-black" />
+                <h2 class="font-semibold text-xl text-black bg-white leading-tight">Aufgabe
                     hinzufügen</h2>
             </div>
         </template>
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 text-black bg-white shadow-lg rounded-box">
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 ">
+                <div class="p-2 sm:p-4 bg-white dark:bg-gray-800 text-black overflow-hidden shadow-md sm:rounded-md mr-4">
                     <div class="overflow-x-auto">
                         <div class="flex-1">
                             <!-- Form -->
