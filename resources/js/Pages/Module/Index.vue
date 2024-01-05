@@ -95,9 +95,9 @@ const props = defineProps({
                             </ul>
                         </div>
                         <div>
-                            <Link :href="route('modules.create')" class="ml-3 mb-3 btn btn-accent btn-outline bg-green shadow-md" method="get"
-                                  as="button" style="background-color: white; color: rgb(55, 65, 81);">Module hinzufügen
-                            </Link>
+                            <button class="mb-3 ml-3 bg-white btn btn-outline btn-success shadow-md" @click="$inertia.visit(route('modules.create'))">
+                                Modul hinzufügen
+                            </button>
                         </div>
                     </div>
                     <div class="ml-auto flex items-center space-x-4 mb-3">
