@@ -1,49 +1,57 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import {Head} from '@inertiajs/vue3';
 
-const dynamicContent = ref('');
+const helpPage = ref('registration');
 
-function resizeIframe(obj) {
-    obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+const isSelected = (page) => {
+    return helpPage.value === page
 }
-function changeContent(content) {
-    let helpPages = {
-        "registration": `<iframe src="https://app.tango.us/app/embed/747a309f-e36b-4152-baf0-cd81f2426556?skipCover=false&defaultListView=false&skipBranding=true" sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin" security="restricted" title="WBH Lernplattform - Registrierung" width="100%" height="500px" referrerpolicy="strict-origin-when-cross-origin" frameborder="0" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>`,
-        "logInAndOut": '<iframe src="https://app.tango.us/app/embed/0aebfdec-ec88-494c-9efd-066a85ca1c16" sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin" security="restricted" title="Logging in to the WBH Learning Platform" width="100%" height="500px" referrerpolicy="strict-origin-when-cross-origin" frameborder="0" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>',
-        "dashboardBasics": '<iframe src="https://app.tango.us/app/embed/e0c92f99-15ec-4098-a1cf-7e72eb29f5bd" sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin" security="restricted" title="Grundfunktionen der WBH-Lernplattform" width="100%" height="500px" referrerpolicy="strict-origin-when-cross-origin" frameborder="0" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>',
-        "viewAndEditProfile": "Profil",
-        "changePassword": "Password",
-        "createAndEditModules": '<iframe src="https://app.tango.us/app/embed/e5f4f953-beb1-44e9-af78-d3ceb206ccab" sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin" security="restricted" title="WBH Lernplattform - Module erstellen und anzeigen" width="100%" height="500px" referrerpolicy="strict-origin-when-cross-origin" frameborder="0" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>',
-        "createAndEditExams": "Prüfungen",
-        "synchroniseCalendar": ""
-    }
 
-    switch (content) {
-        case "registration":
-            dynamicContent.value = helpPages["registration"];
-            break;
-        case "logInAndOut":
-            dynamicContent.value = helpPages["logInAndOut"];
-            break;
-        case "viewAndEditProfile":
-            dynamicContent.value = helpPages["viewAndEditProfile"];
-            break;
-        case "createAndEditModules":
-            dynamicContent.value = helpPages["createAndEditModules"];
-            break;
-        case "synchroniseCalendar":
-            dynamicContent.value = helpPages["synchroniseCalendar"];
-            break;
-        default:
-            break;
-    }
-}
+
+const helpPages = [
+    {
+        key: 'registration',
+        title: 'Registrierung'
+    },
+    {
+        key: 'logInAndOut',
+        title: 'Anmeldung'
+    },
+    {
+        key: 'dashboardBasics',
+        title: 'Übersicht'
+    },
+    {
+        key: 'viewAndEditProfile',
+        title: 'Benutzerdaten anzeigen und bearbeiten'
+    },
+    {
+        key: 'changePassword',
+        title: 'Passwort ändern'
+    },
+    {
+        key: 'createAndEditModules',
+        title: 'Module anlegen und bearbeiten'
+    },
+    {
+        key: 'createAndEditTasks',
+        title: 'Aufgaben anlegen und bearbeiten'
+    },
+    {
+        key: 'createAndEditExams',
+        title: 'Prüfungen anlegen und bearbeiten'
+    },
+    {
+        key: 'synchroniseCalendar',
+        title: 'Termine synchronisieren'
+    },
+]
 </script>
 
 <template>
-    <Head title="Hilfe" />
+    <Head title="Hilfe"/>
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Hilfe</h2>
@@ -57,25 +65,53 @@ function changeContent(content) {
                             <ul class="menu w-56 rounded-box text-black">
                                 <li class="menu-title">
                                     <div class="flex items-center mb-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                             stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"/>
                                         </svg>
                                         <h2 class="text-black text-xl font-bold ml-2">Hilfe-Themen</h2>
                                     </div>
                                 </li>
-                                <li><a @click.prevent="changeContent('registration')">Registrierung</a></li>
-                                <li><a @click.prevent="changeContent('logInAndOut')">Anmeldung</a></li>
-                                <li><a @click.prevent="changeContent('dashboardBasics')">Übersicht</a></li>
-                                <li><a @click.prevent="changeContent('viewAndEditProfile')">Benutzerdaten anzeigen und bearbeiten</a></li>
-                                <li><a @click.prevent="changeContent('changePassword')">Passwort ändern</a></li>
-                                <li><a @click.prevent="changeContent('createAndEditModules')">Module anlegen und bearbeiten</a></li>
-                                <li><a @click.prevent="changeContent('createAndEditTasks')">Aufgaben anlegen und bearbeiten</a></li>
-                                <li><a @click.prevent="changeContent('createAndEditExams')">Prüfungen anlegen und bearbeiten</a></li>
-                                <li><a @click.prevent="changeContent('synchroniseCalendar')">Termine synchronisieren</a></li>
+                                <li><a v-for="page in helpPages" @click.prevent="helpPage = page.key"
+                                       :class="{'active': isSelected(page.key)}" v-text="page.title"></a>
+                                </li>
+
                             </ul>
                         </div>
-                        <div id="dynamicContent" class="p-4 sm:p-8 bg-white shadow-sm sm:rounded-lg w-3/4">
-                            <div v-html="dynamicContent"></div>
+                        <div id="dynamicContent" class="w-3/4">
+                            <iframe v-show="isSelected('registration')"
+                                    src="https://app.tango.us/app/embed/747a309f-e36b-4152-baf0-cd81f2426556?skipCover=false&defaultListView=false&skipBranding=true"
+                                    sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin"
+                                    security="restricted" title="WBH Lernplattform - Registrierung" width="100%"
+                                    height="500px" referrerpolicy="strict-origin-when-cross-origin" frameborder="0"
+                                    webkitallowfullscreen="webkitallowfullscreen"
+                                    mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"
+                                    class="bg-black rounded-[24px]"></iframe>
+                            <iframe v-show="isSelected('logInAndOut')"
+                                    src="https://app.tango.us/app/embed/0aebfdec-ec88-494c-9efd-066a85ca1c16"
+                                    sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin"
+                                    security="restricted" title="Logging in to the WBH Learning Platform" width="100%"
+                                    height="500px" referrerpolicy="strict-origin-when-cross-origin" frameborder="0"
+                                    webkitallowfullscreen="webkitallowfullscreen"
+                                    mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"
+                                    class="bg-black rounded-[24px]"></iframe>
+                            <iframe v-show="isSelected('dashboardBasics')"
+                                    src="https://app.tango.us/app/embed/e0c92f99-15ec-4098-a1cf-7e72eb29f5bd"
+                                    sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin"
+                                    security="restricted" title="Grundfunktionen der WBH-Lernplattform" width="100%"
+                                    height="500px" referrerpolicy="strict-origin-when-cross-origin" frameborder="0"
+                                    webkitallowfullscreen="webkitallowfullscreen"
+                                    mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"
+                                    class="bg-black rounded-[24px]"></iframe>
+                            <iframe v-show="isSelected('createAndEditModules')"
+                                    src="https://app.tango.us/app/embed/e5f4f953-beb1-44e9-af78-d3ceb206ccab"
+                                    sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin"
+                                    security="restricted" title="WBH Lernplattform - Module erstellen und anzeigen"
+                                    width="100%" height="500px" referrerpolicy="strict-origin-when-cross-origin"
+                                    frameborder="0" webkitallowfullscreen="webkitallowfullscreen"
+                                    mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>
+
                         </div>
                     </div>
                 </div>
@@ -83,3 +119,9 @@ function changeContent(content) {
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style>
+#dynamicContent > iframe, #dynamicContent {
+    border-radius: 24px !important;
+}
+</style>
