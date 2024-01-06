@@ -40,8 +40,8 @@ const currentRoute = computed(() => {
     <AuthenticatedLayout>
         <template #header>
             <div class="flex items-center">
-                <book-open-icon class="h-6 w-6"/>
-                <h2 class="font-semibold text-xl text-gray-800 text-gray-200 leading-tight">Modulinformationen</h2>
+                <book-open-icon class="mr-2 h-6 w-6 text-black"/>
+                <h2 class="font-semibold text-xl text-gray-800 text-gray-200 leading-tight">Hier findest du Details zu deinen Modulen.</h2>
             </div>
         </template>
         <div class="py-12">
@@ -50,42 +50,45 @@ const currentRoute = computed(() => {
                     <div class="flex w-full text-black">
                         <!-- Module Information as Card -->
                         <div
-                            class="p-4 sm:p-8 card w-full bg-white dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg">
-                            <div class="flex items-center">
-                                <book-open-icon class="h-6 w-6"/>
-                            </div>
+                            class="mr-2 p-4 sm:p-8 card w-full bg-white dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-lg ">
 
-                            <label class="daisy block mb-1 text-lg ">
-                                <span class="border-b-2 border-solid border-gray pb-0">Modulname:</span>
+                            <label class="daisy block mb-1 text-xl ">
+                                <span class=""><strong>{{ module.name }}</strong></span>
                             </label>
-                            <span>{{ module.name }}</span>
 
                             <label class="daisy block mb-1 text-lg">
                                 <span class="border-b-2 border-solid border-gray pb-0">Beschreibung:</span>
                             </label>
                             <p>{{ module.description }}</p>
 
-                            <label class="daisy block mb-1 text-lg">
-                                <span class="border-b-2 border-solid border-gray pb-0">Status:</span>
-                            </label>
-                            <span>{{ moduleStatusCases.find(status => status.value === module.status)?.name }}</span>
+                            <div class="daisy block mb-1 text-lg">
+                                <label>
+                                    <span class="border-b-2 border-solid border-gray pb-0 mr-2">Status:</span>
+                                </label>
+                                <span>{{ moduleStatusCases.find(status => status.value === module.status)?.name }}</span>
+                            </div>
 
-                            <label class="daisy block mb-1 text-lg">
-                                <span class="border-b-2 border-solid border-gray pb-0">Start Semester:</span>
-                            </label>
-                            <span>{{ module.startSemester }}</span>
+                            <div class="daisy block mb-1 text-lg">
+                                <label>
+                                    <span class="border-b-2 border-solid border-gray pb-0 mr-2">Startsemester:</span>
+                                </label>
+                                <span>{{ module.startSemester }}</span>
+                            </div>
 
-                            <label class="daisy block mb-1 text-lg">
-                                <span class="border-b-2 border-solid border-gray pb-0">End Semester:</span>
-                            </label>
-                            <span>{{ module.endSemester }}</span>
+                            <div class="daisy block mb-1 text-lg">
+                                <label>
+                                    <span class="border-b-2 border-solid border-gray pb-0 mr-2">Endsemester:</span>
+                                </label>
+                                <span>{{ module.endSemester }}</span>
+                            </div>
+
                         </div>
 
                         <div
-                            class="p-4 sm:p-8 card w-full bg-white dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg ml-4">
+                            class="p-4 sm:p-8 card w-full bg-white dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-lg ml-2 mr-4">
                             <div class="flex items-center mb-4">
-                                <pencil-icon class="h-4 w-4"/>
-                                <h3 class="ml-2 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                                <pencil-icon class="mr-2 h-4 w-4 text-black"/>
+                                <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                                     Prüfungen für dieses Modul</h3>
                                 <Link class="ml-auto btn-sm btn btn-outline btn-success"
                                       :href="route('exams.create', {moduleId: module.id, redirectTo: currentRoute})">
@@ -132,9 +135,9 @@ const currentRoute = computed(() => {
                     </div>
 
                 </div>
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg text-black">
+                <div class="mr-4 p-4 sm:p-8 bg-white dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-lg text-black">
                     <div class="flex items-center mb-4">
-                        <clipboard-document-list-icon class="h-4 w-4"/>
+                        <clipboard-document-list-icon class="mr-2 h-4 w-4 text-black"/>
                         <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Verknüpfte
                             Aufgaben</h3>
                         <Link class="ml-auto btn-sm btn btn-outline btn-success"

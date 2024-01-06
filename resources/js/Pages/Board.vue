@@ -5,9 +5,11 @@ import TaskItem from "@/Components/TaskItem.vue";
 import DropdownMultiSelect from "@/Components/DropdownMultiSelect.vue";
 import {computed, ref} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import {AdjustmentsVerticalIcon, DocumentCheckIcon} from "@heroicons/vue/24/solid/index.js";
+import TextInput from "@/Components/TextInput.vue";
 
 
-const {tasks,} = defineProps({
+const props = defineProps({
     task: Object,
     tasks: Array,
     module: Object,
@@ -15,35 +17,8 @@ const {tasks,} = defineProps({
     semesters: Array,
 });
 
-// Search Query and Filter //////////////////////////
-const searchQuery = ref('');
-
 const allTasks = ref(null);
-allTasks.value = tasks;
-
-const filteredTasks = computed(() => {
-    const query = searchQuery.value.toLowerCase();
-    const selectedSemestersInt = selectedSemesters.value.map(Number);
-
-    if (selectedSemestersInt.length === 0) {
-        // No semester selected, return all tasks
-        return allTasks.value.filter((task) => task.title.toLowerCase().includes(query));
-    }
-
-    return allTasks.value.filter((task) => {
-        const taskSemestersInt = task.semesters.map(Number);
-        return (
-            task.title.toLowerCase().includes(query) &&
-            selectedSemestersInt.some((semester) => taskSemestersInt.includes(semester))
-        );
-    });
-});
-
-const handleSelectSemesters = (selected) => {
-    selectedSemesters.value = selected;
-};
-
-const selectedSemesters = ref([]);
+allTasks.value = props;
 
 // Drag and Drop ////////////////////////////////////
 const draggedTask = ref(null);
@@ -104,13 +79,13 @@ const handleDrop = (event, status) => {
     event.target.classList.remove('drag-enter');
 };
 
-const lastTenClosedTasks = computed(() => {
+/*const lastTenClosedTasks = computed(() => {
     const closedTasks = filteredTasks.value
         .filter(task => task.status === 'done')
         .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
 
     return closedTasks.slice(0, 10);
-});
+});*/
 
 </script>
 
@@ -130,64 +105,52 @@ const lastTenClosedTasks = computed(() => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Hier siehst du deine Aufgaben.
-            </h2>
+            <div class="flex items-center">
+                <DocumentCheckIcon class="mr-2 h-6 w-6 text-black"/>
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Hier findest du deine Aufgaben.</h2>
+            </div>
         </template>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="py-6">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-2 lg:px-8">
                 <!-- Full Width row -->
                 <div class="lg:flex lg:items-center lg:justify-between">
-                    <DropdownMultiSelect id="semester" align="left" :initialSelectedSemesters="selectedSemesters"
-                                         @selectSemesters="handleSelectSemesters">
-                        <template #trigger>
-                        <span class="inline-flex rounded-md">
-                            <button
-                                type="button"
-                                class="inline-flex items-center px-3 py-2 border border-transparent text-md leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                            >
-                                Semesterauswahl:
-                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                     fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </button>
-                        </span>
-                        </template>
-
-                        <template #content>
-                            <!-- Dropdown content goes here if needed -->
-                        </template>
-                    </DropdownMultiSelect>
-                    <div class="ml-4">
-                        <PrimaryButton
-                            class=" ml-auto"
-                            style="background-color: white; color: rgb(55 65 81)"
-                            :link="route('tasks.create')">
+                    <!-- Semester Filter -->
+                    <div class="dropdown dropdown-hover items-center mb-3">
+                        <div tabindex="0" role="button" class="btn bg-white hover:bg-white text-black hover:text-black shadow-md">
+                            <adjustments-vertical-icon class="h-6 w-6"/>
+                            Semester
+                        </div>
+                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-md bg-white rounded-md w-52 hover:bg-white text-black shadow-md">
+                            <li v-for="semester in semesters" :key="semester">
+                                <a @click="toggleSemester(semester)">
+                                    <input type="checkbox" :checked="selectedSemesters.includes(semester)" class="checkbox checkbox-xs">
+                                    Semester {{ semester }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Button -->
+                    <div>
+                        <button class="mb-3 ml-3 bg-white btn btn-outline btn-success shadow-md" @click="$inertia.visit(route('tasks.create'))">
                             Aufgabe erstellen
-                        </PrimaryButton>
+                        </button>
                     </div>
                     <!-- Search bar -->
                     <div class="ml-auto flex items-center space-x-4">
-                        <div>
-                            <input
-                                v-model="searchQuery"
-                                type="text"
-                                placeholder="Suchen..."
-                                class="mr-4 border border-gray-300 bg-white text-gray-800 rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                            />
+                        <div class="ml-auto flex items-center space-x-4 mb-3">
+                            <div class="px-4 space-x-4 space-y-3 ">
+                                <TextInput v-model="searchQuery" placeholder="Suchen..." class="w-60"/>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!-- Full width and height columns -->
                 <div class="w-full flex ">
                     <div class="w-full flex ">
-                        <div class="mt-4 w-1/3 flex"
+                        <div class="w-1/3 flex"
                              @drop="event => handleDrop(event, 'open', task)">
                             <div
-                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px]"
+                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px] shadow-md"
                                 @dragover.prevent="handleDragOver('open')"
                                 :class="columnClasses('open')">
                                 <p class="text-gray-800 font-semibold font-sans tracking-wide text-lg">
@@ -207,10 +170,10 @@ const lastTenClosedTasks = computed(() => {
                                 />
                             </div>
                         </div>
-                        <div class="mt-4 w-1/3 flex"
+                        <div class="w-1/3 flex"
                              @drop="event => handleDrop(event, 'in_progress', task)">
                             <div
-                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px]"
+                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px] shadow-md"
                                 @dragover.prevent="handleDragOver('in_progress')" :class="columnClasses('in_progress')">
                                 <p class="text-gray-800 font-semibold font-sans tracking-wide text-lg">
                                     In Bearbeitung
@@ -229,16 +192,16 @@ const lastTenClosedTasks = computed(() => {
                                 />
                             </div>
                         </div>
-                        <div class="mt-4 w-1/3 flex"
+                        <div class="w-1/3 flex"
                              @drop="event => handleDrop(event, 'done', task)">
                             <div
-                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px]"
+                                class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px] shadow-md"
                                 @dragover.prevent="handleDragOver('done')" :class="columnClasses('done')">
                                 <p class="text-gray-800 font-semibold font-sans tracking-wide text-lg">
                                     Erledigt
                                 </p>
                                 <TaskItem
-                                    v-for="task in lastTenClosedTasks"
+                                    v-for="task in filteredTasks"
                                     :key="task.id"
                                     :task="task"
                                     status="done"
@@ -257,3 +220,64 @@ const lastTenClosedTasks = computed(() => {
         </div>
     </AuthenticatedLayout>
 </template>
+
+<script>
+
+export default {
+    data() {
+        return {
+            selectedSemesters: [],
+            sortOption: '',
+            selectedStatuses: [],
+            showCompleted: 'yes',
+            searchQuery: ''
+        };
+
+
+    },
+    computed: {
+        filteredTasks() {
+            let tasks = this.filterTasks(this.tasks);
+            tasks = this.searchTasks(tasks);
+            console.log('Filtered tasks:', tasks);
+            return tasks;
+        },
+        semesters() {
+            return [...(new Array(6)).keys()].map((index) => index + 1);
+        }
+    },
+    methods: {
+        setSortOption(option) {
+            this.sortOption = option;
+        },
+        toggleSemester(semester) {
+            if (this.selectedSemesters.includes(semester)) {
+                this.selectedSemesters = this.selectedSemesters.filter(s => s !== semester);
+            } else {
+                this.selectedSemesters.push(semester);
+            }
+        },
+
+        toggleStatus(status) {
+            if (this.selectedStatuses.includes(status)) {
+                this.selectedStatuses = this.selectedStatuses.filter(s => s !== status);
+            } else {
+                this.selectedStatuses.push(status);
+            }
+        },
+        filterTasks(tasks) {
+            if (this.selectedSemesters.length > 0) {
+                tasks = tasks.filter(task => task.semesters.some((semester) => this.selectedSemesters.includes(semester)));
+            }
+            console.log('Filtered tasks:', tasks);
+            return tasks;
+        },
+        searchTasks(tasks) {
+            if (this.searchQuery.trim() !== '') {
+                return tasks.filter(task => task.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
+            }
+            return tasks;
+        },
+    }
+}
+</script>
