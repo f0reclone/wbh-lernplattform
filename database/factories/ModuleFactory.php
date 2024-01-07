@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\ModuleStatus;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,6 +27,7 @@ class ModuleFactory extends Factory
         $endSemester = $this->faker->numberBetween($startSemester, $this->maxSemester);
 
         return [
+            'user_id' => User::factory(), // Hier wird automatisch ein Testbenutzer erstellt
             'name' => $this->faker->name,
             'description' => $this->faker->sentence,
             'status' => $this->faker->randomElement(ModuleStatus::values()),

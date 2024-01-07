@@ -2,6 +2,8 @@
 import {ref} from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head} from '@inertiajs/vue3';
+import {QuestionMarkCircleIcon} from "@heroicons/vue/24/solid/index.js";
+
 
 const helpPage = ref('registration');
 
@@ -50,10 +52,14 @@ const helpPages = [
 </script>
 
 <template>
-    <Head title="Hilfe"/>
+    <Head title="Hilfe" />
+
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Hilfe</h2>
+            <div class="flex items-center">
+                <QuestionMarkCircleIcon class="mr-2 h-6 w-6 text-black fill-none strokeWidth-5 stroke-black strokeLinecap-round strokeLinejoin-round"/>
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Hilfe</h2>
+            </div>
         </template>
 
         <div class="py-12">

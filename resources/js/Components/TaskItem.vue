@@ -17,7 +17,7 @@ return semesters.length > 0 ? semesters.map(s => `${s}`).join(', ') : 'N/A';
                 @dragover.prevent
                 @drop="handleDrop">
                 <a  :href="route('tasks.edit', {task: task.id})">
-                    <div class="p-2 bg-gray-100	rounded-lg">
+                    <div class="p-2 bg-gray-50	rounded-lg shadow-md">
                         <div class="justify-between">
                             <div class="font-semibold text-md text-gray-800 leading-tight">
                                 {{ task.title }}
