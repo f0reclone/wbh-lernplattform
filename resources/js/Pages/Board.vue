@@ -148,6 +148,7 @@ const handleDrop = (event, status) => {
                 <div class="w-full flex ">
                     <div class="w-full flex ">
                         <div class="w-1/3 flex"
+                             id="open"
                              @drop="event => handleDrop(event, 'open', task)">
                             <div
                                 class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px] shadow-md"
@@ -171,6 +172,7 @@ const handleDrop = (event, status) => {
                             </div>
                         </div>
                         <div class="w-1/3 flex"
+                             id="in_progress"
                              @drop="event => handleDrop(event, 'in_progress', task)">
                             <div
                                 class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px] shadow-md"
@@ -193,6 +195,7 @@ const handleDrop = (event, status) => {
                             </div>
                         </div>
                         <div class="w-1/3 flex"
+                             id="done"
                              @drop="event => handleDrop(event, 'done', task)">
                             <div
                                 class="bg-white rounded-lg px-3 py-3 w-full rounded mr-4 min-h-[500px] shadow-md"

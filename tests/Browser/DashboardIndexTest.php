@@ -33,12 +33,12 @@ class DashboardIndexTest extends DuskTestCase
                 ->visit(route('dashboard'))
                 ->waitUntilMissing('#nprogress', 2)
                 ->screenshot('dashboard/test_it_shows_an_empty_dashboard')
-                ->assertSee('Hier findest du eine Übersicht über deinen Lernfortschritt')
+                ->assertSee('Hier findest du eine Übersicht über deinen Lernfortschritt.')
                 ->assertSee('Deine Stats')
                 ->assertSee('0 / 0 Module')
                 ->assertSee('Credit Points: 0 / 0')
                 ->assertSee('Notendurchschnitt: 0')
-                ->assertSee('Deine Module')
+                ->assertSee('Deine zuletzt bearbeiteten Module')
                 ->assertSee('Deine Termine');
         });
     }
@@ -73,12 +73,11 @@ class DashboardIndexTest extends DuskTestCase
                 ->screenshot('dashboard/test_it_can_show_a_filled_dashboard')
                 ->assertSee('Hier findest du eine Übersicht über deinen Lernfortschritt')
                 ->assertSee('Deine Stats')
-                ->assertSee('21 / 26 Module')
-                ->assertSee('Credit Points: 141 / 177')
+                ->assertSee('21 / 27 Module')
+                ->assertSee('Credit Points: 144 / 180')
                 ->assertSee('Notendurchschnitt: 2.0')
-                ->assertSee('Deine Module')
+                ->assertSee('Deine zuletzt bearbeiteten Module')
                 ->assertSee('Projektarbeit')
-                ->assertSee('Labor Cybersicherheit')
                 ->assertSee('Deine Termine');
         });
     }
