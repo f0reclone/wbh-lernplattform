@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head, Link} from '@inertiajs/vue3';
 import TextInput from "@/Components/TextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import {BookOpenIcon, AdjustmentsVerticalIcon} from "@heroicons/vue/24/solid/index.js";
+import {BookOpenIcon, AdjustmentsVerticalIcon,InformationCircleIcon} from "@heroicons/vue/24/solid/index.js";
 
 const props = defineProps({
     moduleStatusCases: {
@@ -123,6 +123,12 @@ const props = defineProps({
                                 </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg " v-if="modules.length <= 0">
+                        <p class="text-center flex text-black" >
+                            <information-circle-icon class="w-6 h-6 mr-2"></information-circle-icon>
+                            Es sind keine Module verfügbar. Erstelle doch welche!
+                        </p>
                         </div>
                     </div>
                 </div>
