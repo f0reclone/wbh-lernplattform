@@ -9,7 +9,6 @@ const isSelected = (page) => {
     return helpPage.value === page
 }
 
-
 const helpPages = [
     {
         key: 'registration',
@@ -76,7 +75,6 @@ const helpPages = [
                                 <li><a v-for="page in helpPages" @click.prevent="helpPage = page.key"
                                        :class="{'active': isSelected(page.key)}" v-text="page.title"></a>
                                 </li>
-
                             </ul>
                         </div>
                         <div id="dynamicContent" class="w-3/4">
@@ -104,6 +102,19 @@ const helpPages = [
                                     webkitallowfullscreen="webkitallowfullscreen"
                                     mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"
                                     class="bg-black rounded-[24px]"></iframe>
+                            <iframe v-show="isSelected('viewAndEditProfile')"
+                                    src="https://app.tango.us/app/embed/7ce6c281-a8f7-42f7-9e1f-a00bebbd4edf"
+                                    sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin"
+                                    security="restricted" title="WBH Lernplattform - Profil anzeigen und bearbeiten" width="100%"
+                                    height="500px" referrerpolicy="strict-origin-when-cross-origin" frameborder="0"
+                                    webkitallowfullscreen="webkitallowfullscreen"
+                                    mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>
+                            <iframe v-show="isSelected('changePassword')"
+                                    src="https://app.tango.us/app/embed/b086b499-8c91-4142-8f64-8e7364675768"
+                                    sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin"
+                                    security="restricted" title="WBH Lernplattform - Passwort ändern" width="100%"
+                                    height="500px" referrerpolicy="strict-origin-when-cross-origin" frameborder="0" webkitallowfullscreen="webkitallowfullscreen"
+                                    mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>
                             <iframe v-show="isSelected('createAndEditModules')"
                                     src="https://app.tango.us/app/embed/e5f4f953-beb1-44e9-af78-d3ceb206ccab"
                                     sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin"
@@ -111,7 +122,27 @@ const helpPages = [
                                     width="100%" height="500px" referrerpolicy="strict-origin-when-cross-origin"
                                     frameborder="0" webkitallowfullscreen="webkitallowfullscreen"
                                     mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>
-
+                            <iframe v-show="isSelected('createAndEditTasks')"
+                                    src="https://app.tango.us/app/embed/4afee4f9-ecaa-4631-adbb-bade228f42bd"
+                                    sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin"
+                                    security="restricted" title="WBH Lernplattform - Aufgaben erstellen" width="100%"
+                                    height="500px" referrerpolicy="strict-origin-when-cross-origin" frameborder="0"
+                                    webkitallowfullscreen="webkitallowfullscreen"
+                                    mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>
+                            <iframe v-show="isSelected('createAndEditExams')"
+                                    src="https://app.tango.us/app/embed/96babe22-2d4c-40cb-af4a-666f286e25bc"
+                                    sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin"
+                                    security="restricted" title="WBH Lernplattform - Prüfungen erstellen und bearbeiten" width="100%"
+                                    height="500px" referrerpolicy="strict-origin-when-cross-origin" frameborder="0"
+                                    webkitallowfullscreen="webkitallowfullscreen"
+                                    mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>
+                            <iframe v-show="isSelected('synchroniseCalendar')"
+                                    src="https://app.tango.us/app/embed/ca446c45-6b67-44e5-a10d-48282da132ad"
+                                    sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin"
+                                    security="restricted" title="WBH Lernplattform - Kalender synchronisieren" width="100%"
+                                    height="500px" referrerpolicy="strict-origin-when-cross-origin" frameborder="0"
+                                    webkitallowfullscreen="webkitallowfullscreen"
+                                    mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>
                         </div>
                     </div>
                 </div>
