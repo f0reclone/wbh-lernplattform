@@ -7,6 +7,7 @@ namespace Tests\Browser;
 use App\Models\Module;
 use App\Models\Task;
 use App\Models\User;
+use Carbon\Carbon;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
@@ -33,7 +34,7 @@ class TasksIndexTest extends DuskTestCase
                 ->waitUntilMissing('#nprogress', 2)
                 ->screenshot('tasks/test_it_shows_an_empty_task_overview')
                 ->assertSee('Aufgaben')
-                ->assertSee('AUFGABE ERSTELLEN')
+                ->assertSee('Aufgabe erstellen')
                 ->assertSee('Es sind keine Aufgaben verfügbar. Erstelle doch welche!');
         });
     }
@@ -54,7 +55,7 @@ class TasksIndexTest extends DuskTestCase
                 ->waitUntilMissing('#nprogress', 2)
                 ->screenshot('tasks/test_it_does_not_show_foreign_tasks')
                 ->assertSee('Aufgaben')
-                ->assertSee('AUFGABE ERSTELLEN')
+                ->assertSee('Aufgabe erstellen')
                 ->assertSee('Es sind keine Aufgaben verfügbar. Erstelle doch welche!');
 
         });
@@ -73,11 +74,10 @@ class TasksIndexTest extends DuskTestCase
                 ->waitUntilMissing('#nprogress', 2)
                 ->screenshot('tasks/test_it_shows_own_tasks')
                 ->assertSee('Aufgaben')
-                ->assertSee('AUFGABE ERSTELLEN')
+                ->assertSee('Aufgabe erstellen')
                 ->assertDontSee('Es sind keine Aufgaben verfügbar. Erstelle doch welche!')
                 ->assertSee($task->title)
                 ->assertSee($module->name);
-
         });
     }
 }

@@ -43,8 +43,8 @@ const closeModal = () => {
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Konto löschen</h2>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Sobald Ihr Konto gelöscht ist, werden alle Ressourcen und Daten dauerhaft gelöscht. Vor der Löschung
-                Ihres Kontos laden Sie bitte alle Daten und Informationen herunter, die Sie aufbewahren möchten.
+                Sobald dein Konto gelöscht ist, werden alle Ressourcen und Daten dauerhaft gelöscht. Vor der Löschung
+                deines Kontos lade bitte alle Daten und Informationen herunter, die du aufbewahren möchtest.
             </p>
         </header>
 
@@ -53,12 +53,11 @@ const closeModal = () => {
         <Modal :show="confirmingUserDeletion" @close="closeModal">
             <div class="p-6">
                 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                    Sind Sie sicher, dass Sie Ihr Konto löschen möchten?
+                    Bist du sicher, dass du dein Konto löschen möchtest?
                 </h2>
 
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Sobald Ihr Konto gelöscht ist, werden alle Ressourcen und Daten dauerhaft gelöscht. Bitte
-                    Ihr Passwort ein, um zu bestätigen, dass Sie Ihr Konto endgültig löschen möchten.
+                    Sobald dein Konto gelöscht ist, werden alle Ressourcen und Daten dauerhaft gelöscht. Bitte gibt dein Passwort ein, um zu bestätigen, dass du dein Konto endgültig löschen möchtest.
                 </p>
 
                 <div class="mt-6">

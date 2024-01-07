@@ -31,96 +31,102 @@ const props = defineProps({
 
         <template #header>
             <div class="flex items-center">
-            <book-open-icon class="h-6 w-6"/>
-            <h2 class="font-semibold text-xl text-black text-black-200 leading-tight">Module</h2>
+            <book-open-icon class="mr-2 h-6 w-6 text-black"/>
+            <h2 class="font-semibold text-xl text-black text-black-200 leading-tight">Hier findest du alle deine Module.</h2>
             </div>
         </template>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white rounded-box shadow-lg">
+        <div class="py-6">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-2 lg:px-8">
                 <!-- Filters Container -->
-                <div class="flex auto space-x-4 mb-4 space-y-2">
-                    <div class="px-4 space-x-4 space-y-3 ">
-                        <TextInput v-model="searchQuery" placeholder="Suche Modul ..." class="w-60"/>
-                        <Link :href="route('modules.create')" class="btn btn-accent btn-outline bg-green shadow-lg" method="get"
-                              as="button" style="background-color: white; color: rgb(55, 65, 81);">Module hinzufügen
-                        </Link>
-                    </div>
-                    <!-- Semester Filter -->
-                    <div class="dropdown dropdown-hover">
-                        <div tabindex="0" role="button" class="btn m-1 bg-gray-200 hover:bg-gray-200 text-black hover:text-black shadow-lg">
-                            <adjustments-vertical-icon class="h-6 w-6"/>
-                            Semester
+                <div class="lg:flex lg:items-center lg:justify-between">
+                    <!-- Filters and Button on the Left Side -->
+                    <div class="flex items-center ">
+                        <!-- Semester Filter -->
+                        <div class="dropdown dropdown-hover items-center mb-3">
+                            <div tabindex="0" role="button" class="btn bg-white hover:bg-white text-black hover:text-black shadow-md">
+                                <adjustments-vertical-icon class="h-6 w-6"/>
+                                Semester
+                            </div>
+                            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-md bg-white rounded-md w-52 hover:bg-white text-black shadow-md">
+                                <li v-for="semester in semesters" :key="semester">
+                                    <a @click="toggleSemester(semester)">
+                                        <input type="checkbox" :checked="selectedSemesters.includes(semester)" class="checkbox checkbox-xs">
+                                        Semester {{ semester }}
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-lg bg-gray-200 rounded-box w-52 hover:bg-gray-200 text-black shadow-lg">
-                            <li v-for="semester in semesters" :key="semester">
-                                <a @click="toggleSemester(semester)">
-                                    <input type="checkbox" :checked="selectedSemesters.includes(semester)" class="checkbox checkbox-xs">
-                                    Semester {{ semester }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
 
-                    <!-- Status Filter -->
-                    <div class="dropdown dropdown-hover">
-                        <div tabindex="0" role="button" class="btn m-1 bg-gray-200 hover:bg-gray-200 text-black hover:text-black shadow-lg">
-                            <adjustments-vertical-icon class="h-6 w-6"/>
-                            Status
+                        <!-- Status Filter -->
+                        <div class="dropdown dropdown-hover ml-3 mb-3">
+                            <div tabindex="0" role="button" class="btn bg-white hover:bg-white text-black hover:text-black shadow-md">
+                                <adjustments-vertical-icon class="h-6 w-6"/>
+                                Status
+                            </div>
+                            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-md bg-white rounded-md w-52 hover:bg-white text-black shadow-md">
+                                <li v-for="moduleStatusCase in moduleStatusCases" :key="moduleStatusCase.value">
+                                    <a @click="toggleStatus(moduleStatusCase.value)">
+                                        <input type="checkbox" :checked="selectedStatuses.includes(moduleStatusCase.value)" class="checkbox checkbox-xs">
+                                        {{ moduleStatusCase.name }}
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-lg bg-gray-200 rounded-box w-52 hover:bg-gray-200 text-black shadow-lg">
-                            <li v-for="moduleStatusCase in moduleStatusCases" :key="moduleStatusCase.value">
-                                <a @click="toggleStatus(moduleStatusCase.value)">
-                                    <input type="checkbox" :checked="selectedStatuses.includes(moduleStatusCase.value)" class="checkbox checkbox-xs">
-                                    {{ moduleStatusCase.name }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
 
-                    <!-- Sort By Filter -->
-                    <div class="dropdown dropdown-hover">
-                        <div tabindex="0" role="button" class="btn m-1 bg-gray-200 hover:bg-gray-200 text-black hover:text-black inline-flex items-center shadow-lg">
-                            <adjustments-vertical-icon class="h-6 w-6"/>
-                            Sortieren nach
+                        <!-- Sort By Filter -->
+                        <div class="dropdown dropdown-hover ml-3 mb-3">
+                            <div tabindex="0" role="button" class="btn bg-white hover:bg-white text-black hover:text-black inline-flex items-center shadow-md">
+                                <adjustments-vertical-icon class="h-6 w-6"/>
+                                Sortieren nach
+                            </div>
+                            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-md bg-white rounded-md w-52 hover:bg-bg-white text-black shadow-md">
+                                <li>
+                                    <a @click="setSortOption('semester')">
+                                        <input type="radio" :checked="sortOption === 'semester'" class="radio radio-xs">
+                                        Semester
+                                    </a>
+                                </li>
+                                <li>
+                                    <a @click="setSortOption('module')">
+                                        <input type="radio" :checked="sortOption === 'module'" class="radio radio-xs">
+                                        Module
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-lg bg-gray-200 rounded-box w-52 hover:bg-gray-200 text-black shadow-lg">
-                            <li>
-                                <a @click="setSortOption('semester')">
-                                    <input type="radio" :checked="sortOption === 'semester'" class="radio radio-xs">
-                                    Semester
-                                </a>
-                            </li>
-                            <li>
-                                <a @click="setSortOption('module')">
-                                    <input type="radio" :checked="sortOption === 'module'" class="radio radio-xs">
-                                    Module
-                                </a>
-                            </li>
-                        </ul>
+                        <div>
+                            <button class="mb-3 ml-3 bg-white btn btn-outline btn-success shadow-md" @click="$inertia.visit(route('modules.create'))">
+                                Modul hinzufügen
+                            </button>
+                        </div>
                     </div>
-
+                    <div class="ml-auto flex items-center space-x-4 mb-3">
+                        <div class="px-4 space-x-4 space-y-3 ">
+                            <TextInput v-model="searchQuery" placeholder="Suchen..." class="w-60"/>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Main content -->
-                <div class="flex-1">
-
+                <div class="lg:flex lg:items-center lg:justify-between rounded-md bg-white mr-4 shadow-md">
                     <div class="px-4 py-4 flex flex-wrap">
                         <!-- Content -->
-                        <div class="card w-96 bg-white text-black shadow-xl mb-4" v-for="(module, index) in filteredModules"
-                             :key="module.id">
-                            <div class="card-body">
-                                <h2 class="card-title">{{ module.name }}</h2>
-                                <p>Status: {{ module.statusName }}</p>
-                                <p>Beschreibung: {{module.description}}</p>
-                                <p>Start: Semester {{ module.startSemester }}</p>
-                                <p>Ende: Semester {{ module.endSemester }}</p>
-                                <div class="flex justify-between">
-                                <div class="card-actions">
-                                    <a class="btn btn-outline btn-info" :href="route('modules.show', {'module': module.id})">Anzeigen</a>
+                        <div class="w-96 bg-gray-50 rounded-md mr-1 text-black shadow-md mb-4" v-for="(module, index) in filteredModules" :key="module.id">
+                            <div class="card-body flex flex-col h-full justify-between">
+                                <div>
+                                    <h2 class="card-title mb-1">{{ module.name }}</h2>
+                                    <p class="mb-1"> <u>Status:</u> {{ module.statusName }}</p>
+                                    <p class="mb-1"> <u>Beschreibung:</u> {{ module.description }}</p>
+                                    <p><u>Startsemester:</u> {{ module.startSemester }}</p>
+                                    <p><u>Endsemester:</u> {{ module.endSemester }}</p>
                                 </div>
-                                <div class="card-actions">
-                                    <a class="btn btn-outline btn-success" :href="route('modules.edit', {'module': module.id})">Bearbeiten</a>
-                                </div>
+                                <div class="card-actions flex justify-between mt-auto">
+                                    <div class="card-actions">
+                                        <a class="btn btn-outline btn-info" :href="route('modules.show', {'module': module.id})">Anzeigen</a>
+                                    </div>
+                                    <div class="card-actions">
+                                        <a class="btn btn-outline btn-success" :href="route('modules.edit', {'module': module.id})">Bearbeiten</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +167,7 @@ export default {
             return this.sortModules(modules);
         },
         semesters() {
-            return [...(new Array(7)).keys()].map((index) => index + 1);
+            return [...(new Array(6)).keys()].map((index) => index + 1);
         }
     },
     methods: {

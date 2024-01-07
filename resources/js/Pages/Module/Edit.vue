@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head} from '@inertiajs/vue3';
 import {useForm} from '@inertiajs/vue3'
 import InputError from "@/Components/InputError.vue";
+import {BookOpenIcon} from "@heroicons/vue/24/solid/index.js";
 
 const props = defineProps({
     moduleStatusCases: {
@@ -26,61 +27,58 @@ const form = useForm({
     <Head title="Modul bearbeiten"/>
 
     <AuthenticatedLayout>
+        <template #header>
+            <div class="flex items-center">
+                <book-open-icon class="mr-2 h-6 w-6 text-black"/>
+                <h2 class="font-semibold text-xl text-black text-black-200 leading-tight">Modul bearbeiten</h2>
+            </div>
+        </template>
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 rounded-box bg-white lg:px-8 space-y-6 text-black shadow-lg">
-                <div class="relative flex auto">
-                    <!-- Main content -->
-                    <div class="flex-1">
-                        <!-- Header -->
-                        <div class="px-4 py-4 space-x-4">
-                            <a href="" class="flex itemns-center mx-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
-                                </svg>
-                                <span class="text-2xl font-extrabold mx-2">Modul bearbeiten</span>
-                            </a>
-                        </div>
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 ">
+                <div class="p-2 sm:p-4 bg-white dark:bg-gray-800 text-black overflow-hidden shadow-md sm:rounded-md mr-4">
+                    <div class="overflow-x-auto">
+                        <div class="flex-1">
+                            <!-- Form -->
+                            <div class="p-8">
+                                <form @submit.prevent="form.put(route('modules.update', {module:module.id}))">
+                                    <div class="space-y-4">
+                                        <label for="name" class="daisy block mb-1 text-lg bg-white">Modulname:</label>
+                                        <input id="name" v-model="form.name"
+                                               class="input w-full input-bordered bg-white shadow-md"/>
+                                        <InputError class="mt-2" :message="form.errors.name"/>
 
-                        <!-- Form -->
-                        <div class="p-8">
-                            <form @submit.prevent="form.put(route('modules.update', {module:module.id}))">
-                                <div class="space-y-4">
-                                    <label for="name" class="daisy block mb-1 text-lg ">Modulname:</label>
-                                    <input id="name" v-model="form.name"
-                                           class="border rounded-md p-2 w-2/3 md:w-1/2 focus:border-blue-500 focus:ring-green-500 bg-white text-black "/>
-                                    <InputError class="mt-2" :message="form.errors.name" />
+                                        <label for="description" class="daisy block mb-1 text-lg">Beschreibung:</label>
+                                        <textarea v-model="form.description" id="description"
+                                                  class="textarea textarea-bordered textarea-lg w-full bg-white shadow-md"
+                                                  placeholder="Beschreibung der Aufgabe"></textarea>
+                                        <InputError class="mt-2" :message="form.errors.description"/>
 
-                                    <label for="description" class="daisy block mb-1 text-lg">Beschreibung:</label>
-                                    <textarea id="description" v-model="form.description"
-                                              class="border rounded-md p-2 w-2/3 md:w-1/2 h-32 resize-none focus:border-blue-500 text-black focus:ring-green-500 bg-white"></textarea>
-                                    <InputError class="mt-2" :message="form.errors.description" />
-
-                                    <label for="status" class="daisy block mb-1 text-lg">Status:</label>
-                                    <select id="status" v-model="form.status"
-                                            class="border rounded-md p-2 w-2/3 md:w-1/2 focus:border-blue-500 text-black focus:ring-green-500 bg-white">
-                                        <option class="text-black" :value="moduleStatusCase.value" v-for="moduleStatusCase in moduleStatusCases">
-                                            {{ moduleStatusCase.name }}</option>
-                                    </select>
-                                    <InputError class="mt-2" :message="form.errors.status" />
-
-                                    <label for="start_semester" class="daisy block mb-1 text-lg  ">Start
-                                        Semester:</label>
-                                    <input type="number" id="start_semester" v-model="form.start_semester"
-                                           class="text-black border rounded-md p-2 w-2/3 md:w-1/2 focus:border-blue-500 focus:ring-green-500 bg-white"/>
-                                    <InputError class="mt-2" :message="form.errors.start_semester" />
-
-                                    <label for="end_semester" class="daisy block mb-1 text-lg">End Semester:</label>
-                                    <input type="number" id="end_semester" v-model="form.end_semester"
-                                           class="text-black border rounded-md p-2 w-2/3 md:w-1/2 focus:border-blue-500 focus:ring-green-500 bg-white"/>
-                                    <InputError class="mt-2" :message="form.errors.end_semester" />
-                                </div>
-                                <br>
-                                <button type="submit" class="btn btn-accent btn-outline bg-green py-2 px-4 rounded-md">
-                                    Modul bearbeiten
-                                </button>
-                            </form>
+                                        <label for="module" class="daisy block mb-1 text-lg">Status:</label>
+                                        <select id="module" v-model="form.status"
+                                                class="select select-bordered w-full bg-white shadow-md text-lg">
+                                            <option class="text-black text-lg" :value="moduleStatusCase.value" v-for="moduleStatusCase in moduleStatusCases">
+                                                {{ moduleStatusCase.name }}
+                                            </option>
+                                        </select>
+                                        <InputError class="mt-2" :message="form.errors.status"/>
+                                        <label for="credit_points" class="daisy block mb-1 text-lg ">Startsemester:</label>
+                                        <input id="credit_points" v-model="form.start_semester" type="number" min="0"
+                                               max="30"
+                                               class="input w-full input-bordered bg-white shadow-md"/>
+                                        <InputError class="mt-2" :message="form.errors.start_semester"/>
+                                        <label for="credit_points" class="daisy block mb-1 text-lg ">Endsemester:</label>
+                                        <input id="credit_points" v-model="form.end_semester" type="number" min="0"
+                                               max="30"
+                                               class="input w-full input-bordered bg-white shadow-md"/>
+                                        <InputError class="mt-2" :message="form.errors.end_semester"/>
+                                    </div>
+                                    <br>
+                                    <button type="submit"
+                                            class="btn btn-accent btn-outline bg-green py-2 px-4 rounded-md">
+                                        Modul bearbeiten
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

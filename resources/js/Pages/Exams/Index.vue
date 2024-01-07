@@ -1,9 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head} from '@inertiajs/vue3';
+import {Head, Link} from '@inertiajs/vue3';
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import DangerButton from "@/Components/DangerButton.vue";
-import {InformationCircleIcon, PencilIcon} from "@heroicons/vue/24/solid/index.js";
+import {InformationCircleIcon, PencilIcon, PencilSquareIcon, TrashIcon} from "@heroicons/vue/24/solid/index.js";
 import {computed, ref} from "vue";
 
 const props = defineProps({
@@ -33,29 +33,34 @@ const filteredExams = computed(() => {
 
         <template #header>
             <div class="flex items-center">
-                <pencil-icon class="h-6 w-6"/>
-                <h2 class="font-semibold text-xl text-black leading-tight ml-2">Prüfungen</h2>
+                <pencil-icon class="mr-2 h-6 w-6 text-black"/>
+                <h2 class="font-semibold text-xl text-black leading-tight">Hier findest du alle deine Prüfungen.</h2>
             </div>
         </template>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 text-black">
-                <div class="flex">
-                    <div class="ml-auto ">
-                    <select id="module" v-model="selectedModule"
-                            class="select select-bordered bg-gray-300 shadow-lg text-black">
-                        <option class="text-black bg-gray-200 hover:bg-gray-200" :value="null">
-                            Modul auswählen
-                        </option>
-                        <option class="text-black" :value="module.id" v-for="module in modules">
-                            {{ module.name }}
-                        </option>
-                    </select>
+        <div class="py-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-2 text-black ">
+                <!-- Full Width row -->
+
+                <div class="mr-4 lg:flex lg:items-center lg:justify-between ">
+                    <!-- Filters and Button on the Left Side -->
+                    <div class="flex items-center ">
+                        <div class="ml-auto ">
+                            <select id="module" v-model="selectedModule"
+                                    class="mb-3 select select-bordered bg-white shadow-md text-black">
+                                <option class="text-black" :value="null">
+                                    Modul auswählen
+                                </option>
+                                <option class="text-black" :value="module.id" v-for="module in modules">
+                                    {{ module.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <button class="mb-3 ml-3 bg-white btn btn-outline btn-success shadow-md" @click="$inertia.visit(route('exams.create'))">
+                            Prüfung erstellen
+                        </button>
                     </div>
-                    <button class="ml-4 btn btn-outline btn-success" @click="$inertia.visit(route('exams.create'))">
-                        Prüfung erstellen
-                    </button>
                 </div>
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg ">
+                <div class="mr-4 p-4 sm:p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-lg ">
                     <div class="overflow-x-auto">
                         <table class="table" v-if="exams.length > 0">
                             <!-- head -->
@@ -77,12 +82,15 @@ const filteredExams = computed(() => {
                                 <td v-text="exam.grade"></td>
                                 <td v-text="exam.examDate !== null ? dayJS(exam.examDate).format('DD.MM.YYYY') : ''"></td>
                                 <td>
-                                    <PrimaryButton class="ml-4" :link="route('exams.edit', {'exam': exam.id})">
-                                        Bearbeiten
-                                    </PrimaryButton>
-                                    <DangerButton class="ml-4" @click="deleteExam(exam.id)">
-                                        Löschen
-                                    </DangerButton>
+                                    <Link :href="route('exams.edit', {'exam': exam.id})"
+                                          as="button" type="button" class="btn btn-sm btn-info btn-circle text-white">
+                                        <PencilSquareIcon class="h-4 w-4"/>
+                                    </Link>
+                                    <Link :href="route('exams.destroy', {'exam': exam.id})"
+                                          method="DELETE" as="button" type="button"
+                                          class="ml-4 btn btn-sm btn-error btn-circle text-white">
+                                        <TrashIcon class="h-4 w-4"/>
+                                    </Link>
                                 </td>
                             </tr>
                             </tbody>
