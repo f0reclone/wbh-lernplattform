@@ -36,14 +36,14 @@ const form = useForm({
 
         <template #header>
             <div class="flex items-center">
-                <DocumentCheckIcon class="h-6 w-6" />
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight ml-2">Aufgabe
+                <DocumentCheckIcon class="mr-2 h-6 w-6 text-black" />
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Aufgabe
                     bearbeiten</h2>
             </div>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white bg-white text-black overflow-hidden shadow-lg sm:rounded-lg">
+                <div class="p-2 sm:p-4 bg-white bg-white text-black overflow-hidden shadow-md sm:rounded-lg">
                     <div class="overflow-x-auto">
                         <div class="flex-1">
                             <!-- Form -->
@@ -53,27 +53,27 @@ const form = useForm({
 
                                         <label for="name" class="daisy block mb-1 text-lg ">Titel:</label>
                                         <input id="name" v-model="form.title"
-                                               class="input w-full input-bordered bg-white shadow-lg"/>
+                                               class="input w-full input-bordered bg-white shadow-md"/>
                                         <InputError class="mt-2" :message="form.errors.title"/>
 
                                         <label for="description" class="daisy block mb-1 text-lg">Beschreibung:</label>
                                         <textarea v-model="form.description" id="description"
-                                                  class="textarea textarea-bordered textarea-lg w-full bg-white shadow-lg"
+                                                  class="textarea textarea-bordered textarea-lg w-full bg-white shadow-md"
                                                   placeholder="Beschreibung der Aufgabe"></textarea>
                                         <InputError class="mt-2" :message="form.errors.description"/>
 
                                         <label for="module" class="daisy block mb-1 text-lg">Modul:</label>
                                         <select id="module" v-model="form.module_id"
-                                                class="select select-bordered w-full bg-white shadow-lg">
-                                            <option class="text-black" :value="module.id" v-for="module in modules">
+                                                class="select select-bordered w-full bg-white shadow-md text-lg">
+                                            <option class="text-black text-lg" :value="module.id" v-for="module in modules">
                                                 {{ module.name }}
                                             </option>
                                         </select>
                                         <InputError class="mt-2" :message="form.errors.module"/>
                                         <label for="status" class="daisy block mb-1 text-lg">Status:</label>
                                         <select id="status" v-model="form.status"
-                                                class="select select-bordered w-full bg-white shadow-lg">
-                                            <option class="text-black" :value="taskStatusValue.value"
+                                                class="select select-bordered w-full bg-white shadow-md text-lg">
+                                            <option class="text-black text-lg" :value="taskStatusValue.value"
                                                     v-for="taskStatusValue in taskStatusValues">
                                                 {{ taskStatusValue.name }}
                                             </option>

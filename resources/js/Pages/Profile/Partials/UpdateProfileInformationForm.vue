@@ -32,13 +32,13 @@ const form = useForm({
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Profil Informationen</h2>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Aktualisieren Sie die Profilinformationen und die E-Mail-Adresse Ihres Kontos.
+                Aktualisiere die Profilinformationen und E-Mail-Adresse deines Kontos.
             </p>
         </header>
 
-        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
+        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6 ">
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="name" value="Name"/>
 
                 <TextInput
                     id="name"
