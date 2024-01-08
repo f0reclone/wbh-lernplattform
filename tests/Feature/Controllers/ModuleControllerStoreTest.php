@@ -16,7 +16,7 @@ class ModuleControllerStoreTest extends TestCase
 
     public function test_it_redirects_to_login_page_if_no_user_logged_in(): void
     {
-        $response = $this->post(route('module.store'));
+        $response = $this->post(route('modules.store'));
 
         $response->assertRedirect(route('login'));
     }
@@ -30,17 +30,17 @@ class ModuleControllerStoreTest extends TestCase
             ->postJson(route('modules.store'), [
                 'name' => 'Neues Modul',
                 'description' => 'Beschreibung des Moduls',
-                'Status'=> ModuleStatus::Open->value,
+                'status'=> ModuleStatus::Open->value,
                 'start_semester' => '1',
                 'end_semester' => '2'
-            ])->assertRedirect(route('modules.index'));
+            ])->assertRedirect(route('modules.store'));
 
 
         $this->assertDatabaseCount('modules', 1);
         $this->assertDatabaseHas('modules', [
             'name' => 'Neues Modul',
             'description' => 'Beschreibung des Moduls',
-            'Status'=>ModuleStatus::Open->value,
+            'status'=>ModuleStatus::Open->value,
             'start_semester' => '1',
             'end_semester' => '2',
             'user_id' => $user->id
@@ -54,13 +54,14 @@ class ModuleControllerStoreTest extends TestCase
         $response = $this
             ->actingAs($user)
             ->postJson(route('modules.store'), [
+                'id'=> 1,
                 'name' => null,
                 'description' => 'Beschreibung des Moduls',
-                'Status'=>ModuleStatus::Open->value,
+                'status'=>ModuleStatus::Open->value,
                 'start_semester' => '1',
                 'end_semester' => '2'
             ])
-            ->assertJsonValidationErrors(['title' => ['Name muss ausgefüllt werden.']]);
+            ->assertJsonValidationErrors(['name' => ['Name muss ausgefüllt werden.']]);
 
 
         $this->assertDatabaseCount('modules', 0);

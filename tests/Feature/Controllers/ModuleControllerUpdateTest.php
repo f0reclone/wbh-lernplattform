@@ -10,39 +10,39 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class TaskControllerUpdateTest extends TestCase
+class ModuleControllerUpdateTest extends TestCase
 {
     use RefreshDatabase;
 
     public function test_it_redirects_to_login_page_if_no_user_logged_in(): void
     {
-        $response = $this->put(route('modules.update'));
+        $response = $this->put(route('modules.update',['module' => 1]));
 
         $response->assertRedirect(route('login'));
     }
 
-    public function test_it_can_update_a_task_for_the_current_user(): void
+    public function test_it_can_update_a_module_for_the_current_user(): void
     {
         $user = User::factory()->create();
         $module = Module::factory()->createOne(['user_id' => $user->id]);
 
         $response = $this
             ->actingAs($user)
-            ->putJson(route('modules.update'), [
+            ->putJson(route('modules.update',['module' => $module->id]), [
                 'name' => 'Modul bearbeiten',
                 'description' => 'Beschreibung des Moduls',
-                'Status'=> ModuleStatus::Open->value,
+                'status'=> ModuleStatus::Open->value,
                 'start_semester' => '1',
                 'end_semester' => '2'
-            ])->assertRedirect(route('modules.index'));
+            ])->assertRedirect(route('modules'));
 
 
         $this->assertDatabaseCount('modules', 1);
         $this->assertDatabaseHas('modules', [
-            'module_id' => $module->id,
+            'id' => $module->id,
             'name' => 'Modul bearbeiten',
             'description' => 'Beschreibung des Moduls',
-            'Status'=> ModuleStatus::Open->value,
+            'status'=> ModuleStatus::Open->value,
             'start_semester' => '1',
             'end_semester' => '2',
             'user_id' => $user->id,
@@ -52,24 +52,17 @@ class TaskControllerUpdateTest extends TestCase
     public function test_it_can_change_just_the_status_for_the_module(): void
     {
         $user = User::factory()->create();
-        $module = Module::factory()->createOne(['user_id' => $user->id]);
+        $module = Module::factory()->createOne(['name' => 'Modul bearbeiten','description' => 'Beschreibung des Moduls','status' => ModuleStatus::Open->value, 'start_semester' => '1','end_semester' => '2','user_id' => $user->id]);
 
         $response = $this
             ->actingAs($user)
-            ->putJson(route('modules.update'), [
+            ->putJson(route('modules.update',['module' => $module->id]), [
                 'name' => 'Modul bearbeiten',
-                'description' => 'Beschreibung des Moduls',
-                'Status'=> ModuleStatus::Open->value,
-                'start_semester' => '1',
-                'end_semester' => '2'
-            ])->assertRedirect(route('modules.index'));
-
-        $response = $this
-            ->actingAs($user)
-            ->putJson(route('modules.update'), [
+                'description' =>'Beschreibung des Moduls',
                 'status' => ModuleStatus::InProgress->value,
+            ])->assertRedirect(route('modules'));
 
-            ])->assertOk();
+
 
 
         $this->assertDatabaseCount('modules', 1);
@@ -88,7 +81,7 @@ class TaskControllerUpdateTest extends TestCase
         $newUser = User::factory()->createOne();
         $response = $this
             ->actingAs($newUser)
-            ->putJson(route('modules.update'), [
+            ->putJson(route('modules.update',['module' => $module->id]), [
                 'name' => 'Modul bearbeiten',
                 'description' => 'Beschreibung des Moduls',
                 'Status'=> ModuleStatus::Open->value,
@@ -104,7 +97,7 @@ class TaskControllerUpdateTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->putJson(route('modules.update'), [
+            ->putJson(route('modules.update',['module' => $module->id]), [
                 'status' => 'random'
             ])
             ->assertJsonValidationErrors(['status' => ['Der ausgewählte Wert ist ungültig.']]);

@@ -15,7 +15,7 @@ class ModuleIndexTest extends DuskTestCase
     public function test_access_denied_without_user(): void
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(route('modules.index'))
+            $browser->visit(route('modules'))
                 ->waitUntilMissing('#nprogress', 2)
                 ->screenshot('modules/test_access_denied_without_user')
                 ->assertRouteIs('login');
@@ -28,7 +28,7 @@ class ModuleIndexTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use($user) {
             $browser->loginAs($user)
-                ->visit(route('modules.index'))
+                ->visit(route('modules'))
                 ->waitUntilMissing('#nprogress', 2)
                 ->screenshot('modules/test_it_shows_an_empty_modules_overview')
                 ->assertSee('Module')
@@ -51,7 +51,7 @@ class ModuleIndexTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use($user) {
             $browser->loginAs($user)
-                ->visit(route('modules.index'))
+                ->visit(route('modules'))
                 ->waitUntilMissing('#nprogress', 2)
                 ->screenshot('modules/test_it_does_not_show_foreign_modules')
                 ->assertSee('Module')
@@ -69,11 +69,10 @@ class ModuleIndexTest extends DuskTestCase
         $user = User::factory()->createOne();
 
         $module = Module::factory()->createOne(['user_id' => $user->id]);
-        $task = Module::factory()->createOne(['module_id' => $module->id, 'user_id' => $user->id]);
 
         $this->browse(function (Browser $browser) use($user, $module) {
             $browser->loginAs($user)
-                ->visit(route('modules.index'))
+                ->visit(route('modules'))
                 ->waitUntilMissing('#nprogress', 2)
                 ->screenshot('tasks/test_it_shows_own_modules')
                 ->assertSee('Module')
@@ -81,7 +80,6 @@ class ModuleIndexTest extends DuskTestCase
                 ->assertSee('Status')
                 ->assertSee('Semester')
                 ->assertSee('Sortieren nach')
-                ->assertSee('Es sind keine Module verfügbar. Erstelle doch welche!')
                 ->assertSee($module->name);
 
         });
